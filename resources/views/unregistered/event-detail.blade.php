@@ -9,6 +9,13 @@
         </div>
     </section>
 
+    <!-- Back Button -->
+    <div class="container mt-4">
+        <a href="{{ route('events.index') }}" class="btn btn-secondary animate__animated animate__fadeInLeft">
+            <i class="bi bi-arrow-left"></i> Back to Events List
+        </a>
+    </div>
+
     <!-- Event Details Section -->
     <section class="event-details py-5">
         <div class="container">
@@ -27,10 +34,13 @@
                         <hr class="my-4">
                         <p class="event-participants fw-bold">{{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }} slots filled</p>
                     </div>
-
                     <!-- Event Image -->
-                    <div class="event-image-container shadow-lg rounded overflow-hidden mt-4">
-                        <img src="data:image/png;base64,{{ $event->eventImage }}" alt="Event Image" class="event-image img-fluid">
+                    <div class="event-image-container shadow-lg rounded overflow-hidden mt-4 animate__animated animate__fadeInRight">
+                        <img 
+                            src="data:image/png;base64,{{ $event->eventImage }}" 
+                            alt="Event Image" 
+                            class="event-image img-fluid"
+                        >
                     </div>
                 </div>
 
