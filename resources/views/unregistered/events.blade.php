@@ -15,59 +15,60 @@
             <div class="row g-4">
                 @foreach($events as $event)
                 <div class="col-md-4">
-    <div class="event-card position-relative overflow-hidden">
-        <!-- Event Image -->
-        <div class="event-image-container">
-            <img src="data:image/png;base64,{{ $event->eventImage }}" alt="Event Image" class="event-image">
-        </div>
+                    <div class="event-card position-relative overflow-hidden">
+                        <!-- Event Image -->
+                        <div class="event-image-container">
+                            <img src="data:image/png;base64,{{ $event->eventImage }}" alt="Event Image" class="event-image">
+                        </div>
 
-        <!-- Event Details -->
-        <div class="event-details p-4">
-            <!-- Event Name -->
-            <h5 class="event-title text-truncate">{{ $event->eventName }}</h5>
+                        <!-- Event Details -->
+                        <div class="event-details p-4">
+                            <!-- Event Name -->
+                            <h5 class="event-title text-truncate">{{ $event->eventName }}</h5>
 
-            <!-- Event Date -->
-            <p class="event-date mb-1">
-                <i class="bi bi-calendar3 text-success"></i> {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
-            </p>
+                            <!-- Event Date -->
+                            <p class="event-date mb-1">
+                                <i class="bi bi-calendar3 text-success"></i> {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
+                            </p>
 
-            <!-- Event Location -->
-            <p class="event-location mb-1">
-                <i class="bi bi-geo-alt text-success"></i> {{ $event->eventLocation }}
-            </p>
+                            <!-- Event Location -->
+                            <p class="event-location mb-1">
+                                <i class="bi bi-geo-alt text-success"></i> {{ $event->eventLocation }}
+                            </p>
 
-            <!-- Event Participants -->
-            <p class="event-participants fw-bold text-success mb-1">
-                <i class="bi bi-people"></i> {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}
-            </p>
+                            <!-- Event Participants -->
+                            <p class="event-participants fw-bold text-success mb-1">
+                                <i class="bi bi-people"></i> {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}
+                            </p>
 
-            <!-- Event Points -->
-            <p class="event-points text-muted mb-4">
-                <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} Points
-            </p>
+                            <!-- Event Points -->
+                            <p class="event-points text-muted mb-4">
+                                <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} Points
+                            </p>
 
-            <!-- View Details Button -->
-            <div class="view-details-wrapper">
-                <a href="{{ route('events.show', $event->eventId) }}" class="btn btn-success">
-                    View Details
-                </a>
-            </div>
-        </div>
-    </div>
-</div>
-
+                            <!-- View Details Button -->
+                            <div class="view-details-wrapper">
+                                <a href="{{ route('events.show', $event->eventId) }}" class="btn btn-success">
+                                    View Details
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 @endforeach
             </div>
+            <div class="mt-4">
+                {{ $events->links('pagination::bootstrap-5') }}
+            </div>
         </div>
+
     </section>
     <style>
-    /* General */
     body {
         background-color: #f9fafb;
         font-family: 'Roboto', sans-serif;
     }
 
-    /* Page Header */
     .page-header {
         background-color: #28a745;
         color: white;
@@ -78,14 +79,13 @@
         border-bottom: 5px solid #218838;
     }
 
-    /* Events List Section */
     .event-card {
         display: flex;
         flex-direction: column;
         background-color: white;
         border: 1px solid #e3e6e8;
         border-radius: 12px;
-        height: 100%; /* Ensure uniform card size */
+        height: 100%;
         transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
     }
 
@@ -115,7 +115,7 @@
         padding: 20px;
         display: flex;
         flex-direction: column;
-        flex-grow: 1; /* Ensure details section stretches to fill space */
+        flex-grow: 1;
     }
 
     .event-title {
@@ -132,7 +132,7 @@
 
     .event-description {
         display: -webkit-box;
-        -webkit-line-clamp: 3; /* Limit description to 3 lines */
+        -webkit-line-clamp: 3;
         -webkit-box-orient: vertical;
         overflow: hidden;
         text-overflow: ellipsis;
@@ -142,18 +142,18 @@
     .event-participants {
         font-size: 1rem;
         color: #28a745;
-        margin-top: auto; /* Push content above to the top */
+        margin-top: auto;
     }
 
     .view-details-wrapper {
-        margin-top: auto; /* Push the button to the bottom */
+        margin-top: auto;
     }
 
     .btn-success {
         background-color: #28a745;
         border-color: #28a745;
         transition: background-color 0.3s, transform 0.2s;
-        width: 100%; /* Ensure button spans the full width */
+        width: 100%;
     }
 
     .btn-success:hover {
@@ -166,6 +166,28 @@
         .event-card {
             margin-bottom: 20px;
         }
+    }
+
+    .pagination {
+    justify-content: center;
+}
+
+    .pagination .page-link {
+        color: #28a745;
+        border-color: #28a745;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .pagination .page-link:hover {
+        background-color: #28a745;
+        color: white;
+        border-color: #218838;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #28a745;
+        color: white;
+        border-color: #28a745;
     }
 </style>
 @endsection

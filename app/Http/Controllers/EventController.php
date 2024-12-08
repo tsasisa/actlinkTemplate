@@ -12,7 +12,7 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
+        $events = Event::paginate(3);
         return view('unregistered.events', compact('events'));
     }
 
@@ -67,6 +67,6 @@ class EventController extends Controller
     }
 
     public function register($id) {
-        
+
     }
 }
