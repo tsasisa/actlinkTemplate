@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -11,7 +12,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+        return view('unregistered.events', compact('events'));
     }
 
     /**
@@ -33,9 +35,11 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        //
+        $event = Event::with('organizer.user')->findOrFail($id);
+
+        return view('unregistered.event-detail', compact('event'));
     }
 
     /**
@@ -60,5 +64,9 @@ class EventController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function register($id) {
+        
     }
 }
