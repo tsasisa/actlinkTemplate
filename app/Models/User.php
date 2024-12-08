@@ -2,49 +2,39 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 
-class User extends Authenticatable
+class User extends Model
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    protected $table = 'User';
+    protected $primaryKey = 'userId';
+    public $timestamps = false; // If there's no created_at/updated_at columns
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'phone number',
-        'DOB',
+        'userName',
+        'userPassword',
+        'userPhoneNumber',
+        'userImage',
+        'userType',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
-    protected $hidden = [
-        'password',
-        'remember_token',
-    ];
+    // Relationships
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    // Each user can be an admin (if userType = 'Admin')
+    public function admin()
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasOne(Admin::class, 'adminId', 'userId');
+    }
+
+    // Each user can be a member (if userType = 'Member')
+    public function member()
+    {
+        return $this->hasOne(Member::class, 'memberId', 'userId');
+    }
+
+    // Each user can be an organizer (if userType = 'Organizer')
+    public function organizer()
+    {
+        return $this->hasOne(Organizer::class, 'organizerId', 'userId');
     }
 }

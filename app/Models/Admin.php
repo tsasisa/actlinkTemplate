@@ -6,14 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Admin extends Model
 {
-    //
-    protected $fillable = [
-        'name',
-        'email',
-    ];
+    protected $table = 'Admin';
+    protected $primaryKey = 'adminId';
+    public $timestamps = false;
 
-    protected $hidden = [
-        'password',
-    ];
+    // No additional fillable fields given besides the PK, but you can add if you have more
+    protected $fillable = [];
 
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'adminId', 'userId');
+    }
 }

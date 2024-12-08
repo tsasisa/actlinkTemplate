@@ -6,10 +6,22 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organizer extends Model
 {
-    //
-    protected $guarded=[];
+    protected $table = 'Organizer';
+    protected $primaryKey = 'organizerId';
+    public $timestamps = false;
 
-    public function event(){
-        return $this->hasMany(Event::class);
+    protected $fillable = [
+        'organizerAddress',
+        'organizerPhoneNumber'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'organizerId', 'userId');
+    }
+
+    public function events()
+    {
+        return $this->hasMany(Event::class, 'OrganizerId', 'organizerId');
     }
 }

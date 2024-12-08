@@ -6,10 +6,31 @@ use Illuminate\Database\Eloquent\Model;
 
 class Event extends Model
 {
-    //
-    protected $guarded=[];
+    protected $table = 'Event';
+    protected $primaryKey = 'eventId';
+    public $timestamps = false;
 
-    public function organizer(){
-        return $this->belongsTo(Organizer::class);
+    protected $fillable = [
+        'eventName',
+        'eventDescription',
+        'eventImage',
+        'eventDate',
+        'eventLocation',
+        'isHeld',
+        'eventParticipantQuota',
+        'eventParticipantNumber',
+        'eventPoints',
+        'eventUpdates',
+        'organizerId'
+    ];
+
+    public function organizer()
+    {
+        return $this->belongsTo(Organizer::class, 'organizerId', 'organizerId');
+    }
+
+    public function eventParticipants()
+    {
+        return $this->hasMany(EventParticipant::class, 'eventId', 'eventId');
     }
 }
