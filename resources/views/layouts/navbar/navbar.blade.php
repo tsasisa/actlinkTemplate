@@ -52,13 +52,13 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link {{ request()->is('/') ? 'active' : '' }}" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">List of Event</a>
+                        <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">How it Works</a>
+                        <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
                     </li>
                 </ul>
             </div>
