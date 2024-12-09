@@ -48,7 +48,7 @@
 
                             <!-- View Details Button -->
                             <div class="view-details-wrapper">
-                                <a href="{{ route('events.show', $event->eventId) }}" class="btn btn-success">
+                                <a href="{{ route('event.detail', $event->eventId) }}" class="btn btn-success">
                                     View Details
                                 </a>
                             </div>

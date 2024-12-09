@@ -27,7 +27,26 @@
                         <h4 class="fw-bold">Join this Event</h4>
                         @if($event->eventParticipantNumber < $event->eventParticipantQuota)
                             <p class="text-success">Secure your spot now!</p>
-                            <a href="" class="btn btn-success btn-lg w-100 animate__animated animate__pulse animate__infinite">Register Now</a>
+                            @if(auth()->check())
+                                <!-- User is logged in -->
+                                <a 
+                                    href="{{ route('home') }}" 
+                                    class="btn btn-success btn-lg w-100"
+                                >
+                                    Login to Register
+                                </a>
+                            @else
+                                <!-- User is not logged in -->
+
+                                <a 
+                                    href="#" 
+                                    class="btn btn-success btn-lg w-100" 
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#confirmRegistrationModal"
+                                >
+                                    Register Now
+                                </a>
+                            @endif
                         @else
                             <p class="text-danger fw-bold">This event is fully booked.</p>
                         @endif
@@ -69,6 +88,35 @@
                     </div>
                 </div>
             </div>
+            <!-- Confirm Registration Modal -->
+<div class="modal fade" id="confirmRegistrationModal" tabindex="-1" aria-labelledby="confirmRegistrationLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="confirmRegistrationLabel">Confirm Registration</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Are you sure you want to register for this event?</p>
+                <hr>
+                <p><strong>Event Details:</strong></p>
+                <p>Participants: {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}</p>
+                <hr>
+                <p><strong>Your Details:</strong></p>
+                <p>Points: </p>
+                <p>Registered Events: </p>
+            </div>
+            <div class="modal-footer">
+                <form method="POST" action="{{ route('event.register', $event->eventId) }}">
+                    @csrf
+                    <button type="submit" class="btn btn-success">Confirm</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
         </div>
     </section>
 

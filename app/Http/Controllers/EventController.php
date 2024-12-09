@@ -66,7 +66,33 @@ class EventController extends Controller
         //
     }
 
-    public function register($id) {
-
+    public function register(Request $request, $id)
+    {
+        $event = Event::findOrFail($id);
+        $user = auth()->user();
+    
+        // Check if user is already registered
+        // if ($user->registeredEvents->contains($id)) {
+        //     return redirect()->back()->with('error', 'You are already registered for this event.');
+        // }
+    
+        // Check if the event is full
+        if ($event->eventParticipantNumber >= $event->eventParticipantQuota) {
+            return redirect()->back()->with('error', 'This event is fully booked.');
+        }
+    
+        // Deduct points (if applicable)
+        // if ($user->points < $event->eventPointsRequired) {
+        //     return redirect()->back()->with('error', 'You do not have enough points to register.');
+        // }
+    
+        // $user->points += $event->eventPoints;
+        // $user->registeredEvents()->attach($id);
+        $event->eventParticipantNumber += 1;
+        $event->save();
+        // $user->save();
+    
+        return redirect()->route('event.detail', $id)->with('success', 'You have successfully registered for the event.');
     }
+    
 }
