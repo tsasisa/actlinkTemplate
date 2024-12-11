@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('organizer', function (Blueprint $table) {
+        Schema::create('organizers', function (Blueprint $table) {
             $table->integer('organizerId')->unsigned()->primary();
             $table->string('organizerAddress', 255)->nullable();
-            $table->foreign('organizerId')->references('userId')->on('user')->onDelete('cascade');
+            $table->boolean('activeFlag')->default(false);
+            $table->foreign('organizerId')->references('userId')->on('users')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('organizer');
+        Schema::dropIfExists('organizers');
     }
 };

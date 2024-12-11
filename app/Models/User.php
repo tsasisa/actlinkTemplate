@@ -2,21 +2,33 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable; // Extend the base User class
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class User extends Model
+class User extends Authenticatable
 {
-    protected $table = 'User';
-    protected $primaryKey = 'userId';
+    use HasFactory;
+
+    protected $table = 'users'; // Specify the table name
+    protected $primaryKey = 'userId'; // Specify the primary key
     public $timestamps = false; // If there's no created_at/updated_at columns
 
     protected $fillable = [
         'userName',
+        'userEmail',
         'userPassword',
         'userPhoneNumber',
         'userImage',
         'userType',
     ];
+
+    /**
+     * Customize the password field for Laravel authentication.
+     */
+    public function getAuthPassword()
+    {
+        return $this->userPassword; // Use 'userPassword' as the password field
+    }
 
     // Relationships
 

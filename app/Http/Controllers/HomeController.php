@@ -10,6 +10,7 @@ class HomeController extends Controller
 {
     public function index()
     {
+        
         // Fetch the latest 5 events
         $latestEvents = Event::orderBy('eventDate', 'asc') // Order by nearest event date
         ->with('organizer.user') // Eager load organizer's user

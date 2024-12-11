@@ -20,7 +20,6 @@
 
         .navbar-brand img {
             width: 98px;
-            height: 34px;
         }
 
         .btn-green {
@@ -52,7 +51,7 @@
             <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
                 <ul class="navbar-nav">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="#">Home</a>
+                        <a class="nav-link"  href="#">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">List of Event</a>
@@ -81,7 +80,7 @@
             <!-- Footer Column 1: Logo -->
             <div class="col-3 my-4 text-center">
                 <!-- ActLink Logo -->
-                <img src="{{ asset('assets/images/Logo.png') }}" alt="ActLink Logo" class="footer-logo img-fluid text-center" style="max-width: 200px;">
+                <img src="{{ asset('assets/images/Logo.png') }}" alt="ActLink Logo" class="footer-logo" style="max-width: 150px;">
             </div>
             
             <!-- Footer Column 2: About ActLink -->
