@@ -15,9 +15,10 @@ class actiLinkSeeder extends Seeder
     public function run()
     {
         // Step 1: Seed users
-        DB::table('user')->insert([
+        DB::table('users')->insert([
             [
                 'userName' => 'Alice Johnson',
+                'userEmail' => 'alice@gmail.com',
                 'userPassword' => Hash::make('password123'),
                 'userPhoneNumber' => '081234567890',
                 'userImage' => null,
@@ -25,6 +26,7 @@ class actiLinkSeeder extends Seeder
             ],
             [
                 'userName' => 'Bob Smith',
+                'userEmail' => 'bob@gmail.com',
                 'userPassword' => Hash::make('password123'),
                 'userPhoneNumber' => '081234567891',
                 'userImage' => null,
@@ -32,6 +34,7 @@ class actiLinkSeeder extends Seeder
             ],
             [
                 'userName' => 'Charlie Brown',
+                'userEmail' => 'charlie@gmail.com',
                 'userPassword' => Hash::make('password123'),
                 'userPhoneNumber' => '081234567892',
                 'userImage' => null,
@@ -39,6 +42,7 @@ class actiLinkSeeder extends Seeder
             ],
             [
                 'userName' => 'Diana Evans',
+                'userEmail' => 'diana@gmail.com',
                 'userPassword' => Hash::make('password123'),
                 'userPhoneNumber' => '081234567893',
                 'userImage' => null,
@@ -46,6 +50,7 @@ class actiLinkSeeder extends Seeder
             ],
             [
                 'userName' => 'Ethan Walker',
+                'userEmail' => 'ethan@gmail.com',
                 'userPassword' => Hash::make('password123'),
                 'userPhoneNumber' => '081234567894',
                 'userImage' => null,
@@ -54,20 +59,20 @@ class actiLinkSeeder extends Seeder
         ]);
 
         // Step 2: Seed members
-        DB::table('member')->insert([
+        DB::table('members')->insert([
             ['memberId' => 1, 'memberDOB' => '1990-01-01', 'memberPoints' => 50], // Alice Johnson
             ['memberId' => 3, 'memberDOB' => '1995-05-15', 'memberPoints' => 40], // Charlie Brown
             ['memberId' => 5, 'memberDOB' => '2000-09-30', 'memberPoints' => 30], // Ethan Walker
         ]);
 
         // Step 3: Seed organizers
-        DB::table('organizer')->insert([
+        DB::table('organizers')->insert([
             ['organizerId' => 2, 'organizerAddress' => 'Jakarta, Indonesia'], // Bob Smith
             ['organizerId' => 4, 'organizerAddress' => 'Bandung, Indonesia'], // Diana Evans
         ]);
 
         // Step 4: Seed events
-        DB::table('event')->insert([
+        DB::table('events')->insert([
             [
                 'eventName' => 'Beach Cleanup Drive',
                 'eventDescription' => 'Join us for a day of cleaning the beach and spreading awareness about waste management.',

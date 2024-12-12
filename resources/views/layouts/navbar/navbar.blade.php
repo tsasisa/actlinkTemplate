@@ -20,7 +20,6 @@
 
         .navbar-brand img {
             width: 98px;
-            height: 34px;
         }
 
         .btn-green {
@@ -81,7 +80,7 @@
             <!-- Footer Column 1: Logo -->
             <div class="col-3 my-4 text-center">
                 <!-- ActLink Logo -->
-                <img src="{{ asset('assets/images/Logo.png') }}" alt="ActLink Logo" class="footer-logo img-fluid text-center" style="max-width: 200px;">
+                <img src="{{ asset('assets/images/Logo.png') }}" alt="ActLink Logo" class="footer-logo" style="max-width: 150px;">
             </div>
             
             <!-- Footer Column 2: About ActLink -->

@@ -11,17 +11,17 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('member', function (Blueprint $table) {
+        Schema::create('members', function (Blueprint $table) {
             $table->integer('memberId')->unsigned()->primary();
             $table->date('memberDOB')->nullable();
             $table->integer('memberPoints')->default(0);
 
-            $table->foreign('memberId')->references('userId')->on('user')->onDelete('cascade');
+            $table->foreign('memberId')->references('userId')->on('users')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('member');
+        Schema::dropIfExists('members');
     }
 };

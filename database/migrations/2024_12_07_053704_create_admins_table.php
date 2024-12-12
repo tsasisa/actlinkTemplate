@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('admin', function (Blueprint $table) {
+        Schema::create('admins', function (Blueprint $table) {
             $table->integer('adminId')->unsigned()->primary();
-            $table->foreign('adminId')->references('userId')->on('user')->onDelete('cascade');
+            $table->foreign('adminId')->references('userId')->on('users')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('admin');
+        Schema::dropIfExists('admins');
     }
 };

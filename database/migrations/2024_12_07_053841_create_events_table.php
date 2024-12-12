@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('event', function (Blueprint $table) {
+        Schema::create('events', function (Blueprint $table) {
             $table->increments('eventId');
             $table->string('eventName', 255);
             $table->string('eventDescription', 255)->nullable();
@@ -25,12 +25,12 @@ return new class extends Migration
             $table->string('eventUpdates', 255)->nullable();
             $table->integer('organizerId')->unsigned()->nullable();
 
-            $table->foreign('organizerId')->references('organizerId')->on('organizer')->onDelete('set null');
+            $table->foreign('organizerId')->references('organizerId')->on('organizers')->onDelete('set null');
         });
     }
 
     public function down()
     {
-        Schema::dropIfExists('event');
+        Schema::dropIfExists('events');
     }
 };
