@@ -71,8 +71,7 @@
     </nav>
 
     @yield('content')
-
-    <!-- Footer Section -->
+    
 <!-- Footer Section -->
 <footer class="footer py-4" style="background-color: #28a745; color: white;">
     <div class="container">
