@@ -23,14 +23,14 @@ Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login/check-email', [LoginController::class, 'checkEmail'])->name('login.checkEmail');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
-Route::middleware(['auth', 'checkRole:admin'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/admin/home', [AdminController::class, 'index'])->name('admin.home');
 });
 
-Route::middleware(['auth', 'checkRole:organizer'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/organizer/home', [OrganizerController::class, 'index'])->name('organizer.home');
 });
 
-Route::middleware(['auth', 'checkRole:member'])->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/member/home', [MemberController::class, 'index'])->name('member.home');
 });
