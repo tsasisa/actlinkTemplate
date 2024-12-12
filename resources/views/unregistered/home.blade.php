@@ -48,7 +48,7 @@
                 <div class="col">
                     <div class="sdg-icon-card">
                         <img src="{{ asset('assets/images/sdg-11.gif') }}" alt="SDG 11" class="img-fluid mb-3" style="max-width: 130px;">
-                        <p class="lead">Sustainabl Cities and Communities - Make cities and human settlements inclusive, safe, resilient, and sustainable.</p>
+                        <p class="lead">Sustainable Cities and Communities - Make cities and human settlements inclusive, safe, resilient, and sustainable.</p>
                     </div>
                 </div>
 
