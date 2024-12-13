@@ -11,9 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user', function (Blueprint $table) {
+        Schema::create('users', function (Blueprint $table) {
             $table->increments('userId');
             $table->string('userName', 255);
+            $table->string('userEmail', 255);
             $table->string('userPassword', 255);
             $table->string('userPhoneNumber', 255)->nullable();
             $table->text('userImage')->nullable(); // Store Base64-encoded image
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user');
+        Schema::dropIfExists('users');
     }
 };

@@ -6,13 +6,15 @@ use Illuminate\Database\Eloquent\Model;
 
 class Organizer extends Model
 {
-    protected $table = 'Organizer';
+    protected $table = 'organizers';
     protected $primaryKey = 'organizerId';
     public $timestamps = false;
 
     protected $fillable = [
         'organizerAddress',
-        'officialSocialMedia'
+        'organizerPhoneNumber',
+        'officialSocialMedia',
+        'activeFlag'
     ];
 
     public function user()
