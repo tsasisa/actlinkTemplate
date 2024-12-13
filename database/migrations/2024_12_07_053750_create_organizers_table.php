@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('organizerAddress', 255)->nullable();
             $table->string('officialSocialMedia', 255);
             $table->boolean('activeFlag')->default(false);
-            $table->foreign('organizerId')->references('userId')->on('user')->onDelete('cascade');
+            $table->foreign('organizerId')->references('userId')->on('users')->onDelete('cascade');
         });
     }
 

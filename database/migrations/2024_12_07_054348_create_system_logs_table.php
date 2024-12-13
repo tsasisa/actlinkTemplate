@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('systemLogs', function (Blueprint $table) {
+        Schema::create('systemLog', function (Blueprint $table) {
             $table->increments('id');
             $table->string('entityName', 255);
             $table->string('entityOperation', 255);
@@ -22,6 +22,6 @@ return new class extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('systemLogs');
+        Schema::dropIfExists('systemLog');
     }
 };
