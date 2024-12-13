@@ -12,7 +12,7 @@ class Organizer extends Model
 
     protected $fillable = [
         'organizerAddress',
-        'organizerPhoneNumber'
+        'officialSocialMedia'
     ];
 
     public function user()

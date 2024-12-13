@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class SystemLog extends Model
+class Systemlog extends Model
 {
     protected $table = 'SystemLog';
     protected $primaryKey = 'id';

@@ -20,6 +20,7 @@ class Event extends Model
         'eventParticipantQuota',
         'eventParticipantNumber',
         'eventPoints',
+        'eventType',
         'eventUpdates',
         'organizerId'
     ];

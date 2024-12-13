@@ -26,20 +26,23 @@
         {{-- @auth('admin') --}}
             <ul class="navbar-nav side-nav">
               <li class="nav-item">
-                <a class="nav-link text-white" style="margin-left: 20px;" href="#">Dashboard
-                  <span class="sr-only">(current)</span>
+                <a class="nav-link text-white {{request()->is('/')? 'text-light' : 'text'}}" style="margin-left: 20px;" href="{{route('admin.home')}}">Dashboard
+                  {{-- <span class="sr-only">(current)</span> --}}
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 20px;">Events</a>
+                <a class="nav-link {{request()->is('admin-events')? 'text-light' : 'text-normal'}}" href="{{route('admin.events')}}" style="margin-left: 20px;">Events</a>
               </li>
+             
               <li class="nav-item">
-                <a class="nav-link" href="#" style="margin-left: 20px;">Organizations</a>
+                  <a class="nav-link {{request()->is('admin/organizers') ? 'text-light' : 'text-normal'}}" href="{{route('admin.organizers')}}" style="margin-left: 20px;">Organizations</a>
               </li>
+
               <li class="nav-item">
-                <a class="nav-link" href="#"
-                  style="margin-left: 20px;">Users</a>
+                  <a class="nav-link {{request()->is('admin/members') ? 'text-light' : 'text-normal'}}" href="{{route('admin.members.indexMember')}}" style="margin-left: 20px;">Members</a>
               </li>
+       
+          
             </ul>
         {{-- @endauth --}}
           <ul class="navbar-nav ml-md-auto d-md-flex">

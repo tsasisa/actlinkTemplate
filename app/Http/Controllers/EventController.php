@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\SystemLog; // Tambahkan ini
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -39,6 +40,14 @@ class EventController extends Controller
     {
         $event = Event::with('organizer.user')->findOrFail($id);
 
+        // Log system
+        SystemLog::create([
+            'entityName' => 'Event',
+            'entityOperation' => 'Viewed',
+            'OperationDescription' => 'Viewed event detail: ' . $event->eventName,
+            'Datetime' => now(),
+        ]);
+
         return view('unregistered.event-detail', compact('event'));
     }
 
@@ -70,29 +79,29 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $user = auth()->user();
-    
+
         // Check if user is already registered
         // if ($user->registeredEvents->contains($id)) {
         //     return redirect()->back()->with('error', 'You are already registered for this event.');
         // }
-    
+
         // Check if the event is full
         if ($event->eventParticipantNumber >= $event->eventParticipantQuota) {
             return redirect()->back()->with('error', 'This event is fully booked.');
         }
-    
-        // Deduct points (if applicable)
-        // if ($user->points < $event->eventPointsRequired) {
-        //     return redirect()->back()->with('error', 'You do not have enough points to register.');
-        // }
-    
-        // $user->points += $event->eventPoints;
-        // $user->registeredEvents()->attach($id);
+
+        // Update participant number
         $event->eventParticipantNumber += 1;
         $event->save();
-        // $user->save();
-    
+
+        // Log system
+        SystemLog::create([
+            'entityName' => 'Event',
+            'entityOperation' => 'Registered',
+            'OperationDescription' => 'User ' . $user->name . ' registered for event: ' . $event->eventName,
+            'Datetime' => now(),
+        ]);
+
         return redirect()->route('event.detail', $id)->with('success', 'You have successfully registered for the event.');
     }
-    
 }
