@@ -27,7 +27,7 @@
                         <h4 class="fw-bold">Join this Event</h4>
                         @if($event->eventParticipantNumber < $event->eventParticipantQuota)
                             <p class="text-success">Secure your spot now!</p>
-                            @if(auth()->check())
+                            @if(!   auth()->check())
                                 <!-- User is logged in -->
                                 <a 
                                     href="{{ route('home') }}" 
