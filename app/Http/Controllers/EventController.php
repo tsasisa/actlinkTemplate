@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\SystemLog; // Tambahkan ini
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class EventController extends Controller
 {
@@ -78,7 +79,8 @@ class EventController extends Controller
     public function register(Request $request, $id)
     {
         $event = Event::findOrFail($id);
-        $user = auth()->user();
+        $user = Auth::user(); 
+    
 
         // Check if user is already registered
         // if ($user->registeredEvents->contains($id)) {

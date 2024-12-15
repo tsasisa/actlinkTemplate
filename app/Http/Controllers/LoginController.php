@@ -28,18 +28,15 @@ class LoginController extends Controller
 
     public function login(Request $request)
     {
-        // Validate the credentials
-        Log::info('Test log from controller');
         $credentials = $request->validate([
-            
             'email' => 'required|email',
             'password' => 'required|string|min:8',
         ]);
     
-        // Attempt to authenticate the user
+        // Attempt to authenticate using custom column
         if (Auth::attempt(['userEmail' => $credentials['email'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
-        
+    
             // Redirect based on user role
             $user = Auth::user();
             if ($user->userType === 'admin') {
@@ -56,5 +53,6 @@ class LoginController extends Controller
             'login' => 'The provided credentials are incorrect.',
         ])->withInput(); // Retain the entered email
     }
+    
     
 }
