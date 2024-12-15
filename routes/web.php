@@ -7,6 +7,8 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Middleware\CheckMember;
+use App\Http\Middleware\CheckOrganizer;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
@@ -18,7 +20,7 @@ Route::resource('register', RegisterController::class);
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 // Admin Routes
-Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('home');
     Route::get('/events', [AdminController::class, 'events'])->name('events');
     Route::get('/events/create', [AdminController::class, 'createEvent'])->name('createEvent');
@@ -43,15 +45,17 @@ Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () 
 });
 
 // Organizer Routes
-Route::middleware(['auth'])->prefix('organizer')->name('organizer.')->group(function () {
+Route::middleware(['auth', CheckOrganizer::class])->prefix('organizer')->name('organizer.')->group(function () {
     Route::get('/home', [OrganizerController::class, 'index'])->name('home');
 });
 
 // Member Routes
-Route::middleware(['auth'])->prefix('member')->name('member.')->group(function () {
+Route::middleware(['auth',CheckMember::class])->prefix('member')->name('member.')->group(function () {
     Route::get('/home', [MemberController::class, 'index'])->name('home');
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('event.register');
 });
+
+
 
 // Event Routes (Publicly accessible)
 Route::get('/events', [EventController::class, 'index'])->name('events.index');

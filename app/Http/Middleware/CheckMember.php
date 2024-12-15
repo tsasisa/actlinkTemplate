@@ -10,10 +10,14 @@ class CheckMember
 {
     public function handle($request, Closure $next)
     {
+        
         if (Auth::check() && Auth::user()->userType === 'member') {
             return $next($request);
         }
 
-        return redirect('home')->with('error', 'You do not have member access.');
+        if($request->routeIs('home')){
+            return $next($request);
+        }
+        return redirect()->route('home')->with('error', 'You do not have member access.');
     }
 }
