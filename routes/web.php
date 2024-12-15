@@ -18,7 +18,7 @@ Route::resource('register', RegisterController::class);
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 // Admin Routes
-Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->group(function () {
+Route::middleware(['auth'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [AdminController::class, 'index'])->name('home');
     Route::get('/events', [AdminController::class, 'events'])->name('events');
     Route::get('/events/create', [AdminController::class, 'createEvent'])->name('createEvent');
@@ -35,7 +35,7 @@ Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->grou
     Route::put('/organizers/update/{organizerId}', [AdminController::class, 'updateOrganizer'])->name('organizers.update');
 
     // Member Management
-    Route::get('/members', [AdminController::class, 'indexMember'])->name('members.index');
+    Route::get('/members', [AdminController::class, 'indexMember'])->name('members.indexMember');
     Route::get('/members/edit/{memberId}', [AdminController::class, 'editMember'])->name('members.edit');
     Route::put('/members/{memberId}', [AdminController::class, 'updateMember'])->name('members.update');
     Route::delete('/members/{memberId}', [AdminController::class, 'deleteMember'])->name('members.delete');
@@ -43,17 +43,16 @@ Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->grou
 });
 
 // Organizer Routes
-Route::middleware(['auth', 'checkOrganizer'])->prefix('organizer')->name('organizer.')->group(function () {
+Route::middleware(['auth'])->prefix('organizer')->name('organizer.')->group(function () {
     Route::get('/home', [OrganizerController::class, 'index'])->name('home');
 });
 
 // Member Routes
-Route::middleware(['auth', 'checkMember'])->prefix('member')->name('member.')->group(function () {
+Route::middleware(['auth'])->prefix('member')->name('member.')->group(function () {
     Route::get('/home', [MemberController::class, 'index'])->name('home');
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('event.register');
 });
 
-// Event Routes
+// Event Routes (Publicly accessible)
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('event.detail');
-
