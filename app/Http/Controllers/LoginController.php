@@ -27,32 +27,31 @@ class LoginController extends Controller
     }
 
     public function login(Request $request)
-    {
-        $credentials = $request->validate([
-            'email' => 'required|email',
-            'password' => 'required|string|min:8',
-        ]);
-    
-        // Attempt to authenticate using custom column
-        if (Auth::attempt(['userEmail' => $credentials['email'], 'password' => $credentials['password']])) {
-            $request->session()->regenerate();
-    
-            // Redirect based on user role
-            $user = Auth::user();
-            if ($user->userType === 'admin') {
-                return redirect()->intended('/admin/home');
-            } elseif ($user->userType === 'organizer') {
-                return redirect()->intended('/organizer/home');
-            } elseif ($user->userType === 'member') {
-                return redirect()->intended('/member/home');
-            }
+{
+    $credentials = $request->validate([
+        'email' => 'required|email',
+        'password' => 'required|string|min:8',
+    ]);
+
+    if (Auth::attempt(['userEmail' => $credentials['email'], 'password' => $credentials['password']])) {
+        $request->session()->regenerate();
+
+        $user = Auth::user();
+        switch ($user->userType) {
+            case 'admin':
+                return redirect()->route('admin.home');
+            case 'organizer':
+                return redirect()->route('organizer.home');
+            case 'member':
+                return redirect()->route('member.home');
+            default:
+                Auth::logout(); // Logout if userType is invalid
+                return redirect('/')->with('error', 'Unauthorized role.');
         }
-    
-        // If authentication fails, redirect back with an error message
-        return back()->withErrors([
-            'login' => 'The provided credentials are incorrect.',
-        ])->withInput(); // Retain the entered email
     }
+
+    return back()->withErrors(['login' => 'Invalid credentials provided.']);
+}
     
     
 }
