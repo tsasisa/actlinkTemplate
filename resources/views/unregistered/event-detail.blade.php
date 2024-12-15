@@ -107,7 +107,7 @@
                             <p>Registered Events: </p>
                         </div>
                         <div class="modal-footer">
-                            <form method="POST" action="{{ route('event.register', $event->eventId) }}">
+                            <form method="POST" action="{{ route('member.event.register', $event->eventId) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Confirm</button>
                             </form>
