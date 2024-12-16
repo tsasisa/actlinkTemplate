@@ -3,12 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use App\Traits\LogsSystemActivity;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
 
 class LoginController extends Controller
 {
+    use LogsSystemActivity;
+
     public function showLoginForm()
     {
         return view('unregistered.login');
@@ -32,27 +35,29 @@ class LoginController extends Controller
             'email' => 'required|email',
             'password' => 'required|string|min:8',
         ]);
-    
+
         if (Auth::attempt(['userEmail' => $credentials['email'], 'password' => $credentials['password']])) {
             $request->session()->regenerate();
-    
             $user = Auth::user();
+
+            // Log the login activity
+            $this->logActivity('User', 'Login', 'User logged in: ' . $user->userEmail);
+
             switch ($user->userType) {
                 case 'admin':
                     return redirect()->route('admin.home');
                 case 'organizer':
+                    if ($user->organizer && $user->organizer->activeFlag == 0) {
+                        return redirect()->route('organizer.waitingAccept');
+                    }
                     return redirect()->route('organizer.home');
                 case 'member':
                     return redirect()->route('member.home');
-                default:
-                    Auth::logout(); // Logout if userType is invalid
-                    return redirect('/')->with('error', 'Unauthorized role.');
             }
         }
-    
-        return back()->withErrors(['login' => 'Invalid credentials provided.']);
+
+        return back()->withErrors(['login' => 'Invalid credentials provided.'])->onlyInput('email');
     }
-    
     
     
 }

@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('members', function (Blueprint $table) {
             $table->integer('memberId')->unsigned()->primary();
-            $table->date('memberDOB')->nullable();
+            $table->date('memberDOB');
             $table->integer('memberPoints')->default(0);
 
             $table->foreign('memberId')->references('userId')->on('users')->onDelete('cascade');

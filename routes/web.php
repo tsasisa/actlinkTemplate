@@ -9,10 +9,15 @@ use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Middleware\CheckMember;
 use App\Http\Middleware\CheckOrganizer;
+use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
 
 // Public Routes
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])
+    ->middleware(CheckUserRole::class)
+    ->name('home');
+
+
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login/check-email', [LoginController::class, 'checkEmail'])->name('login.checkEmail');
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
@@ -20,8 +25,8 @@ Route::resource('register', RegisterController::class);
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
 
 // Admin Routes
-Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->group(function () {
-    Route::get('/', [AdminController::class, 'index'])->name('home');
+Route::middleware(['auth', CheckUserRole::class ])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/home', [AdminController::class, 'index'])->name('home');
     Route::get('/events', [AdminController::class, 'events'])->name('events');
     Route::get('/events/create', [AdminController::class, 'createEvent'])->name('createEvent');
     Route::post('/events', [AdminController::class, 'storeEvent'])->name('storeEvent');
@@ -45,12 +50,14 @@ Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->grou
 });
 
 // Organizer Routes
-Route::middleware(['auth', CheckOrganizer::class])->prefix('organizer')->name('organizer.')->group(function () {
+Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('organizer.')->group(function () {
     Route::get('/home', [OrganizerController::class, 'index'])->name('home');
+    Route::get('/waitingAccept', [OrganizerController::class, 'waitingAccept'])->name('waitingAccept');
+
 });
 
 // Member Routes
-Route::middleware(['auth',CheckMember::class])->prefix('member')->name('member.')->group(function () {
+Route::middleware(['auth',CheckUserRole::class])->prefix('member')->name('member.')->group(function () {
     Route::get('/home', [MemberController::class, 'index'])->name('home');
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('event.register');
 });

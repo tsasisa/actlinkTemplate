@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('organizers', function (Blueprint $table) {
             $table->integer('organizerId')->unsigned()->primary();
-            $table->string('organizerAddress', 255)->nullable();
-            $table->string('officialSocialMedia', 255)->nullable();
+            $table->string('organizerAddress', 255);
+            $table->string('officialSocialMedia', 255);
             $table->boolean('activeFlag')->default(false);
             $table->foreign('organizerId')->references('userId')->on('users')->onDelete('cascade');
         });

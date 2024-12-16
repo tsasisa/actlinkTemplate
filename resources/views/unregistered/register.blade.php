@@ -53,6 +53,7 @@
                             <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" placeholder="Confirm your password" minlength="8" required>
                             <div class="invalid-feedback">Passwords do not match.</div>
                         </div>
+
                         <div class="mb-3">
                             <label for="phoneNumber" class="form-label">Phone Number</label>
                             <input type="text" class="form-control @error('phoneNumber') is-invalid @enderror" 
@@ -70,7 +71,7 @@
                         <!-- Role Selection -->
                         <div class="mb-3">
                             <label for="userType" class="form-label">Register as</label>
-                            <select name="userType" id="userType" class="form-select" onchange="toggleOrganizerFields(this.value)" required>
+                            <select name="userType" id="userType" class="form-select" onchange="toggleFields(this.value)" required>
                                 <option value="" disabled selected>Select a role</option>
                                 <option value="member">Member</option>
                                 <option value="organizer">Organizer</option>
@@ -78,14 +79,26 @@
                             <div class="invalid-feedback">Please select a role.</div>
                         </div>
 
-                        <!-- Organizer Additional Fields -->
+                        <!-- Member-Specific Fields -->
+                        <div id="dobField" class="mb-3" style="display: none;">
+                            <label for="dob" class="form-label">Date of Birth</label>
+                            <input type="date" class="form-control" id="dob" name="dob">
+                            <div class="invalid-feedback">Please provide your date of birth.</div>
+                        </div>
+
+                        <!-- Organizer-Specific Fields -->
                         <div id="organizerFields" style="display: none;">
                             <div class="mb-3">
                                 <label for="organizerAddress" class="form-label">Organizer Address</label>
-                                <input type="text" class="form-control" id="organizerAddress" name="organizerAddress" placeholder="Enter your organization address" required>
+                                <input type="text" class="form-control" id="organizerAddress" name="organizerAddress" placeholder="Enter your organization address">
                                 <div class="invalid-feedback">Please provide an organizer address.</div>
                             </div>
-                
+                        
+                            <div class="mb-3">
+                                <label for="officialSocialMedia" class="form-label">Official Social Media</label>
+                                <input type="url" class="form-control" id="officialSocialMedia" name="officialSocialMedia" placeholder="Enter official social media URL">
+                                <div class="invalid-feedback">Please provide a valid URL for your organization's social media.</div>
+                            </div>
                         </div>
 
                         <!-- Submit Button -->
@@ -143,29 +156,57 @@ document.addEventListener('DOMContentLoaded', function () {
         }, false);
     });
 
-    // Show/Hide Organizer Fields
+    // Role-specific Field Variables
     const userTypeField = document.getElementById('userType');
+    const dobField = document.getElementById('dobField');
     const organizerFields = document.getElementById('organizerFields');
-    const organizerAddress = document.getElementById('organizerAddress');
+    const dobInput = document.getElementById('dob');
+    const organizerAddressInput = document.getElementById('organizerAddress');
+    const officialSocialMediaInput = document.getElementById('officialSocialMedia');
 
+    // Show/Hide Role-Specific Fields Based on Selected Role
     if (userTypeField) {
         userTypeField.addEventListener('change', function () {
-            if (userTypeField.value === 'organizer') {
-                organizerFields.style.display = 'block';
-                organizerAddress.required = true; // Add validation when organizer is selected
-            } else {
+            const selectedRole = userTypeField.value;
+
+            if (selectedRole === 'member') {
+                // Show DOB field for Member role
+                dobField.style.display = 'block';
+                dobInput.required = true;
+
+                // Hide Organizer fields
                 organizerFields.style.display = 'none';
-                organizerAddress.required = false; // Remove validation when member is selected
+                organizerAddressInput.required = false;
+                officialSocialMediaInput.required = false;
+            } else if (selectedRole === 'organizer') {
+                // Show Organizer fields for Organizer role
+                organizerFields.style.display = 'block';
+                organizerAddressInput.required = true;
+                officialSocialMediaInput.required = true;
+
+                // Hide DOB field
+                dobField.style.display = 'none';
+                dobInput.required = false;
+            } else {
+                // Hide all role-specific fields for default/other roles
+                dobField.style.display = 'none';
+                dobInput.required = false;
+
+                organizerFields.style.display = 'none';
+                organizerAddressInput.required = false;
+                officialSocialMediaInput.required = false;
             }
         });
     }
 
-    // Ensure hidden fields are not validated
+    // Ensure Hidden Fields Are Not Validated
     function toggleOrganizerFieldValidation() {
         if (userTypeField.value === 'member') {
-            organizerAddress.required = false;
+            organizerAddressInput.required = false;
+            officialSocialMediaInput.required = false;
         } else if (userTypeField.value === 'organizer') {
-            organizerAddress.required = true;
+            organizerAddressInput.required = true;
+            officialSocialMediaInput.required = true;
         }
     }
 

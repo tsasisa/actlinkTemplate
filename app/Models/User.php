@@ -33,10 +33,7 @@ class User extends Authenticatable
     // Relationships
 
     // Each user can be an admin (if userType = 'Admin')
-    public function admin()
-    {
-        return $this->hasOne(Admin::class, 'adminId', 'userId');
-    }
+
 
     // Each user can be a member (if userType = 'Member')
     public function member()
