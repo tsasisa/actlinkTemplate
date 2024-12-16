@@ -10,6 +10,7 @@
 
         .navbar {
             background-color: white !important;
+            padding: 0.5rem 1rem;
         }
 
         .navbar-nav .nav-link {
@@ -30,6 +31,17 @@
         .btn-green:hover {
             background-color: #218838; /* Darker green on hover */
             color: white;
+        }
+
+        .navbar .bi-person-circle {
+            vertical-align: middle;
+            font-size: 1.5rem;
+            color: #28a745;
+        }
+
+        .navbar .btn {
+            padding: 0.4rem 0.8rem;
+            font-size: 0.9rem;
         }
     </style>
     <title>ActLink</title>
@@ -62,24 +74,24 @@
                 </ul>
             </div>
 
-            <!-- Register/Login Section on the Right -->
-            <!-- User Account Section -->
-            <div class="ms-auto d-flex align-items-center">
+            <!-- Updated User Account Section -->
+            <div class="ms-auto d-flex align-items-center gap-3">
                 @auth
                     <!-- My Profile Icon -->
-                    <a href="/profile" class="me-3">
-                        <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #28a745;"></i>
+                    <a href="/profile" class="d-flex align-items-center text-decoration-none">
+                        <i class="bi bi-person-circle me-2"></i>
+                        <span class="text-dark" style="font-weight: 500;">My Profile</span>
                     </a>
 
                     <!-- Logout Button -->
-                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                    <form action="{{ route('logout') }}" method="POST" class="m-0">
                         @csrf
                         <button type="submit" class="btn btn-outline-danger">Logout</button>
                     </form>
                 @else
                     <!-- Register and Login Buttons -->
-                    <a href="/register" class="btn btn-green me-2">Register</a>
-                    <a href="/login" class="btn btn-outline-success">Login</a>
+                    <a href="/register" class="btn btn-green">Register</a>
+                    <a href="/login" class="btn btn-outline-success ms-2">Login</a>
                 @endauth
             </div>
         </div>
@@ -87,54 +99,54 @@
 
     @yield('content')
     
-<!-- Footer Section -->
-<footer class="footer py-4" style="background-color: #28a745; color: white;">
-    <div class="container">
-        <div class="row">
-            <!-- Footer Column 1: Logo -->
-            <div class="col-3 my-4 text-center">
-                <!-- ActLink Logo -->
-                <img src="{{ asset('assets/images/Logo.png') }}" alt="ActLink Logo" class="footer-logo" style="max-width: 150px;">
-            </div>
-            
-            <!-- Footer Column 2: About ActLink -->
-            <div class="col-md-3 mb-4">
-                <h5 class="footer-title">About ActLink</h5>
-                <p>ActLink is a platform that connects individuals with meaningful events focused on sustainability and social causes.</p>
-            </div>
+    <!-- Footer Section -->
+    <footer class="footer py-4" style="background-color: #28a745; color: white;">
+        <div class="container">
+            <div class="row">
+                <!-- Footer Column 1: Logo -->
+                <div class="col-3 my-4 text-center">
+                    <!-- ActLink Logo -->
+                    <img src="{{ asset('assets/images/Logo.png') }}" alt="ActLink Logo" class="footer-logo" style="max-width: 150px;">
+                </div>
+                
+                <!-- Footer Column 2: About ActLink -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">About ActLink</h5>
+                    <p>ActLink is a platform that connects individuals with meaningful events focused on sustainability and social causes.</p>
+                </div>
 
-            <!-- Footer Column 3: Quick Links -->
-            <div class="col-md-3 mb-4">
-                <h5 class="footer-title">Quick Links</h5>
-                <ul class="list-unstyled">
-                    <li><a href="#" class="text-white">Home</a></li>
-                    <li><a href="#events" class="text-white">Events</a></li>
-                    <li><a href="#sdgs" class="text-white">How it works</a></li>
-                    <li><a href="#contact" class="text-white">Contact</a></li>
-                </ul>
-            </div>
+                <!-- Footer Column 3: Quick Links -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-white">Home</a></li>
+                        <li><a href="#events" class="text-white">Events</a></li>
+                        <li><a href="#sdgs" class="text-white">How it works</a></li>
+                        <li><a href="#contact" class="text-white">Contact</a></li>
+                    </ul>
+                </div>
 
-            <!-- Footer Column 4: Social Media -->
-            <div class="col-md-3 mb-4">
-                <h5 class="footer-title">Follow Us</h5>
-                <div class="social-icons">
-                    <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
-                    <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
-                    <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
-                    <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                <!-- Footer Column 4: Social Media -->
+                <div class="col-md-3 mb-4">
+                    <h5 class="footer-title">Follow Us</h5>
+                    <div class="social-icons">
+                        <a href="#" class="text-white me-3"><i class="bi bi-facebook"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-twitter"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-instagram"></i></a>
+                        <a href="#" class="text-white me-3"><i class="bi bi-linkedin"></i></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- Copyright Section -->
-    <div class="text-left mt-4 text-center">
-        <p>&copy; {{ date('Y') }} ActLink. All Rights Reserved.</p>
-    </div>
-</footer>
+        <!-- Copyright Section -->
+        <div class="text-left mt-4 text-center">
+            <p>&copy; {{ date('Y') }} ActLink. All Rights Reserved.</p>
+        </div>
+    </footer>
 
-<!-- Add Bootstrap Icons (for social media icons) -->
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- Add Bootstrap Icons (for social media icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

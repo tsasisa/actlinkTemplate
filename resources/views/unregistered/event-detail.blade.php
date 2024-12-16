@@ -30,7 +30,7 @@
                             @if(!   auth()->check())
                                 <!-- User is logged in -->
                                 <a 
-                                    href="{{ route('home') }}" 
+                                    href="{{ route('login') }}" 
                                     class="btn btn-success btn-lg w-100"
                                 >
                                     Login to Register
