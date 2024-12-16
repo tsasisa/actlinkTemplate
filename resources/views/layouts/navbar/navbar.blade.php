@@ -63,10 +63,25 @@
             </div>
 
             <!-- Register/Login Section on the Right -->
+            <!-- User Account Section -->
             <div class="ms-auto d-flex align-items-center">
-              <a href="/register" class="btn btn-green me-2">Register</a>
-              <a href="/login" class="btn btn-outline-success">Login</a>
-          </div>
+                @auth
+                    <!-- My Profile Icon -->
+                    <a href="/profile" class="me-3">
+                        <i class="bi bi-person-circle" style="font-size: 1.5rem; color: #28a745;"></i>
+                    </a>
+
+                    <!-- Logout Button -->
+                    <form action="{{ route('logout') }}" method="POST" class="d-inline">
+                        @csrf
+                        <button type="submit" class="btn btn-outline-danger">Logout</button>
+                    </form>
+                @else
+                    <!-- Register and Login Buttons -->
+                    <a href="/register" class="btn btn-green me-2">Register</a>
+                    <a href="/login" class="btn btn-outline-success">Login</a>
+                @endauth
+            </div>
         </div>
     </nav>
 

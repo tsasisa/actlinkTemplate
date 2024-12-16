@@ -18,6 +18,7 @@ Route::post('/login/check-email', [LoginController::class, 'checkEmail'])->name(
 Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 Route::resource('register', RegisterController::class);
 Route::post('/register', [RegisterController::class, 'store'])->name('register.store');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Admin Routes
 Route::middleware(['auth', 'checkAdmin'])->prefix('admin')->name('admin.')->group(function () {
