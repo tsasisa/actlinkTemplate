@@ -53,7 +53,11 @@ class LoginController extends Controller
                     return redirect()->route('organizer.home');
                 case 'member':
                     return redirect()->route('member.home');
+                default:
+                    Auth::logout(); // Logout if userType is invalid
+                    return redirect('/')->with('error', 'Unauthorized role.');
             }
+
         }
 
         return back()->withErrors(['login' => 'Invalid credentials provided.'])->onlyInput('email');
