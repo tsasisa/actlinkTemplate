@@ -43,6 +43,36 @@
             padding: 0.4rem 0.8rem;
             font-size: 0.9rem;
         }
+
+        .dropdown-menu {
+        border-radius: 8px;
+        padding: 0.5rem 0;
+        box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
+        border: none;
+    }
+
+    .dropdown-item {
+        font-family: 'Roboto', sans-serif;
+        font-size: 0.9rem;
+        font-weight: 500;
+        color: #333;
+        transition: all 0.3s ease;
+    }
+
+    .dropdown-item:hover {
+        background-color: #f8f9fa;
+        color: #28a745;
+    }
+
+    .dropdown-item.logout-btn {
+        color: #dc3545;
+        font-weight: bold;
+    }
+
+    .dropdown-item.logout-btn:hover {
+        background-color: #dc3545;
+        color: #fff;
+    }
     </style>
     <title>ActLink</title>
 </head>
@@ -74,27 +104,55 @@
                 </ul>
             </div>
 
-            <!-- Updated User Account Section -->
             <div class="ms-auto d-flex align-items-center gap-3">
-                @auth
-                    <!-- My Profile Icon -->
-                    <a href="/profile" class="d-flex align-items-center text-decoration-none">
-                        <i class="bi bi-person-circle me-2"></i>
-                        <span class="text-dark" style="font-weight: 500;">My Profile</span>
-                    </a>
+    @auth
+        <!-- Dropdown for "My Profile" -->
+        <div class="dropdown">
+            <a 
+                href="#" 
+                class="d-flex align-items-center text-decoration-none dropdown-toggle" 
+                id="profileDropdown" 
+                data-bs-toggle="dropdown" 
+                aria-expanded="false"
+            >
+                <i class="bi bi-person-circle me-2"></i>
+                <span class="text-dark" style="font-weight: 500;">
+                    {{ Auth::user()->userName ?? 'My Profile' }}
+                </span>
+            </a>
 
-                    <!-- Logout Button -->
+            <!-- Dropdown Menu -->
+            <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="min-width: 200px;">
+                <!-- Common for all users -->
+                <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+
+                <!-- Member-only option -->
+                @if(Auth::user()->userType === 'member')
+                    <li><a class="dropdown-item" href="/registered-events">Registered Events</a></li>
+                @endif
+
+                <!-- Organizer-only option -->
+                @if(Auth::user()->userType === 'organizer')
+                    <li><a class="dropdown-item" href="/organize-events">Organize Events</a></li>
+                @endif
+
+                <li><hr class="dropdown-divider"></li>
+
+                <!-- Logout Button with Padding -->
+                <li class="px-3">
                     <form action="{{ route('logout') }}" method="POST" class="m-0">
                         @csrf
-                        <button type="submit" class="btn btn-outline-danger">Logout</button>
+                        <button type="submit" class="btn btn-outline-danger w-100">Logout</button>
                     </form>
-                @else
-                    <!-- Register and Login Buttons -->
-                    <a href="/register" class="btn btn-green">Register</a>
-                    <a href="/login" class="btn btn-outline-success ms-2">Login</a>
-                @endauth
-            </div>
+                </li>
+            </ul>
         </div>
+    @else
+        <!-- Register and Login Buttons -->
+        <a href="/register" class="btn btn-green">Register</a>
+        <a href="/login" class="btn btn-outline-success ms-2">Login</a>
+    @endauth
+</div>
     </nav>
 
     @yield('content')
@@ -119,8 +177,8 @@
                 <div class="col-md-3 mb-4">
                     <h5 class="footer-title">Quick Links</h5>
                     <ul class="list-unstyled">
-                        <li><a href="#" class="text-white">Home</a></li>
-                        <li><a href="#events" class="text-white">Events</a></li>
+                        <li><a href="/" class="text-white">Home</a></li>
+                        <li><a href="/events" class="text-white">Events</a></li>
                         <li><a href="#sdgs" class="text-white">How it works</a></li>
                         <li><a href="#contact" class="text-white">Contact</a></li>
                     </ul>
@@ -148,5 +206,7 @@
     <!-- Add Bootstrap Icons (for social media icons) -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
