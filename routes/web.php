@@ -55,6 +55,11 @@ Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('or
     Route::get('/home', [OrganizerController::class, 'index'])->name('home');
     Route::get('/waitingAccept', [OrganizerController::class, 'waitingAccept'])->name('waitingAccept');
 
+    Route::get('/updateProfile', [OrganizerController::class, 'updateProfile'])->name('updateProfile'); 
+    Route::put('/updateProfile', [OrganizerController::class, 'update'])->name('updateProfile'); 
+    Route::get('/manage-event', [OrganizerController::class, 'manageEvent'])->name('manage-event');
+    Route::get('/create-event', [OrganizerController::class, 'createEvent'])->name('create-event');
+    Route::post('/create-event', [OrganizerController::class, 'create'])->name('create-event');
 });
 
 // Member Routes
