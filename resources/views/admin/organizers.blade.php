@@ -42,6 +42,7 @@
                             <th>Name</th>
                             <th>Address</th>
                             <th>Social Media</th>
+                            <th>Email</th>
                             <th>Status</th>
                             <th>Actions</th>
                         </tr>
@@ -53,6 +54,7 @@
                                 <td>{{ $organizer->user->userName }}</td>
                                 <td>{{ $organizer->organizerAddress ?? 'No Address' }}</td>
                                 <td>{{ $organizer->officialSocialMedia }}</td>
+                                <td>{{ $organizer->user->userEmail }}</td>
                                 <td>
                                     @if ($organizer->activeFlag)
                                         <span class="badge badge-success">Accepted</span>

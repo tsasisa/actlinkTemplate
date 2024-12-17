@@ -48,10 +48,10 @@
                                 <td>{{ $member->memberPoints }}</td>
                                 <td>
                                     <!-- Edit Button -->
-                                    <a href="{{ route('admin.members.editMember', $member->memberId) }}" class="btn btn-warning btn-sm">Edit</a>
+                                    <a href="{{ route('admin.members.edit', $member->memberId) }}" class="btn btn-warning btn-sm">Edit</a>
 
                                     <!-- Delete Button -->
-                                    <form action="{{ route('admin.members.deleteMember', $member->memberId) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this member?')">
+                                    <form action="{{ route('admin.members.delete', $member->memberId) }}" method="POST" style="display:inline;" onsubmit="return confirm('Are you sure you want to delete this member?')">
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="btn btn-danger btn-sm">Delete</button>

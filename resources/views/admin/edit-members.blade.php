@@ -19,7 +19,7 @@
                 @endif
 
                 <!-- Form untuk mengedit member -->
-                <form action="{{ route('admin.members.updateMember', $member->memberId) }}" method="POST">
+                <form action="{{ route('admin.members.update', $member->memberId) }}" method="POST">
                     @csrf
                     @method('PUT')
 
