@@ -7,8 +7,6 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisterController;
-use App\Http\Middleware\CheckMember;
-use App\Http\Middleware\CheckOrganizer;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
 
@@ -68,8 +66,6 @@ Route::middleware(['auth',CheckUserRole::class])->prefix('member')->name('member
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('event.register');
      Route::get('/registered-events', [EventController::class, 'registeredEvents'])->name('registered.events');
 });
-
-
 
 // Event Routes (Publicly accessible)
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
