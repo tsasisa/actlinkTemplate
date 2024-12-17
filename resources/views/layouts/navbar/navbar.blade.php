@@ -128,7 +128,7 @@
 
                 <!-- Member-only option -->
                 @if(Auth::user()->userType === 'member')
-                    <li><a class="dropdown-item" href="/registered-events">Registered Events</a></li>
+                    <li><a class="dropdown-item" href="{{ route('member.registered.events') }}">Registered Events</a></li>
                 @endif
 
                 <!-- Organizer-only option -->

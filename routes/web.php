@@ -61,6 +61,7 @@ Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('or
 Route::middleware(['auth',CheckUserRole::class])->prefix('member')->name('member.')->group(function () {
     Route::get('/home', [MemberController::class, 'index'])->name('home');
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('event.register');
+     Route::get('/registered-events', [EventController::class, 'registeredEvents'])->name('registered.events');
 });
 
 

@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Member;
 use App\Models\SystemLog; // Tambahkan ini
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class EventController extends Controller
 {
@@ -41,6 +43,20 @@ class EventController extends Controller
     {
         $event = Event::with('organizer.user')->findOrFail($id);
 
+        $authUser = Auth::user();
+
+        $member = Member::where('memberId', $authUser->userId)->first();
+        $memberPoints = $member ? $member->memberPoints : 0;
+
+        // Check if the user is already registered
+        $isRegistered = false;
+        if (Auth::check()) {
+            $isRegistered = DB::table('eventParticipants')
+                ->where('memberId', Auth::user()->userId)
+                ->where('eventId', $id)
+                ->exists();
+        }
+
         // Log system
         SystemLog::create([
             'entityName' => 'Event',
@@ -49,7 +65,7 @@ class EventController extends Controller
             'Datetime' => now(),
         ]);
 
-        return view('unregistered.event-detail', compact('event'));
+        return view('unregistered.event-detail', compact('event', 'memberPoints', 'isRegistered'));
     }
 
     /**
@@ -80,12 +96,6 @@ class EventController extends Controller
     {
         $event = Event::findOrFail($id);
         $user = Auth::user(); 
-    
-
-        // Check if user is already registered
-        // if ($user->registeredEvents->contains($id)) {
-        //     return redirect()->back()->with('error', 'You are already registered for this event.');
-        // }
 
         // Check if the event is full
         if ($event->eventParticipantNumber >= $event->eventParticipantQuota) {
@@ -96,6 +106,19 @@ class EventController extends Controller
         $event->eventParticipantNumber += 1;
         $event->save();
 
+        $member = Member::where('memberId', $user->userId)->first();
+
+        if ($member) {
+            $member->memberPoints += $event->eventPoints;
+            $member->save();
+        }
+
+        DB::table('eventParticipants')->insert([
+        'memberId' => $member->memberId,
+        'eventId' => $event->eventId,
+        'registeredDate' => now(),
+        ]);
+
         // Log system
         SystemLog::create([
             'entityName' => 'Event',
@@ -105,5 +128,25 @@ class EventController extends Controller
         ]);
 
         return redirect()->route('event.detail', $id)->with('success', 'You have successfully registered for the event.');
+    }
+
+    public function registeredEvents()
+    {
+        $user = Auth::user();
+
+        // Ensure the user is authenticated
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Please log in to view your registered events.');
+        }
+
+        // Get the registered events for the authenticated user
+        $registeredEvents = DB::table('eventParticipants')
+            ->join('events', 'eventParticipants.eventId', '=', 'events.eventId')
+            ->where('eventParticipants.memberId', $user->userId)
+            ->select('events.*', 'eventParticipants.registeredDate')
+            ->get();
+
+        // Pass the data to the view
+        return view('registered.registered-events', compact('registeredEvents'));
     }
 }

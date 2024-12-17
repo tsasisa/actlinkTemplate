@@ -25,30 +25,21 @@
                     <!-- Join Event Card -->
                     <div class="join-card shadow-lg rounded p-4 text-center animate__animated animate__fadeInRight">
                         <h4 class="fw-bold">Join this Event</h4>
-                        @if($event->eventParticipantNumber < $event->eventParticipantQuota)
-                            <p class="text-success">Secure your spot now!</p>
-                            @if(!   auth()->check())
-                                <!-- User is logged in -->
-                                <a 
-                                    href="{{ route('login') }}" 
-                                    class="btn btn-success btn-lg w-100"
-                                >
-                                    Login to Register
-                                </a>
+                        @if($event->eventParticipantNumber >= $event->eventParticipantQuota)
+                            <p class="text-danger fw-bold">This event is fully booked.</p>
+                            <button class="btn btn-secondary btn-lg w-100" disabled>Event Full</button>
+                        @elseif(!auth()->check())
+                            <!-- User is not logged in -->
+                            <a href="{{ route('login') }}" class="btn btn-success btn-lg w-100">Login to Register</a>
+                        @else
+                            @if($isRegistered)
+                                <p class="text-warning fw-bold">You are already registered for this event.</p>
+                                <button class="btn btn-secondary btn-lg w-100" disabled>Already Registered</button>
                             @else
-                                <!-- User is not logged in -->
-
-                                <a 
-                                    href="#" 
-                                    class="btn btn-success btn-lg w-100" 
-                                    data-bs-toggle="modal" 
-                                    data-bs-target="#confirmRegistrationModal"
-                                >
+                                <a href="#" class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#confirmRegistrationModal">
                                     Register Now
                                 </a>
                             @endif
-                        @else
-                            <p class="text-danger fw-bold">This event is fully booked.</p>
                         @endif
                         <hr class="my-4">
                         <p class="event-participants fw-bold">{{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }} slots filled</p>
@@ -103,7 +94,7 @@
                             <p>Participants: {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}</p>
                             <hr>
                             <p><strong>Your Details:</strong></p>
-                            <p>Points: </p>
+                            <p>Points: {{ $memberPoints }} + {{ $event->eventPoints }}</p>
                             <p>Registered Events: </p>
                         </div>
                         <div class="modal-footer">
