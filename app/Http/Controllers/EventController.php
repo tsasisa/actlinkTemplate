@@ -44,18 +44,9 @@ class EventController extends Controller
         $event = Event::with('organizer.user')->findOrFail($id);
 
         $authUser = Auth::user();
-        $memberPoints = 0; // Default member points for non-authenticated users
-        $isRegistered = false; // Default to not registered
+        $isRegistered = false;
 
         if ($authUser) {
-            // Fetch the member details
-            $member = Member::where('memberId', $authUser->userId)->first();
-
-            if ($member) {
-                $memberPoints = $member->memberPoints;
-            }
-
-            // Check if the user is already registered
             $isRegistered = DB::table('eventParticipants')
                 ->where('memberId', $authUser->userId)
                 ->where('eventId', $id)
@@ -77,7 +68,6 @@ class EventController extends Controller
         return view('unregistered.event-detail', [
             'event' => $event,
             'isRegistered' => $isRegistered,
-            'memberPoints' => $memberPoints,
             'from' => $request->query('from', 'events'),
         ]);
 }
