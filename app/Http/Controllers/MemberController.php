@@ -23,7 +23,7 @@ class MemberController extends Controller
 
             $user = Auth::user(); 
         
-        return view('unregistered.home', compact('latestEvents', 'largestParticipantEvents', 'user'));
+        return view('registered.home', compact('latestEvents', 'largestParticipantEvents', 'user'));
     }
 
     public function leaderboard() {

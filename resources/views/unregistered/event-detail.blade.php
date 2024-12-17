@@ -37,9 +37,8 @@
                         @elseif(!auth()->check())
                             <!-- User is not logged in -->
                             <a href="{{ route('login') }}?intended={{ urlencode(request()->fullUrl()) }}" class="btn btn-success btn-lg w-100">
-    Login to Register
-</a>
-
+                                Login to Register
+                            </a>
                         @else
                             @if($isRegistered)
                                 <p class="text-warning fw-bold">You are already registered for this event.</p>
@@ -89,31 +88,30 @@
                 </div>
             </div>
             <!-- Confirm Registration Modal -->
-<div class="modal fade" id="confirmRegistrationModal" tabindex="-1" aria-labelledby="confirmRegistrationLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered"> <!-- Added 'modal-dialog-centered' -->
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmRegistrationLabel">Confirm Registration</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal fade" id="confirmRegistrationModal" tabindex="-1" aria-labelledby="confirmRegistrationLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="confirmRegistrationLabel">Confirm Registration</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p class="fs-5 fw-bold">Are you sure you want to register for this event?</p>
+                            <p class="text-success fw-bold">
+                                <i class="bi bi-star-fill text-warning"></i> 
+                                You will earn {{ $event->eventPoints }} points!
+                            </p>
+                        </div>
+                        <div class="modal-footer d-flex justify-content-center"> <!-- Center the buttons -->
+                            <form method="POST" action="{{ route('member.event.register', $event->eventId) }}">
+                                @csrf
+                                <button type="submit" class="btn btn-success">Confirm</button>
+                            </form>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="modal-body text-center"> <!-- Center align the content -->
-                <p class="fs-5 fw-bold">Are you sure you want to register for this event?</p>
-                <p class="text-success fw-bold">
-                    <i class="bi bi-star-fill text-warning"></i> 
-                    You will earn {{ $event->eventPoints }} points!
-                </p>
-            </div>
-            <div class="modal-footer d-flex justify-content-center"> <!-- Center the buttons -->
-                <form method="POST" action="{{ route('member.event.register', $event->eventId) }}">
-                    @csrf
-                    <button type="submit" class="btn btn-success">Confirm</button>
-                </form>
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            </div>
-        </div>
-    </div>
-</div>
-
         </div>
     </section>
 
