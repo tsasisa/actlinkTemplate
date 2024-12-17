@@ -44,17 +44,26 @@ class EventController extends Controller
         $event = Event::with('organizer.user')->findOrFail($id);
 
         $authUser = Auth::user();
+        $memberPoints = 0; // Default member points for non-authenticated users
+        $isRegistered = false; // Default to not registered
 
-        $member = Member::where('memberId', $authUser->userId)->first();
-        $memberPoints = $member ? $member->memberPoints : 0;
+        if ($authUser) {
+            // Fetch the member details
+            $member = Member::where('memberId', $authUser->userId)->first();
 
-        // Check if the user is already registered
-        $isRegistered = false;
-        if (Auth::check()) {
+            if ($member) {
+                $memberPoints = $member->memberPoints;
+            }
+
+            // Check if the user is already registered
             $isRegistered = DB::table('eventParticipants')
-                ->where('memberId', Auth::user()->userId)
+                ->where('memberId', $authUser->userId)
                 ->where('eventId', $id)
                 ->exists();
+        }
+
+        if (!Auth::check()) {
+            session(['url.intended' => url()->full()]);
         }
 
         // Log system
@@ -71,7 +80,7 @@ class EventController extends Controller
             'memberPoints' => $memberPoints,
             'from' => $request->query('from', 'events'),
         ]);
-    }
+}
 
     /**
      * Show the form for editing the specified resource.

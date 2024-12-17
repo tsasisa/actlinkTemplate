@@ -36,7 +36,10 @@
                             <button class="btn btn-secondary btn-lg w-100" disabled>Event Full</button>
                         @elseif(!auth()->check())
                             <!-- User is not logged in -->
-                            <a href="{{ route('login') }}" class="btn btn-success btn-lg w-100">Login to Register</a>
+                            <a href="{{ route('login') }}?intended={{ urlencode(request()->fullUrl()) }}" class="btn btn-success btn-lg w-100">
+    Login to Register
+</a>
+
                         @else
                             @if($isRegistered)
                                 <p class="text-warning fw-bold">You are already registered for this event.</p>

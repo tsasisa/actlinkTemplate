@@ -40,7 +40,6 @@ class LoginController extends Controller
             $request->session()->regenerate();
             $user = Auth::user();
 
-            // Log the login activity
             $this->logActivity('User', 'Login', 'User logged in: ' . $user->userEmail);
 
             switch ($user->userType) {
@@ -52,18 +51,19 @@ class LoginController extends Controller
                     }
                     return redirect()->route('organizer.home');
                 case 'member':
-                    return redirect()->route('member.home');
+                    return redirect()->intended(route('member.home'));
                 default:
-                    Auth::logout(); // Logout if userType is invalid
+                    Auth::logout();
                     return redirect('/')->with('error', 'Unauthorized role.');
             }
-
         }
 
         return back()->withErrors(['login' => 'Invalid credentials provided.'])->onlyInput('email');
     }
 
-     public function logout(Request $request) {
+
+    public function logout(Request $request)
+    {
         Auth::logout();
 
         $request->session()->invalidate();
@@ -71,5 +71,4 @@ class LoginController extends Controller
 
         return redirect('/')->with('success', 'You have been logged out.');
     }
-    
 }
