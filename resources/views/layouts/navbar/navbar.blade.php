@@ -49,30 +49,30 @@
         padding: 0.5rem 0;
         box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
         border: none;
-    }
+        }
 
-    .dropdown-item {
-        font-family: 'Roboto', sans-serif;
-        font-size: 0.9rem;
-        font-weight: 500;
-        color: #333;
-        transition: all 0.3s ease;
-    }
+        .dropdown-item {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333;
+            transition: all 0.3s ease;
+        }
 
-    .dropdown-item:hover {
-        background-color: #f8f9fa;
-        color: #28a745;
-    }
+        .dropdown-item:hover {
+            background-color: #f8f9fa;
+            color: #28a745;
+        }
 
-    .dropdown-item.logout-btn {
-        color: #dc3545;
-        font-weight: bold;
-    }
+        .dropdown-item.logout-btn {
+            color: #dc3545;
+            font-weight: bold;
+        }
 
-    .dropdown-item.logout-btn:hover {
-        background-color: #dc3545;
-        color: #fff;
-    }
+        .dropdown-item.logout-btn:hover {
+            background-color: #dc3545;
+            color: #fff;
+        }
     </style>
     <title>ActLink</title>
 </head>
@@ -214,5 +214,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
+
 </body>
 </html>
