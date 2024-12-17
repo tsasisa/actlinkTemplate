@@ -102,6 +102,9 @@
                         <a class="nav-link {{ request()->is('shop') ? 'active' : '' }}" href="/shop">Shop</a>
                     </li>
                     <li class="nav-item">
+                        <a class="nav-link {{ request()->is('leaderboard') ? 'active' : '' }}" href="/leaderboard">Leaderboard</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
                     </li>
                 </ul>

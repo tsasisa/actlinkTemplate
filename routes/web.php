@@ -70,3 +70,4 @@ Route::middleware(['auth',CheckUserRole::class])->prefix('member')->name('member
 // Event Routes (Publicly accessible)
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('event.detail');
+Route::get('/leaderboard', [MemberController::class, 'leaderboard'])->name('leaderboard.index');
