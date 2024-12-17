@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
 
@@ -71,3 +72,4 @@ Route::middleware(['auth',CheckUserRole::class])->prefix('member')->name('member
 Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('event.detail');
 Route::get('/leaderboard', [MemberController::class, 'leaderboard'])->name('leaderboard.index');
+Route::get('/profile/{userId}', [UserController::class, 'showProfile'])->name('profile');

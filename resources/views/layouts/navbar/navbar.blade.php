@@ -130,7 +130,7 @@
             <!-- Dropdown Menu -->
             <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="min-width: 200px;">
                 <!-- Common for all users -->
-                <li><a class="dropdown-item" href="/profile">My Profile</a></li>
+                <li><a class="dropdown-item" href="{{ route('profile', Auth::user()->userId) }}">My Profile</a></li>
 
                 <!-- Member-only option -->
                 @if(Auth::user()->userType === 'member')

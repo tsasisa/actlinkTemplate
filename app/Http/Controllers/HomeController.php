@@ -12,17 +12,16 @@ class HomeController extends Controller
     {
         
         // Fetch the latest 5 events
-        $latestEvents = Event::orderBy('eventDate', 'asc') // Order by nearest event date
-        ->with('organizer.user') // Eager load organizer's user
+        $latestEvents = Event::orderBy('eventDate', 'asc')
+        ->with('organizer.user')
         ->take(3)
         ->get();
     
-    $largestParticipantEvents = Event::orderBy('eventParticipantNumber', 'desc') // Order by largest participant number
-        ->with('organizer.user') // Eager load organizer's user
-        ->take(3)
-        ->get();
-    
-    return view('unregistered.home', compact('latestEvents', 'largestParticipantEvents'));
-
-       }
+        $largestParticipantEvents = Event::orderBy('eventParticipantNumber', 'desc')
+            ->with('organizer.user')
+            ->take(3)
+            ->get();
+        
+        return view('unregistered.home', compact('latestEvents', 'largestParticipantEvents'));
+    }
 }
