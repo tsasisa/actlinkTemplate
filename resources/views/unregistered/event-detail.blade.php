@@ -11,9 +11,15 @@
 
     <!-- Back Button -->
     <div class="container mt-4">
-        <a href="{{ route('events.index') }}" class="btn btn-secondary animate__animated animate__fadeInLeft">
-            <i class="bi bi-arrow-left"></i> Back to Events List
-        </a>
+        @if($from === 'registered-events')
+            <a href="{{ route('member.registered.events') }}" class="btn btn-secondary animate__animated animate__fadeInLeft">
+                <i class="bi bi-arrow-left"></i> Back to Registered Events
+            </a>
+        @else
+            <a href="{{ route('events.index') }}" class="btn btn-secondary animate__animated animate__fadeInLeft">
+                <i class="bi bi-arrow-left"></i> Back to Events List
+            </a>
+        @endif
     </div>
 
     <!-- Event Details Section -->

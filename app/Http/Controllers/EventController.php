@@ -39,7 +39,7 @@ class EventController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($id)
+    public function show($id, Request $request)
     {
         $event = Event::with('organizer.user')->findOrFail($id);
 
@@ -65,7 +65,12 @@ class EventController extends Controller
             'Datetime' => now(),
         ]);
 
-        return view('unregistered.event-detail', compact('event', 'memberPoints', 'isRegistered'));
+        return view('unregistered.event-detail', [
+            'event' => $event,
+            'isRegistered' => $isRegistered,
+            'memberPoints' => $memberPoints,
+            'from' => $request->query('from', 'events'),
+        ]);
     }
 
     /**

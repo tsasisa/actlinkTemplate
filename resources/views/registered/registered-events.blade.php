@@ -36,7 +36,7 @@
                                     <p class="card-text">
                                         <i class="bi bi-clock"></i> Registered On: {{ \Carbon\Carbon::parse($event->registeredDate)->format('d M, Y') }}
                                     </p>
-                                    <a href="{{ route('event.detail', $event->eventId) }}" class="btn btn-success">View Event</a>
+                                    <a href="{{ route('event.detail', ['id' => $event->eventId, 'from' => 'registered-events']) }}" class="btn btn-success">View Event</a>
                                 </div>
                             </div>
                         </div>

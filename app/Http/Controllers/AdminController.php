@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Organizer;
 use App\Models\Member;
-use App\Models\SystemLog; // Tambahkan ini
+use App\Models\SystemLog;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
