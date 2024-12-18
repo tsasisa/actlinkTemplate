@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\EventParticipant;
 use App\Models\Organizer;
 use Illuminate\Http\Request;
 use App\Models\SystemLog;
@@ -16,7 +17,9 @@ class OrganizerController extends Controller
     public function index(){          
         $user = Auth::user(); 
         $organizer = Organizer::where('organizerId', $user->userId)->first();
-        return view('organizer.organizer', compact( 'user', 'organizer'));
+        $events = Event::where('organizerId', $user->userId)->orderBy('eventDate', 'asc')->get();
+
+        return view('organizer.organizer', compact( 'user', 'organizer', 'events'));
     }
 
     public function waitingAccept()
@@ -83,7 +86,11 @@ class OrganizerController extends Controller
 
     public function manageEvent(){
 
-        return view('organizer.manage-event');
+        $eventOrg = Auth::user(); 
+        $events = Event::where('organizerId', $eventOrg->userId)->get(); 
+         
+
+        return view('organizer.manage-event', compact('events' ));
     }
 
     public function createEvent(){
@@ -94,15 +101,14 @@ class OrganizerController extends Controller
     public function create(Request $request){
         $user = Auth::user();
         $request->validate([
-            'event-name' => 'required|string|max:255',
-            'event-description' => 'required|string',
+            'event-name' => 'required|string|max:255|min:5',
+            'event-description' => 'required|string|max:255',
             'image' => 'required|image|mimes:jpeg,png,jpg|max:10240',
             'event-date' => 'required|date',
             'event-location' => 'required|string|max:255',
             'event-quota' => 'required|integer',
             'event-points' => 'required|integer',
             'event-type' => 'required|string',
-            'event-update' => 'nullable|string',
         ]);
        
         if ($request->hasFile('image')) {
@@ -123,10 +129,8 @@ class OrganizerController extends Controller
             'eventParticipantQuota' => $request->input('event-quota'),
             'eventPoints' => $request->input('event-points'),
             'eventType' => $request->input('event-type'),
-            'eventUpdates' => $request->input('event-update'),
             'organizerId' => $user->userId
         ]);
-
         
         $this->logActivity(
             'Event',
@@ -134,6 +138,93 @@ class OrganizerController extends Controller
             'Created event: ' . $event->eventName . ' by organizer: ' . $user->userName
         );
 
-        return redirect()->back()->with('success', 'Event created successfully!');
+        return redirect('organizer/manage-event');
+
     }
+
+    public function detail($id){
+        $event = Event::with('organizer.user')->findOrFail($id);
+
+        return view('organizer.event-detail', compact('event'));
+    }
+
+    public function editEvent($id){
+        $event = Event::with('organizer.user')->findOrFail($id);
+        return view('organizer.event-edit', compact('event'));
+    }
+
+    public function edit($id, Request $request)
+{
+    $event = Event::with('organizer.user')->findOrFail($id);
+
+    // Update validation rules to allow null values
+    $request->validate([
+        'event-name' => 'nullable|string|max:255|min:5',
+        'event-description' => 'nullable|string|max:255',
+        'image' => 'nullable|image|mimes:jpeg,png,jpg|max:10240',
+        'event-date' => 'nullable|date',
+        'event-location' => 'nullable|string|max:255',
+        'event-quota' => 'nullable|integer',
+        'event-points' => 'nullable|integer',
+        'event-type' => 'nullable|string',
+        'event-update' => 'nullable|string',
+    ]);
+
+    // Handle the optional image file
+    if ($request->hasFile('image')) {
+        $imageFile = $request->file('image');
+        $fileContents = file_get_contents($imageFile);
+        $base64Image = base64_encode($fileContents);
+        $event->eventImage = $base64Image; // Update only if a new image is uploaded
+    }
+
+    // Update fields only if they are provided
+    if ($request->filled('event-name')) {
+        $event->eventName = $request->input('event-name');
+    }
+
+    if ($request->filled('event-description')) {
+        $event->eventDescription = $request->input('event-description');
+    }
+
+    if ($request->filled('event-date')) {
+        $event->eventDate = $request->input('event-date');
+    }
+
+    if ($request->filled('event-location')) {
+        $event->eventLocation = $request->input('event-location');
+    }
+
+    if ($request->filled('event-quota')) {
+        $event->eventParticipantQuota = $request->input('event-quota');
+    }
+
+    if ($request->filled('event-points')) {
+        $event->eventPoints = $request->input('event-points');
+    }
+
+    if ($request->filled('event-type')) {
+        $event->eventType = $request->input('event-type');
+    }
+
+    if ($request->filled('event-update')) {
+        $event->eventUpdates = $request->input('event-update');
+    }
+
+    // Save the updated event
+    $event->save();
+
+    return redirect('organizer/manage-event');
+    }
+
+    public function viewParticipant($id)
+{
+    $participants = EventParticipant::where('eventId', $id)
+        ->join('users', 'eventparticipants.memberId', '=', 'users.userId')
+        ->select('eventparticipants.*', 'users.userName')
+        ->get();
+
+    return view('organizer.event-participant', compact('participants'));
+}
+
 }

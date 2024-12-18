@@ -71,9 +71,16 @@
                             @endif
                         </div>
 
+                        @if ($organizer)
+                            <div class="card-footer text-center bg-light py-3">
+                                <a href="{{ route('organizer.updateProfile') }}" class="btn btn-outline-success btn-lg animate__animated animate__pulse animate__infinite">Edit Profile</a>
+                            </div>
+                        @else
                         <div class="card-footer text-center bg-light py-3">
                             <a href="#" class="btn btn-outline-success btn-lg animate__animated animate__pulse animate__infinite">Edit Profile</a>
                         </div>
+                        @endif
+                        
                     </div>
                 </div>
             </div>

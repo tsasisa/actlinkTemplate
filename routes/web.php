@@ -57,9 +57,14 @@ Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('or
 
     Route::get('/updateProfile', [OrganizerController::class, 'updateProfile'])->name('updateProfile'); 
     Route::put('/updateProfile', [OrganizerController::class, 'update'])->name('updateProfile'); 
-    Route::get('/manage-event', [OrganizerController::class, 'manageEvent'])->name('manage-event');
     Route::get('/create-event', [OrganizerController::class, 'createEvent'])->name('create-event');
     Route::post('/create-event', [OrganizerController::class, 'create'])->name('create-event');
+    Route::get('/manage-event', [OrganizerController::class, 'manageEvent'])->name('manage-event');
+    Route::get('/manage-events/{id}', [OrganizerController::class, 'detail'])->name('event-detail');
+    Route::get('/manage-events/{id}/participants', [OrganizerController::class, 'viewParticipant'])->name('event-participant');
+    Route::get('/event-edit/{id}', [OrganizerController::class, 'editEvent'])->name('event-edit');
+    Route::put('/event-edit/{id}', [OrganizerController::class, 'edit'])->name('event-update');
+    
 });
 
 // Member Routes

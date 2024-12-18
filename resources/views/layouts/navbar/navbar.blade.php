@@ -139,7 +139,7 @@
 
                 <!-- Organizer-only option -->
                 @if(Auth::user()->userType === 'organizer')
-                    <li><a class="dropdown-item" href="/organize-events">Organize Events</a></li>
+                    <li><a class="dropdown-item" href="{{ route('organizer.manage-event') }}">Manage Events</a></li>
                 @endif
 
                 <li><hr class="dropdown-divider"></li>
