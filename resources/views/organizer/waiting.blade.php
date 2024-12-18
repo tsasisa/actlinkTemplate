@@ -16,10 +16,12 @@
                         Please wait for the admin to approve your account. We will notify you once the process is complete.
                     </p>
                 </div>
-                <div class="card-footer text-center">
-                    <a href="{{ route('home') }}" class="btn btn-primary">Back to Home</a>
-                    //tunggu logout 
-                </div>
+                    <div class="card-footer text-center">
+                        <form action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="btn btn-primary">Back to Home</button>
+                        </form>
+                    </div>
             </div>
         </div>
     </div>
