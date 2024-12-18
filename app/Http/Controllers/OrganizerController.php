@@ -5,10 +5,14 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\Organizer;
 use Illuminate\Http\Request;
+use App\Models\SystemLog;
 use Illuminate\Support\Facades\Auth;
+use App\Traits\LogsSystemActivity;
+
 
 class OrganizerController extends Controller
 {
+    use LogsSystemActivity;
     public function index(){          
         $user = Auth::user(); 
         $organizer = Organizer::where('organizerId', $user->userId)->first();
@@ -33,6 +37,7 @@ class OrganizerController extends Controller
     {
         $user = Auth::user(); 
         $organizer = Organizer::where('organizerId', $user->userId)->first();
+
         return view('organizer.updateProfile', compact('user', 'organizer'));
     }
 
@@ -62,6 +67,15 @@ class OrganizerController extends Controller
             $organizer->officialSocialMedia = $request->sosmed;
             $organizer->save();
         }
+
+        
+        $user = $organizer->user;
+
+        $this->logActivity(
+            'Organizer',
+            'Updated', 
+            'Updated organizer: ' . $user->userName 
+        );
 
         // Redirect to the profile edit page with success message
         return redirect()->route('organizer.home')->with('success', 'Profile updated successfully!');
@@ -99,7 +113,7 @@ class OrganizerController extends Controller
             $base64Image = null; 
         }
         
-        Event::create([
+        $event = Event::create([
             'eventName' => $request->input('event-name'),
             'eventDescription' => $request->input('event-description'),
             'eventImage' => $base64Image,
@@ -112,6 +126,13 @@ class OrganizerController extends Controller
             'eventUpdates' => $request->input('event-update'),
             'organizerId' => $user->userId
         ]);
+
+        
+        $this->logActivity(
+            'Event',
+            'Created',
+            'Created event: ' . $event->eventName . ' by organizer: ' . $user->userName
+        );
 
         return redirect()->back()->with('success', 'Event created successfully!');
     }
