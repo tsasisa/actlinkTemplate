@@ -6,11 +6,15 @@ use App\Models\Event;
 use App\Models\Organizer;
 use App\Models\Member;
 use App\Models\SystemLog;
+use Illuminate\Support\Facades\Auth;
+use App\Traits\LogsSystemActivity;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
+
+    use LogsSystemActivity;
     public function index(Request $request)
     {
         $query = SystemLog::query();
@@ -29,7 +33,8 @@ class AdminController extends Controller
             $query->where('Datetime', '<=', $endDate);
         }
 
-        $logs = $query->get();
+        $logs = $query->paginate(10);
+
 
         return view('admin.admin', compact('logs'));
     }
@@ -61,7 +66,7 @@ class AdminController extends Controller
 
     public function createEvent()
     {
-        $organizers = Organizer::with('user')->get();
+        $organizers = Organizer::where('activeFlag', 1)->with('user')->get();
         return view('admin.create-events', compact('organizers'));
     }
 
@@ -74,7 +79,7 @@ class AdminController extends Controller
             'eventLocation' => 'required|string',
             'eventParticipantQuota' => 'required|integer',
             'eventImage' => 'nullable|image',
-            'organizerId' => 'required|exists:organizer,organizerId',
+            'organizerId' => 'required|exists:organizers,organizerId',
         ]);
 
         $eventDate = Carbon::parse($request->input('eventDate'));
@@ -98,10 +103,12 @@ class AdminController extends Controller
 
         $event->save();
 
+        $user = Auth::user();
+
         SystemLog::create([
             'entityName' => 'Event',
             'entityOperation' => 'Created',
-            'OperationDescription' => 'Created new event: ' . $event->eventName,
+            'OperationDescription' => $user->userName .' created new event: ' . $event->eventName,
             'Datetime' => now(),
         ]);
 
@@ -131,7 +138,7 @@ class AdminController extends Controller
             'eventUpdates' => 'nullable|string',
             'eventPoints' => 'nullable|integer',
             'eventImage' => 'nullable|image|mimes:jpeg,png,jpg,gif',
-            'organizerId' => 'required|exists:organizer,organizerId',
+            'organizerId' => 'required|exists:organizers,organizerId',
         ]);
 
         $event->update($validatedData);
@@ -143,10 +150,12 @@ class AdminController extends Controller
 
         $event->save();
 
+        $user = Auth::user();
+
         SystemLog::create([
             'entityName' => 'Event',
             'entityOperation' => 'Updated',
-            'OperationDescription' => 'Updated event: ' . $event->eventName,
+            'OperationDescription' => $user->userName .' updated event: ' . $event->eventName,
             'Datetime' => now(),
         ]);
 
@@ -157,10 +166,12 @@ class AdminController extends Controller
     {
         $event = Event::find($id);
 
+        $user = Auth::user();
+
         SystemLog::create([
             'entityName' => 'Event',
             'entityOperation' => 'Deleted',
-            'OperationDescription' => 'Deleted event: ' . $event->eventName,
+            'OperationDescription' => $user->userName. ' deleted event: ' . $event->eventName,
             'Datetime' => now(),
         ]);
 
@@ -174,27 +185,27 @@ class AdminController extends Controller
 
     public function showOrganizers(Request $request)
     {
-        
+
         $status = $request->input('status');
-        
+
         $query = Organizer::query();
-        
-        
+
+
         if ($status) {
             if ($status == 'pending') {
-                $query->where('activeFlag', 0); 
+                $query->where('activeFlag', 0);
             } elseif ($status == 'accepted') {
                 $query->where('activeFlag', 1);
             }
         }
-    
-      
-        $organizers = $query->paginate(10); 
-    
+
+
+        $organizers = $query->paginate(10);
+
 
         return view('admin.organizers', compact('organizers'));
     }
-    
+
 
     public function acceptOrganizer($organizerId)
     {
@@ -202,8 +213,18 @@ class AdminController extends Controller
         if ($organizer) {
             $organizer->activeFlag = true;
             $organizer->save();
+
+            $user = $organizer->user;
+
+            $this->logActivity(
+                'Organizer',
+                'Accepted', 
+                'Admin accepted organizer: ' . $user->userName 
+            );
             return redirect()->route('admin.organizers')->with('success', 'Organizer accepted successfully.');
         }
+       
+
         return redirect()->route('admin.organizers')->with('error', 'Organizer not found.');
     }
 
@@ -212,6 +233,15 @@ class AdminController extends Controller
         $organizer = Organizer::find($organizerId);
         if ($organizer) {
             $organizer->delete();
+
+            $user = $organizer->user;
+
+            $this->logActivity(
+                'Organizer',
+                'Declined', 
+                'Admin declined organizer: ' . $user->userName 
+            );
+
             return redirect()->route('admin.organizers')->with('success', 'Organizer declined successfully.');
         }
         return redirect()->route('admin.organizers')->with('error', 'Organizer not found.');
@@ -220,8 +250,8 @@ class AdminController extends Controller
     public function editOrganizer($organizerId)
     {
         $organizer = Organizer::find($organizerId);
-        
-    
+
+
         if (!$organizer) {
             return redirect()->route('admin.organizers')->with('error', 'Organizer not found');
         }
@@ -231,33 +261,41 @@ class AdminController extends Controller
 
     public function updateOrganizer(Request $request, $organizerId)
     {
-        
+
         $organizer = Organizer::find($organizerId);
 
-        
+
         if (!$organizer) {
             return redirect()->route('admin.organizers')->with('error', 'Organizer not found');
         }
 
-    
+
         $validatedData = $request->validate([
-            'userName' => 'required|string|max:255', 
-            'organizerAddress' => 'nullable|string|max:255', 
-            'officialSocialMedia' => 'nullable|string|max:255', 
+            'userName' => 'required|string|max:255',
+            'organizerAddress' => 'nullable|string|max:255',
+            'officialSocialMedia' => 'nullable|string|max:255',
         ]);
 
-  
+
         $organizer->user->update([
             'userName' => $validatedData['userName'],
         ]);
 
-       
+
         $organizer->update([
             'organizerAddress' => $validatedData['organizerAddress'],
-            'officialSocialMedia' => $validatedData['officialSocialMedia'], 
+            'officialSocialMedia' => $validatedData['officialSocialMedia'],
         ]);
 
-       
+        $user = $organizer->user;
+
+        $this->logActivity(
+            'Organizer',
+            'Updated', 
+            'Updated organizer: ' . $user->userName 
+        );
+
+
         return redirect()->route('admin.organizers')->with('success', 'Organizer updated successfully');
     }
 
@@ -267,32 +305,32 @@ class AdminController extends Controller
     {
         $searchName = $request->get('searchName');
         $members = Member::whereHas('user', function ($query) use ($searchName) {
-            
+
             $query->where('userName', 'like', '%' . $searchName . '%')
                   ->where('userType', 'member');
-        })->paginate(10); 
+        })->paginate(10);
 
-      
+
         return view('admin.members', compact('members'));
     }
 
     public function editMember($memberId)
     {
-        
+
         $member = Member::find($memberId);
 
         if (!$member) {
             return redirect()->route('admin.members.indexMember')->with('error', 'Member not found');
         }
-    
+
         return view('admin.edit-members', compact('member'));
     }
 
     public function updateMember(Request $request, $memberId)
     {
-       
+
         $member = Member::find($memberId);
-        
+
         if (!$member) {
             return redirect()->route('admin.members.indexMember')->with('error', 'Member not found');
         }
@@ -302,10 +340,10 @@ class AdminController extends Controller
             'userPhoneNumber' => 'nullable|string|max:255',
             'memberDOB' => 'nullable|date',
             'memberPoints' => 'nullable|integer',
-            'userType' => 'required|string|in:admin,organizer,member', 
+            'userType' => 'required|string|in:admin,organizer,member',
         ]);
 
-   
+
         $member->user->update([
             'userName' => $validatedData['userName'],
             'userPhoneNumber' => $validatedData['userPhoneNumber'],
@@ -317,31 +355,47 @@ class AdminController extends Controller
             'memberPoints' => $validatedData['memberPoints'],
         ]);
 
+        $user = Auth::user();
+
+        $this->logActivity(
+            'Member',
+            'Updated', 
+            ' Admin updated member: ' . $user->userName 
+        );
+
         return redirect()->route('admin.members.indexMember')
             ->with('success', 'Member updated successfully!');
     }
 
     public function deleteMember($memberId)
     {
-        
+
         $member = Member::find($memberId);
 
         if (!$member) {
             return redirect()->route('admin.members.indexMember')->with('error', 'Member not found');
         }
 
-  
+
         $user = $member->user;
-        $member->delete(); 
-        $user->delete();  
+        $member->delete();
+        $user->delete();
+
+        $user = Auth::user();
+
+        $this->logActivity(
+            'Member',
+            'Deleted', 
+            ' Admin deleted member: ' . $user->userName 
+        );
 
         return redirect()->route('admin.members.indexMember')->with('success', 'Member deleted successfully');
     }
 
-   
+
     public function updateRoleMember(Request $request, $memberId)
     {
-    
+
         $member = Member::find($memberId);
 
         if (!$member) {
@@ -355,6 +409,14 @@ class AdminController extends Controller
         $member->user->update([
             'userType' => $request->userType,
         ]);
+
+        $user = Auth::user();
+
+        $this->logActivity(
+            'Member',
+            'Updated', 
+            ' Admin updated member role of : ' . $user->userName 
+        );
 
         return redirect()->route('admin.members.indexMember')->with('success', 'Role updated successfully');
     }

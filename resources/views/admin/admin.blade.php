@@ -16,6 +16,9 @@
                                         <option value="Created">Created</option>
                                         <option value="Updated">Updated</option>
                                         <option value="Deleted">Deleted</option>
+                                        <option value="Accepted">Accepted</option>
+                                        <option value="Declined">Declined</option>
+                                        <option value="Login">Login</option>
                                     </select>
                                 </div>
 
@@ -66,8 +69,16 @@
                         </tbody>
                     </table>
 
+                    <div class="mt-4">
+                        {{ $logs->links() }}
+                    </div>
+
                 </div>
             </div>
         </div>
+
+
+
     </div>
+    
 @endsection

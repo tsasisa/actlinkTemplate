@@ -24,4 +24,11 @@ class HomeController extends Controller
         
         return view('unregistered.home', compact('latestEvents', 'largestParticipantEvents'));
     }
+
+
+    public function howItWorks()
+    {
+    
+        return view('unregistered.howItWorks') ;
+    }
 }

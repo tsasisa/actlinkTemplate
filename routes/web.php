@@ -75,3 +75,4 @@ Route::get('/events/{id}', [EventController::class, 'show'])->name('event.detail
 Route::get('/leaderboard', [MemberController::class, 'leaderboard'])->name('leaderboard.index');
 Route::get('/profile/{userId}', [UserController::class, 'showProfile'])->name('profile');
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
+Route::get('/how-it-works', [HomeController::class, 'howItWorks'])->name('howItWorks');
