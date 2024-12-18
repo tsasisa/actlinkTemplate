@@ -7,7 +7,7 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class actiLinkSeeder extends Seeder
+class actLinkSeeder extends Seeder
 {
     /**
      * Run the database seeds.

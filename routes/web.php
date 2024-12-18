@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\OrganizerController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\ShopController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\CheckUserRole;
 use Illuminate\Support\Facades\Route;
@@ -65,7 +66,7 @@ Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('or
 Route::middleware(['auth',CheckUserRole::class])->prefix('member')->name('member.')->group(function () {
     Route::get('/home', [MemberController::class, 'index'])->name('home');
     Route::post('/events/{id}/register', [EventController::class, 'register'])->name('event.register');
-     Route::get('/registered-events', [EventController::class, 'registeredEvents'])->name('registered.events');
+    Route::get('/registered-events', [EventController::class, 'registeredEvents'])->name('registered.events');
 });
 
 // Event Routes (Publicly accessible)
@@ -73,3 +74,4 @@ Route::get('/events', [EventController::class, 'index'])->name('events.index');
 Route::get('/events/{id}', [EventController::class, 'show'])->name('event.detail');
 Route::get('/leaderboard', [MemberController::class, 'leaderboard'])->name('leaderboard.index');
 Route::get('/profile/{userId}', [UserController::class, 'showProfile'])->name('profile');
+Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');

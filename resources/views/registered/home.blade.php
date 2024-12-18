@@ -8,7 +8,7 @@
             <div class="carousel-item active" style="background: url('{{ asset('assets/images/1.jpg') }}') no-repeat center center/cover;">
                 <section class="hero d-flex align-items-center justify-content-center text-center">
                     <div class="container position-relative text-white">
-                        <h1 class="display-4 fw-bold">Registered HomeActLink</h1>
+                        <h1 class="display-4 fw-bold">ActLink</h1>
                         <p class="lead">A link for every act that matters.</p>            
                     </div>
                 </section>
