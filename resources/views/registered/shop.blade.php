@@ -1,6 +1,20 @@
 @extends('layouts.navbar.navbar')
 
 @section('content')
+    @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            {{ session('error') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white">
         <div class="container position-relative">
@@ -11,6 +25,11 @@
                     <i class="bi bi-exclamation-circle-fill"></i> Login to claim items!
                 </p>
             @endguest
+            @auth
+                <p class="fw-bold mt-3 animate__animated animate__fadeInUp" style="color: #ffdd57;">
+                    <i class="bi bi-wallet-fill"></i> Your Points: {{ auth()->user()->member->memberPoints }} Points
+                </p>
+            @endauth
         </div>
     </section>
 
@@ -27,7 +46,6 @@
                         <!-- Item Card -->
                         <div class="col-md-4">
                             <div class="card shadow-sm h-100 border-0">
-                                <!-- Ensure the image URL is valid or show a placeholder -->
                                 <div class="card-img-top-container">
                                     <img 
                                         src="{{ $item->image ? asset($item->image) : asset('images/placeholder.png') }}" 
@@ -46,12 +64,13 @@
                                 </div>
                                 <div class="card-footer bg-white border-0 text-center">
                                     @auth
-                                        <!-- Enable the button if the user is logged in -->
-                                        <button class="btn btn-success btn-sm fw-bold">
-                                            Claim Now
+                                    <form action="{{ route('shop.claim', $item->itemId) }}" method="POST">
+                                        @csrf
+                                        <button type="submit" class="btn btn-success btn-lg w-100">
+                                            Claim
                                         </button>
+                                    </form>
                                     @else
-                                        <!-- Disable the button if the user is not logged in -->
                                         <button class="btn btn-secondary btn-sm fw-bold" disabled>
                                             Claim Now
                                         </button>

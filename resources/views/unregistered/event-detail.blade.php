@@ -102,7 +102,7 @@
                                 You will earn {{ $event->eventPoints }} points!
                             </p>
                         </div>
-                        <div class="modal-footer d-flex justify-content-center"> <!-- Center the buttons -->
+                        <div class="modal-footer d-flex justify-content-center">
                             <form method="POST" action="{{ route('member.event.register', $event->eventId) }}">
                                 @csrf
                                 <button type="submit" class="btn btn-success">Confirm</button>
@@ -115,7 +115,6 @@
         </div>
     </section>
 
-    <!-- Custom Styles -->
     <style>
         /* Page Header */
         .page-header {

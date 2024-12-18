@@ -46,4 +46,9 @@ class User extends Authenticatable
     {
         return $this->hasOne(Organizer::class, 'organizerId', 'userId');
     }
+
+    public function claimedItems()
+    {
+        return $this->hasMany(ClaimedItem::class);
+    }
 }
