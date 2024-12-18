@@ -6,6 +6,11 @@
         <div class="container position-relative">
             <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">🛒 Shop</h1>
             <p class="lead animate__animated animate__fadeInUp">Find items to enhance your volunteer experience!</p>
+            @guest
+                <p class="text-warning fw-bold mt-3 animate__animated animate__fadeInUp">
+                    <i class="bi bi-exclamation-circle-fill"></i> Login to claim items!
+                </p>
+            @endguest
         </div>
     </section>
 
@@ -40,9 +45,17 @@
                                     </div>
                                 </div>
                                 <div class="card-footer bg-white border-0 text-center">
-                                    <button class="btn btn-success btn-sm fw-bold">
+                                    @auth
+                                        <!-- Enable the button if the user is logged in -->
+                                        <button class="btn btn-success btn-sm fw-bold">
                                             Claim Now
-                                    </button>
+                                        </button>
+                                    @else
+                                        <!-- Disable the button if the user is not logged in -->
+                                        <button class="btn btn-secondary btn-sm fw-bold" disabled>
+                                            Claim Now
+                                        </button>
+                                    @endauth
                                 </div>
                             </div>
                         </div>
@@ -98,8 +111,13 @@
             transition: background-color 0.2s ease;
         }
 
-        .card-footer button:hover {
-            background-color: #218838;
+        .card-footer button:disabled {
+            background-color: #6c757d; /* Gray for disabled button */
+            cursor: not-allowed;
+        }
+
+        .card-footer button:hover:disabled {
+            background-color: #6c757d;
         }
 
         @media (max-width: 768px) {
