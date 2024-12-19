@@ -2,8 +2,15 @@
 @section('content')
 <div class="container">
     <h1>Participants</h1>
-    @foreach ($participants as $participant)
-        <p>{{ $participant->userName }}</p>
-    @endforeach
+    @if ($participants->isEmpty())
+        <div>
+            <h1>This event doesn't have any participants yet</h1>
+        </div>
+        @else
+            @foreach ($participants as $participant)
+            <p>{{ $participant->userName }}</p>
+        @endforeach
+    @endif
+    
 </div>
 @endsection
