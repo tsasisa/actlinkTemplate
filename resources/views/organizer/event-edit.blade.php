@@ -1,6 +1,6 @@
 @extends('layouts.navbar.navbar')
 @section('content')
-<div class="container">
+<div class="container my-3">
     <form action="{{ route('organizer.event-update', ['id' => $event->eventId]) }}" method="POST" enctype="multipart/form-data">
 
             @csrf

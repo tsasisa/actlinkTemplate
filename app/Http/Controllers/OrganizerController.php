@@ -17,7 +17,7 @@ class OrganizerController extends Controller
     public function index(){          
         $user = Auth::user(); 
         $organizer = Organizer::where('organizerId', $user->userId)->first();
-        $events = Event::where('organizerId', $user->userId)->orderBy('eventDate', 'asc')->get();
+        $events = Event::where('organizerId', $user->userId)->orderBy('eventDate', 'asc')->paginate(6);
 
         return view('organizer.organizer', compact( 'user', 'organizer', 'events'));
     }
@@ -87,7 +87,7 @@ class OrganizerController extends Controller
     public function manageEvent(){
 
         $eventOrg = Auth::user(); 
-        $events = Event::where('organizerId', $eventOrg->userId)->get(); 
+        $events = Event::where('organizerId', $eventOrg->userId)->paginate(6); 
          
 
         return view('organizer.manage-event', compact('events' ));

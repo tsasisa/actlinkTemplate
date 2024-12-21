@@ -3,10 +3,10 @@
 <div class="container">
    
     
-    <h1>Recently Created Events</h1>
-    <a href="{{ route('organizer.manage-event') }}"><button type="button" class="btn btn-success">Manage Event</button></a>
+    <h1 class="page-title">Recently Created Events</h1>
+    <a href="{{ route('organizer.manage-event') }}"><button type="button" class="btn btn-success my-3">Manage Event</button></a>
     
-    <section class="latest-events py-5 ">
+    <section class="latest-events ">
     <div class="container text-center">
         <h4 class="event-heading fw-bold mb-4"></h4>
         <div class="row">
@@ -25,6 +25,9 @@
             </div>
             @endforeach
         </div>
+        <div class="mt-4">
+                {{ $events->links('pagination::bootstrap-5') }}
+        </div>
     </div>
 </section>
 </div>
@@ -37,6 +40,12 @@
         }
         .latest-events {
             background-color: white;
+        }
+
+        .page-title {
+            font-family: 'Roboto', sans-serif !important;
+            font-size: 2.5rem;
+            font-weight: 500;
         }
 
         .event-card {

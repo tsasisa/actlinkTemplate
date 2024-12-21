@@ -5,49 +5,51 @@
     <a href="{{route('organizer.create-event')}}"><button type="button" class="btn btn-success my-3">Create Event</button></a>
     
     <h1>Your Events</h1>
-    <section class="latest-events py-5 ">
-    <div class="container text-center">
-        
-        <div class="row">
-        @foreach($events as $event)
-                <div class="col-md-4">
-                    <div class="event-card position-relative overflow-hidden">
-                        <!-- Event Image -->
-                        <div class="event-image-container">
-                            <img src="data:image/png;base64,{{ $event->eventImage }}" alt="Event Image" class="event-image">
-                        </div>
-                        <!-- Event Details -->
-                        <div class="event-details p-4">
-                            <!-- Event Name -->
-                            <h5 class="event-title text-truncate">{{ $event->eventName }}</h5>
-                            <!-- Event Date -->
-                            <p class="event-date mb-1">
-                                <i class="bi bi-calendar3 text-success"></i> {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
-                            </p>
-                            <!-- Event Location -->
-                            <p class="event-location mb-1">
-                                <i class="bi bi-geo-alt text-success"></i> {{ $event->eventLocation }}
-                            </p>
-                            <!-- Event Participants -->
-                            <p class="event-participants fw-bold text-success mb-1">
-                                <i class="bi bi-people"></i> {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}
-                            </p>
-                            <!-- Event Points -->
-                            <p class="event-points text-muted mb-4">
-                                <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} Points
-                            </p>
-                            <!-- View Details Button -->
-                            <div class="view-details-wrapper">
-                                <a href="{{ route('organizer.event-detail', ['id' => $event->eventId, 'from' => 'events']) }}" class="btn btn-success">
-                                    View Details
-                                </a>
+    <section class="latest-events my-3 ">
+        <div class="container text-center">
+            <div class="row">
+                @foreach($events as $event)
+                        <div class="col-md-4 my-2">
+                            <div class="event-card position-relative overflow-hidden">
+                                <!-- Event Image -->
+                                <div class="event-image-container">
+                                    <img src="data:image/png;base64,{{ $event->eventImage }}" alt="Event Image" class="event-image">
+                                </div>
+                                <!-- Event Details -->
+                                <div class="event-details p-4">
+                                    <!-- Event Name -->
+                                    <h5 class="event-title text-truncate">{{ $event->eventName }}</h5>
+                                    <!-- Event Date -->
+                                    <p class="event-date mb-1">
+                                        <i class="bi bi-calendar3 text-success"></i> {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
+                                    </p>
+                                    <!-- Event Location -->
+                                    <p class="event-location mb-1">
+                                        <i class="bi bi-geo-alt text-success"></i> {{ $event->eventLocation }}
+                                    </p>
+                                    <!-- Event Participants -->
+                                    <p class="event-participants fw-bold text-success mb-1">
+                                        <i class="bi bi-people"></i> {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}
+                                    </p>
+                                    <!-- Event Points -->
+                                    <p class="event-points text-muted mb-4">
+                                        <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} Points
+                                    </p>
+                                    <!-- View Details Button -->
+                                    <div class="view-details-wrapper">
+                                        <a href="{{ route('organizer.event-detail', ['id' => $event->eventId, 'from' => 'events']) }}" class="btn btn-success">
+                                            View Details
+                                        </a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
                 @endforeach
+                    <div class="mt-4">
+                    {{ $events->links('pagination::bootstrap-5') }}
+                    </div>
+            </div>
         </div>
-    </div>
     </section>
 </div>
 <style>

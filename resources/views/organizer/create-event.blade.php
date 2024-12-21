@@ -1,6 +1,6 @@
 @extends('layouts.navbar.navbar')
 @section('content')
-<div class="container">
+<div class="container my-4">
     <form action="{{route('organizer.create-event')}}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
