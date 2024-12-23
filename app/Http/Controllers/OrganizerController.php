@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use App\Models\EventParticipant;
 use App\Models\Organizer;
+use App\Models\ShopItem;
 use Illuminate\Http\Request;
 use App\Models\SystemLog;
 use Illuminate\Support\Facades\Auth;
@@ -227,4 +228,36 @@ class OrganizerController extends Controller
     return view('organizer.event-participant', compact('participants'));
 }
 
+    public function createProduct(){
+
+        return view('organizer.add-product');
+    }
+
+    public function addProduct(Request $request){
+
+        $request->validate([
+            'product-name' => 'required|string|max:255|min:5',
+            'product-description' => 'required|string|max:255',
+            'image' => 'required|image|mimes:jpeg,png,jpg',
+            'product-price' => 'required|integer',
+            'product-quantity' => 'required|integer',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $fileContents = file_get_contents($imageFile);
+            $base64Image = base64_encode($fileContents);
+        } else {
+            $base64Image = null; 
+        }
+
+        $product = ShopItem::create([
+            'name' => $request->input('product-name'),
+            'description' => $request->input('product-description'),
+            'price' => $request->input('product-price'),
+            'quantity' => $request->input('product-quantity'),
+            'image' => $base64Image
+        ]);
+        return redirect('organizer/home');
+    }
 }

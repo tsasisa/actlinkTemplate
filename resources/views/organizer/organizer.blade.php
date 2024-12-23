@@ -5,6 +5,7 @@
     
     <h1 class="page-title">Recently Created Events</h1>
     <a href="{{ route('organizer.manage-event') }}"><button type="button" class="btn btn-success my-3">Manage Event</button></a>
+    <a href="{{ route('organizer.create-product') }}"><button type="button" class="btn btn-success my-3">Add Product</button></a>
     
     <section class="latest-events ">
     <div class="container text-center">
@@ -128,6 +129,17 @@
             height: 100vh; /* Full height for each carousel item */
             background-size: cover;
             background-position: center;
+        }
+
+        .btn-success {
+        background-color: #28a745;
+        border-color: #28a745;
+        transition: background-color 0.3s, transform 0.2s;
+    }
+
+        .btn-success:hover {
+            background-color: #218838;
+            transform: scale(1.02);
         }
 
         .event-image {
