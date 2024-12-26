@@ -4,8 +4,7 @@
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white">
         <div class="container">
-            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">Event Details</h1>
-            <p class="lead animate__animated animate__fadeInUp">Discover everything about this event and join the movement.</p>
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">@lang('organizer.Event-Details')</h1>
         </div>
     </section>
 
@@ -15,8 +14,8 @@
     <section class="event-details py-5">
         
         <div class="container">
-        <a href="{{ route('organizer.event-edit', ['id' => $event->eventId, 'from' => 'events']) }}"><button type="button" class="btn btn-success my-4">Edit Event</button></a>
-        <a href="{{ route('organizer.event-participant', ['id' => $event->eventId, 'from' => 'events']) }}"><button type="button" class="btn btn-success my-4">View Participant</button></a>
+        <a href="{{ route('organizer.event-edit', ['id' => $event->eventId, 'from' => 'events']) }}"><button type="button" class="btn btn-success my-4">@lang('organizer.Edit-Event')</button></a>
+        <a href="{{ route('organizer.event-participant', ['id' => $event->eventId, 'from' => 'events']) }}"><button type="button" class="btn btn-success my-4">@lang('organizer.View-Participant')</button></a>
             <div class="row">
                 <!-- Sidebar -->
                 <div class="col-lg-4 order-lg-2 mb-4">
@@ -43,17 +42,17 @@
                             <i class="bi bi-geo-alt"></i> {{ $event->eventLocation }}
                         </p>
 
-                        <h4 class="mt-4">Description</h4>
+                        <h4 class="mt-4">@lang('organizer.Description')</h4>
                         <p class="event-description">{{ $event->eventDescription }}</p>
 
-                        <h4 class="mt-4">Event Updates</h4>
+                        <h4 class="mt-4">@lang('organizer.Event-Updates')</h4>
                         <p class="event-updates">{{ $event->eventUpdates }}</p>
 
-                        <h4 class="mt-4">Event Points</h4>
-                        <p class="event-points"><i class="bi bi-star-fill text-warning"></i> Earn {{ $event->eventPoints }} points for participating!</p>
+                        <h4 class="mt-4">@lang('organizer.Event-Points')</h4>
+                        <p class="event-points"><i class="bi bi-star-fill text-warning"></i>{{ $event->eventPoints }}</p>
 
-                        <h4 class="mt-4">Organizer</h4>
-                        <p class="event-organizer"><i class="bi bi-person"></i> Organized by: {{ $event->organizer->user->userName }}</p>
+                        <h4 class="mt-4">@lang('organizer.Organizer')</h4>
+                        <p class="event-organizer"><i class="bi bi-person"></i>{{ $event->organizer->user->userName }}</p>
                     </div>
                 </div>
             </div>

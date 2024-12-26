@@ -2,9 +2,9 @@
 @section('content')
 <div class="container">
 
-    <a href="{{route('organizer.create-event')}}"><button type="button" class="btn btn-success my-3">Create Event</button></a>
+    <a href="{{route('organizer.create-event')}}"><button type="button" class="btn btn-success my-3">@lang('organizer.Create-Event')</button></a>
     
-    <h1>Your Events</h1>
+    <h1>@lang('organizer.Your-Events')</h1>
     <section class="latest-events my-3 ">
         <div class="container text-center">
             <div class="row">
@@ -33,12 +33,12 @@
                                     </p>
                                     <!-- Event Points -->
                                     <p class="event-points text-muted mb-4">
-                                        <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} Points
+                                        <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} @lang('organizer.Points')
                                     </p>
                                     <!-- View Details Button -->
                                     <div class="view-details-wrapper">
                                         <a href="{{ route('organizer.event-detail', ['id' => $event->eventId, 'from' => 'events']) }}" class="btn btn-success">
-                                            View Details
+                                            @lang('organizer.View-Details')
                                         </a>
                                     </div>
                                 </div>

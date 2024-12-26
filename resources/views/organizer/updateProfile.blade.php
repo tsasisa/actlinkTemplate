@@ -1,12 +1,12 @@
 @extends('layouts.navbar.navbar')
 @section('content')
-<div class="container">
+<div class="container my-3">
     <form action="{{ route('organizer.updateProfile') }}" method="POST">
             @csrf
             @method('PUT')
 
-            <div class="form-group">
-                <label for="name">Name</label>
+            <div class="mb-3">
+                <label for="name">@lang('organizer.Name')</label>
                 <input 
                     type="text" 
                     id="name" 
@@ -17,8 +17,8 @@
                 >
             </div>
 
-            <div class="form-group">
-                <label for="email">Email</label>
+            <div class="mb-3">
+                <label for="email">@lang('organizer.Email')</label>
                 <input 
                     type="email" 
                     id="email" 
@@ -29,8 +29,8 @@
                 >
             </div>
 
-            <div class="form-group">
-                <label for="phone">Phone</label>
+            <div class="mb-3">
+                <label for="phone">@lang('organizer.Phone')</label>
                 <input 
                     type="text" 
                     id="phone" 
@@ -40,8 +40,8 @@
                 >
             </div>
 
-            <div class="form-group">
-                <label for="phone">Address</label>
+            <div class="mb-3">
+                <label for="phone">@lang('organizer.Address')</label>
                 <input 
                     type="text" 
                     id="address" 
@@ -51,8 +51,8 @@
                 >
             </div>
 
-            <div class="form-group">
-                <label for="phone">Social Media</label>
+            <div class="mb-3">
+                <label for="phone">@lang('organizer.Social-Media')</label>
                 <input 
                     type="text" 
                     id="sosmed" 
@@ -62,7 +62,7 @@
                 >
             </div>
 
-            <button type="submit" class="btn btn-primary">Update</button>
+            <button type="submit" class="btn btn-primary">@lang('organizer.Submit')</button>
         </form>
     </div>
     

@@ -3,9 +3,9 @@
 <div class="container">
    
     
-    <h1 class="page-title">Recently Created Events</h1>
-    <a href="{{ route('organizer.manage-event') }}"><button type="button" class="btn btn-success my-3">Manage Event</button></a>
-    <a href="{{ route('organizer.create-product') }}"><button type="button" class="btn btn-success my-3">Add Product</button></a>
+    <h1 class="page-title">@lang('organizer.Recently-Created-Events')</h1>
+    <a href="{{ route('organizer.manage-event') }}"><button type="button" class="btn btn-success my-3">@lang('organizer.Manage-Event')</button></a>
+    <a href="{{ route('organizer.create-product') }}"><button type="button" class="btn btn-success my-3">@lang('organizer.Add-Product')</button></a>
     
     <section class="latest-events ">
     <div class="container text-center">
@@ -21,7 +21,7 @@
                     <p class="event-date">{{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}</p>
                     <p class="event-location">{{ $event->eventLocation }}</p>
                     <p class="event-description">{{ str($event->eventDescription)->limit(100) }}</p>
-                    <p class="event-organizer">Organized by: {{ $event->organizer->user->userName }}</p>
+                    <p class="event-organizer">@lang('organizer.Organized-by'): {{ $event->organizer->user->userName }}</p>
                 </div>
             </div>
             @endforeach

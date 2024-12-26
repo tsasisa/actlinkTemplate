@@ -6,20 +6,20 @@
         <div class="col-md-8">
             <div class="card shadow-lg">
                 <div class="card-header bg-warning text-white">
-                    <h2 class="fw-bold">Pending Approval</h2>
+                    <h2 class="fw-bold">@lang('organizer.Pending-Approval')</h2>
                 </div>
                 <div class="card-body">
                     <p class="text-muted fs-5">
-                        Thank you for signing up as an organizer! Your registration is currently under review.
+                        @lang('organizer.Thankyou')
                     </p>
                     <p class="text-muted fs-6">
-                        Please wait for the admin to approve your account. We will notify you once the process is complete.
+                        @lang('organizer.Please-wait')
                     </p>
                 </div>
                     <div class="card-footer text-center">
                         <form action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="btn btn-primary">Back to Home</button>
+                            <button type="submit" class="btn btn-primary">@lang('organizer.Back-To-Home')</button>
                         </form>
                     </div>
             </div>
