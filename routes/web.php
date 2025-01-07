@@ -55,8 +55,8 @@ Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('or
     Route::get('/home', [OrganizerController::class, 'index'])->name('home');
     Route::get('/waitingAccept', [OrganizerController::class, 'waitingAccept'])->name('waitingAccept');
 
-    Route::get('/updateProfile', [OrganizerController::class, 'updateProfile'])->name('updateProfile'); 
-    Route::put('/updateProfile', [OrganizerController::class, 'update'])->name('updateProfile'); 
+    Route::get('/updateProfile', [OrganizerController::class, 'updateProfile'])->name('updateProfile');
+    Route::put('/updateProfile', [OrganizerController::class, 'update'])->name('updateProfile');
     Route::get('/create-event', [OrganizerController::class, 'createEvent'])->name('create-event');
     Route::post('/create-event', [OrganizerController::class, 'create'])->name('create-event');
     Route::get('/manage-event', [OrganizerController::class, 'manageEvent'])->name('manage-event');
@@ -83,3 +83,12 @@ Route::get('/profile/{userId}', [UserController::class, 'showProfile'])->name('p
 Route::get('/shop', [ShopController::class, 'index'])->name('shop.index');
 Route::post('/shop/claim/{itemId}', [ShopController::class, 'claim'])->middleware('auth')->name('shop.claim');
 Route::get('/how-it-works', [HomeController::class, 'howItWorks'])->name('howItWorks');
+
+//localization
+Route::get('/set-locale/{locale}', function($locale){
+    if(in_array($locale, ['en','id'])){
+        session(['locale'=> $locale]);
+    }
+
+    return redirect()->back();
+})->name('set-locale');

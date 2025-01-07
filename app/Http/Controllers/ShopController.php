@@ -25,7 +25,7 @@ class ShopController extends Controller
 
         $user->member->memberPoints -= $item->price;
         $user->member->save();
-        
+
         ClaimedItem::create([
             'userId' => $user->userId,
             'itemId' => $item->itemId,

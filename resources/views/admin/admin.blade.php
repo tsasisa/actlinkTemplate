@@ -12,58 +12,64 @@
                                 <!-- Filter by operation -->
                                 <div class="col-md-3">
                                     <select name="action" class="form-control">
-                                        <option value="">Select Action</option>
-                                        <option value="Created">Created</option>
-                                        <option value="Updated">Updated</option>
-                                        <option value="Deleted">Deleted</option>
-                                        <option value="Accepted">Accepted</option>
-                                        <option value="Declined">Declined</option>
-                                        <option value="Login">Login</option>
+                                        <option value="">{{ __('admin.select_action') }}</option>
+                                        <option value="Created">{{ __('admin.created') }}</option>
+                                        <option value="Updated">{{ __('admin.updated') }}</option>
+                                        <option value="Deleted">{{ __('admin.deleted') }}</option>
+                                        <option value="Accepted">{{ __('admin.accepted') }}</option>
+                                        <option value="Declined">{{ __('admin.declined') }}</option>
+                                        <option value="Login">{{ __('admin.login') }}</option>
                                     </select>
                                 </div>
 
                                 <!-- Filter by date -->
                                 <div class="col-md-3">
                                     <!-- Start Date -->
-                                    <input type="date" name="start_date" class="form-control" placeholder="Start Date">
+                                    <input type="date" name="start_date" class="form-control" placeholder="{{ __('admin.start_date') }}">
                                 </div>
 
                                 <div class="col-md-3">
                                     <!-- End Date -->
-                                    <input type="date" name="end_date" class="form-control" placeholder="End Date">
+                                    <input type="date" name="end_date" class="form-control" placeholder="{{ __('admin.end_date') }}">
                                 </div>
 
                                 <div class="col-md-3">
-                                    <button type="submit" class="btn btn-primary">Filter</button>
+                                    <button type="submit" class="btn btn-primary">{{ __('admin.filter') }}</button>
                                 </div>
+
                             </div>
                         </form>
 
 
                     </div>
 
-                    <h5 class="card-title mb-4 d-inline">System Logs</h5>
+                        <div class="d-flex flex-row-reverse">
+                            <a class="btn btn-primary" style="margin-left: 10px;" href="{{ route('set-locale','id') }}">{{ __('admin.indonesia') }}</a>
+                            <a class="btn btn-primary" href="{{ route('set-locale','en') }}">{{ __('admin.english') }}</a>
+                        </div>
+
+                    <h5 class="card-title mb-4 d-inline">{{ __('admin.system_logs') }}</h5>
 
                     <table class="table">
                         <thead>
                             <tr>
-                                <th scope="col">Entity Name</th>
-                                <th scope="col">Operation</th>
-                                <th scope="col">Description</th>
-                                <th scope="col">Created At</th>
+                                <th scope="col">{{ __('admin.entity_name') }}</th>
+                                <th scope="col">{{ __('admin.operation') }}</th>
+                                <th scope="col">{{ __('admin.description') }}</th>
+                                <th scope="col">{{ __('admin.created_at') }}</th>
                             </tr>
                         </thead>
                         <tbody>
                             @forelse($logs as $log)
                                 <tr>
                                     <td>{{ $log->entityName }}</td>
-                                    <td>{{ ucfirst($log->entityOperation) }}</td>
+                                    <td>{{ __('admin.operation_' . strtolower($log->entityOperation)) }}</td>
                                     <td>{{ $log->operationDescription }}</td>
                                     <td>{{ \Carbon\Carbon::parse($log->Datetime)->format('d M, Y H:i') }}</td>
                                 </tr>
                             @empty
                                 <tr>
-                                    <td colspan="4" class="text-center">No logs found</td>
+                                    <td colspan="4" class="text-center">{{ __('no_logs') }}</td> 
                                 </tr>
                             @endforelse
                         </tbody>
@@ -77,8 +83,6 @@
             </div>
         </div>
 
-
-
     </div>
-    
+
 @endsection

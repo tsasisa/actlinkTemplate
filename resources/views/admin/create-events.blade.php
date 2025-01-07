@@ -6,26 +6,27 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-4">Create New Event</h5>
+                <h5 class="card-title mb-4">{{ __('admin.create_new_event') }}</h5> <!-- Lokalisasi judul -->
+
                 <form method="POST" action="{{ route('admin.storeEvent') }}" enctype="multipart/form-data">
                     @csrf
-                    <!-- Event Name -->
+                    <!-- Name -->
                     <div class="form-outline mb-4">
-                        <input type="text" name="eventName" class="form-control" placeholder="Event Name" required />
+                        <input type="text" name="eventName" class="form-control" placeholder="{{ __('admin.event_name') }}" required />
                         @error('eventName')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <!-- Event Description -->
+                    <!-- Description -->
                     <div class="form-outline mb-4">
-                        <textarea name="eventDescription" class="form-control" placeholder="Event Description" required></textarea>
+                        <textarea name="eventDescription" class="form-control" placeholder="{{ __('admin.event_description') }}" required></textarea>
                         @error('eventDescription')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <!-- Event Date -->
+                    <!-- Date -->
                     <div class="form-outline mb-4">
                         <input type="datetime-local" name="eventDate" class="form-control" required id="eventDate" />
                         @error('eventDate')
@@ -33,23 +34,23 @@
                         @enderror
                     </div>
 
-                    <!-- Event Location -->
+                    <!-- Location -->
                     <div class="form-outline mb-4">
-                        <input type="text" name="eventLocation" class="form-control" placeholder="Event Location" required />
+                        <input type="text" name="eventLocation" class="form-control" placeholder="{{ __('admin.event_location') }}" required />
                         @error('eventLocation')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <!-- Participant Quota -->
+                    <!-- Quota -->
                     <div class="form-outline mb-4">
-                        <input type="number" name="eventParticipantQuota" class="form-control" placeholder="Participant Quota" required />
+                        <input type="number" name="eventParticipantQuota" class="form-control" placeholder="{{ __('admin.participant_quota') }}" required />
                         @error('eventParticipantQuota')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <!-- Event Image -->
+                    <!-- Image -->
                     <div class="form-outline mb-4">
                         <input type="file" name="eventImage" class="form-control" />
                         @error('eventImage')
@@ -57,10 +58,10 @@
                         @enderror
                     </div>
 
-                    <!-- Organizer Dropdown -->
+                    <!-- Organizer -->
                     <div class="form-outline mb-4">
                         <select name="organizerId" class="form-control" required>
-                            <option value="">Select Organizer</option>
+                            <option value="">{{ __('admin.select_organizer') }}</option>
                             @foreach($organizers as $organizer)
                                 <option value="{{ $organizer->organizerId }}">{{ $organizer->user->userName }}</option>
                             @endforeach
@@ -70,14 +71,14 @@
                         @enderror
                     </div>
 
-                    <!-- Event Type Dropdown -->
+                    <!-- Event Type -->
                     <div class="form-outline mb-4">
                         <select name="eventType" class="form-control" required>
-                            <option value="">Select Event Type</option>
-                            <option value="Environment">Environment</option>
-                            <option value="Social">Social</option>
-                            <option value="Healthcare">Healthcare</option>
-                            <option value="Education">Education</option>
+                            <option value="">{{ __('admin.select_event_type') }}</option>
+                            <option value="Environment">{{ __('admin.environment') }}</option>
+                            <option value="Social">{{ __('admin.social') }}</option>
+                            <option value="Healthcare">{{ __('admin.healthcare') }}</option>
+                            <option value="Education">{{ __('admin.education') }}</option>
                         </select>
                         @error('eventType')
                             <span class="text-danger">{{ $message }}</span>
@@ -86,7 +87,7 @@
 
                     <!-- Event Updates -->
                     <div class="form-outline mb-4">
-                        <textarea name="eventUpdates" class="form-control" placeholder="Event Updates" rows="3"></textarea>
+                        <textarea name="eventUpdates" class="form-control" placeholder="{{ __('admin.event_updates') }}" rows="3"></textarea>
                         @error('eventUpdates')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -94,14 +95,13 @@
 
                     <!-- Event Points -->
                     <div class="form-outline mb-4">
-                        <input type="number" name="eventPoints" class="form-control" placeholder="Event Points" required />
+                        <input type="number" name="eventPoints" class="form-control" placeholder="{{ __('admin.event_points') }}" required />
                         @error('eventPoints')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </div>
 
-                    <!-- Submit Button -->
-                    <button type="submit" class="btn btn-primary">Create Event</button>
+                    <button type="submit" class="btn btn-primary">{{ __('admin.create_event') }}</button>
                 </form>
             </div>
         </div>
