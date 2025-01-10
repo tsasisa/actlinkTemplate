@@ -5,18 +5,14 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
-                <h5 class="card-title mb-4">Edit Member</h5>
 
-                <!-- Display errors -->
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
+                <!-- Language Switcher -->
+                <div class="d-flex flex-row-reverse">
+                    <a class="btn btn-primary" style="margin-left: 10px;" href="{{ route('set-locale', 'id') }}">{{ __('admin.indonesia') }}</a>
+                    <a class="btn btn-primary" href="{{ route('set-locale', 'en') }}">{{ __('admin.english') }}</a>
+                </div>
+
+                <h5 class="card-title mb-4">{{ __('admin.edit_member') }}</h5>
 
                 <!-- Form untuk mengedit member -->
                 <form action="{{ route('admin.members.update', $member->memberId) }}" method="POST">
@@ -25,44 +21,142 @@
 
                     <!-- Input Nama -->
                     <div class="form-group">
-                        <label for="userName">Name</label>
-                        <input type="text" name="userName" id="userName" class="form-control" value="{{ old('userName', $member->user->userName) }}" required>
+                        <label for="userName">{{ __('admin.name') }}</label>
+                        <input 
+                            type="text" 
+                            name="userName" 
+                            id="userName" 
+                            class="form-control @error('userName') is-invalid @enderror" 
+                            value="{{ old('userName', $member->user->userName) }}" 
+                            required>
+                        @error('userName')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Input Phone Number -->
                     <div class="form-group">
-                        <label for="userPhoneNumber">Phone Number</label>
-                        <input type="text" name="userPhoneNumber" id="userPhoneNumber" class="form-control" value="{{ old('userPhoneNumber', $member->user->userPhoneNumber) }}">
+                        <label for="userPhoneNumber">{{ __('admin.phone') }}</label>
+                        <input 
+                            type="text" 
+                            name="userPhoneNumber" 
+                            id="userPhoneNumber" 
+                            class="form-control @error('userPhoneNumber') is-invalid @enderror" 
+                            value="{{ old('userPhoneNumber', $member->user->userPhoneNumber) }}">
+                        @error('userPhoneNumber')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Input Date of Birth -->
                     <div class="form-group">
-                        <label for="memberDOB">Date of Birth</label>
-                        <input type="date" name="memberDOB" id="memberDOB" class="form-control" value="{{ old('memberDOB', $member->memberDOB) }}">
+                        <label for="memberDOB">{{ __('admin.date_of_birth') }}</label>
+                        <input 
+                            type="date" 
+                            name="memberDOB" 
+                            id="memberDOB" 
+                            class="form-control @error('memberDOB') is-invalid @enderror" 
+                            value="{{ old('memberDOB', $member->memberDOB) }}">
+                        @error('memberDOB')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Input Points -->
                     <div class="form-group">
-                        <label for="memberPoints">Points</label>
-                        <input type="number" name="memberPoints" id="memberPoints" class="form-control" value="{{ old('memberPoints', $member->memberPoints) }}">
+                        <label for="memberPoints">{{ __('admin.points') }}</label>
+                        <input 
+                            type="number" 
+                            name="memberPoints" 
+                            id="memberPoints" 
+                            class="form-control @error('memberPoints') is-invalid @enderror" 
+                            value="{{ old('memberPoints', $member->memberPoints) }}">
+                        @error('memberPoints')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <!-- Dropdown untuk role (userType) -->
                     <div class="form-group">
-                        <label for="userType">Role</label>
-                        <select name="userType" id="userType" class="form-control">
-                            <option value="admin" {{ $member->user->userType == 'admin' ? 'selected' : '' }}>Admin</option>
-                            <option value="organizer" {{ $member->user->userType == 'organizer' ? 'selected' : '' }}>Organizer</option>
+                        <label for="userType">{{ __('admin.role') }}</label>
+                        <select 
+                            name="userType" 
+                            id="userType" 
+                            class="form-control @error('userType') is-invalid @enderror">
+                            <option value="member" {{ $member->user->userType == 'member' ? 'selected' : '' }}>{{ __('admin.member') }}</option>
+                            <option value="admin" {{ $member->user->userType == 'admin' ? 'selected' : '' }}>{{ __('admin.admin') }}</option>
+                            <option value="organizer" {{ $member->user->userType == 'organizer' ? 'selected' : '' }}>{{ __('admin.organizer') }}</option>
                         </select>
+                        @error('userType')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
                     </div>
-                    
+
+                    <!-- Input tambahan untuk Organizer -->
+                    <div id="organizerFields" style="display: none;">
+                        <div class="form-group">
+                            <label for="organizerAddress">{{ __('admin.organizer_address') }}</label>
+                            <input 
+                                type="text" 
+                                name="organizerAddress" 
+                                id="organizerAddress" 
+                                class="form-control @error('organizerAddress') is-invalid @enderror" 
+                                value="{{ old('organizerAddress') }}">
+                            @error('organizerAddress')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                        <div class="form-group">
+                            <label for="officialSocialMedia">{{ __('admin.official_social_media') }}</label>
+                            <input 
+                                type="text" 
+                                name="officialSocialMedia" 
+                                id="officialSocialMedia" 
+                                class="form-control @error('officialSocialMedia') is-invalid @enderror" 
+                                value="{{ old('officialSocialMedia') }}">
+                            @error('officialSocialMedia')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
                     <!-- Tombol Save Changes -->
                     <br>
-                    <button type="submit" class="btn btn-primary">Save Changes</button>
-                    <a href="{{ route('admin.members.indexMember') }}" class="btn btn-secondary">Cancel</a>
+                    <button type="submit" class="btn btn-primary">{{ __('admin.save_changes') }}</button>
+                    <a href="{{ route('admin.members.indexMember') }}" class="btn btn-secondary">{{ __('admin.cancel') }}</a>
                 </form>
             </div>
         </div>
     </div>
 </div>
+
+<script>
+   document.addEventListener('DOMContentLoaded', function () {
+    const userTypeDropdown = document.getElementById('userType');
+    const organizerFields = document.getElementById('organizerFields');
+    const organizerAddressField = document.getElementById('organizerAddress');
+    const officialSocialMediaField = document.getElementById('officialSocialMedia');
+
+    function toggleOrganizerFields() {
+        if (userTypeDropdown.value === 'organizer') {
+            organizerFields.style.display = 'block';
+        } else {
+            organizerFields.style.display = 'none';
+            // Reset nilai jika tidak ada error validasi
+            if (!organizerAddressField.classList.contains('is-invalid') && 
+                !officialSocialMediaField.classList.contains('is-invalid')) {
+                organizerAddressField.value = '';
+                officialSocialMediaField.value = '';
+            }
+        }
+    }
+
+    // Jalankan fungsi saat halaman dimuat ulang
+    toggleOrganizerFields();
+
+    // Tambahkan event listener untuk perubahan dropdown
+    userTypeDropdown.addEventListener('change', toggleOrganizerFields);
+});
+
+</script>
 @endsection

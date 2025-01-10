@@ -5,6 +5,8 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
+
+                <!-- Flash Messages -->
                 @if (\Session::has('success'))
                     <div class="alert alert-success">
                         <p>{!! \Session::get('success') !!}</p>
@@ -21,16 +23,22 @@
                     </div>
                 @endif
 
-                <h5 class="card-title mb-4">Organizer Management</h5>
+                <!-- Language Switcher -->
+                <div class="d-flex flex-row-reverse">
+                    <a class="btn btn-primary" style="margin-left: 10px;" href="{{ route('set-locale', 'id') }}">{{ __('admin.indonesia') }}</a>
+                    <a class="btn btn-primary" href="{{ route('set-locale', 'en') }}">{{ __('admin.english') }}</a>
+                </div>
+
+                <h5 class="card-title mb-4">{{ __('admin.organizer_management') }}</h5>
 
                 <!-- Filter Organizer -->
                 <form method="GET" action="{{ route('admin.organizers') }}">
                     <div class="form-inline mb-4">
-                        <label for="status" class="mr-2">Filter Status:</label>
+                        <label for="status" class="mr-2">{{ __('admin.filter_status') }}:</label>
                         <select name="status" class="form-control" onchange="this.form.submit()">
-                            <option value="">All</option>
-                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>Pending</option>
-                            <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>Accepted</option> 
+                            <option value="">{{ __('admin.all') }}</option>
+                            <option value="pending" {{ request('status') == 'pending' ? 'selected' : '' }}>{{ __('admin.pending') }}</option>
+                            <option value="accepted" {{ request('status') == 'accepted' ? 'selected' : '' }}>{{ __('admin.accepted') }}</option>
                         </select>
                     </div>
                 </form>
@@ -38,13 +46,13 @@
                 <table class="table mt-4">
                     <thead>
                         <tr>
-                            <th>Id</th>
-                            <th>Name</th>
-                            <th>Address</th>
-                            <th>Social Media</th>
-                            <th>Email</th>
-                            <th>Status</th>
-                            <th>Actions</th>
+                            <th>{{ __('admin.id') }}</th>
+                            <th>{{ __('admin.name') }}</th>
+                            <th>{{ __('admin.address') }}</th>
+                            <th>{{ __('admin.social_media') }}</th>
+                            <th>{{ __('admin.email') }}</th>
+                            <th>{{ __('admin.status') }}</th>
+                            <th>{{ __('admin.actions') }}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -52,22 +60,22 @@
                             <tr>
                                 <td>{{ $organizer->organizerId }}</td>
                                 <td>{{ $organizer->user->userName }}</td>
-                                <td>{{ $organizer->organizerAddress ?? 'No Address' }}</td>
+                                <td>{{ $organizer->organizerAddress ?? __('admin.no_address') }}</td>
                                 <td>{{ $organizer->officialSocialMedia }}</td>
                                 <td>{{ $organizer->user->userEmail }}</td>
                                 <td>
                                     @if ($organizer->activeFlag)
-                                        <span class="badge badge-success">Accepted</span>
+                                        <span class="badge badge-success">{{ __('admin.accepted') }}</span>
                                     @else
-                                        <span class="badge badge-warning">Pending</span>
+                                        <span class="badge badge-warning">{{ __('admin.pending') }}</span>
                                     @endif
                                 </td>
                                 <td>
                                     @if (!$organizer->activeFlag)
-                                        <a href="{{ route('admin.organizers.accept', $organizer->organizerId) }}" class="btn btn-success btn-sm">Accept</a>
-                                        <a href="{{ route('admin.organizers.decline', $organizer->organizerId) }}" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure you want to decline this organizer?')">Decline</a>
+                                        <a href="{{ route('admin.organizers.accept', $organizer->organizerId) }}" class="btn btn-success btn-sm">{{ __('admin.accept') }}</a>
+                                        <a href="{{ route('admin.organizers.decline', $organizer->organizerId) }}" class="btn btn-danger btn-sm" onclick="return confirm('{{ __('admin.confirm_decline') }}')">{{ __('admin.decline') }}</a>
                                     @else
-                                        <a href="{{ route('admin.organizers.edit', $organizer->organizerId) }}" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="{{ route('admin.organizers.edit', $organizer->organizerId) }}" class="btn btn-warning btn-sm">{{ __('admin.edit') }}</a>
                                     @endif
                                 </td>
                             </tr>

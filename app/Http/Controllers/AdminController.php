@@ -261,62 +261,60 @@ class AdminController extends Controller
 
     public function updateOrganizer(Request $request, $organizerId)
     {
-
+        // Cari organizer berdasarkan ID
         $organizer = Organizer::find($organizerId);
-
 
         if (!$organizer) {
             return redirect()->route('admin.organizers')->with('error', 'Organizer not found');
         }
 
-
+        // Validasi input
         $validatedData = $request->validate([
             'userName' => 'required|string|max:255',
-            'organizerAddress' => 'nullable|string|max:255',
-            'officialSocialMedia' => 'nullable|string|max:255',
-        ]);
+            'organizerAddress' => 'required|string|max:255',
+            'officialSocialMedia' => 'required|url|max:255',
+        ], __('validationEditOrganizer.custom'));
+        
 
-
+        // Update data user
         $organizer->user->update([
             'userName' => $validatedData['userName'],
         ]);
 
-
+        // Update data organizer
         $organizer->update([
             'organizerAddress' => $validatedData['organizerAddress'],
             'officialSocialMedia' => $validatedData['officialSocialMedia'],
         ]);
 
+        // Log aktivitas
         $user = $organizer->user;
 
         $this->logActivity(
             'Organizer',
-            'Updated', 
-            'Updated organizer: ' . $user->userName 
+            'Updated',
+            'Updated organizer: ' . $user->userName
         );
-
 
         return redirect()->route('admin.organizers')->with('success', 'Organizer updated successfully');
     }
 
-    // =================== MEMBER MANAGEMENT =======================================
+
+   // =================== MEMBER MANAGEMENT =======================================
 
     public function indexMember(Request $request)
     {
         $searchName = $request->get('searchName');
         $members = Member::whereHas('user', function ($query) use ($searchName) {
-
             $query->where('userName', 'like', '%' . $searchName . '%')
-                  ->where('userType', 'member');
+                ->where('userType', 'member');
         })->paginate(10);
-
 
         return view('admin.members', compact('members'));
     }
 
     public function editMember($memberId)
     {
-
         $member = Member::find($memberId);
 
         if (!$member) {
@@ -328,74 +326,79 @@ class AdminController extends Controller
 
     public function updateMember(Request $request, $memberId)
     {
-
+        // Cari member berdasarkan ID
         $member = Member::find($memberId);
 
         if (!$member) {
-            return redirect()->route('admin.members.indexMember')->with('error', 'Member not found');
+            return redirect()->route('admin.members.indexMember')->with('error', __('admin.member_not_found'));
         }
 
         $validatedData = $request->validate([
-            'userName' => 'required|string|max:255',
-            'userPhoneNumber' => 'nullable|string|max:255',
-            'memberDOB' => 'nullable|date',
-            'memberPoints' => 'nullable|integer',
-            'userType' => 'required|string|in:admin,organizer,member',
-        ]);
+            'userName' => 'required|string|max:255', 
+            'userPhoneNumber' => 'required|regex:/^08[0-9]{7,}$/|max:15', 
+            'memberDOB' => 'required|date', 
+            'memberPoints' => 'nullable|integer|min:0', 
+            'userType' => 'required|string|in:member,admin,organizer', 
+            'organizerAddress' => 'exclude_if:userType,member|exclude_if:userType,admin|required|string|max:255',
+            'officialSocialMedia' => 'exclude_if:userType,member|exclude_if:userType,admin|required|url|max:255'
+        ], __('validationEditMember.custom'));
+        
 
-
+        // Update data user
         $member->user->update([
             'userName' => $validatedData['userName'],
             'userPhoneNumber' => $validatedData['userPhoneNumber'],
             'userType' => $validatedData['userType'],
         ]);
 
+        // Update data member
         $member->update([
             'memberDOB' => $validatedData['memberDOB'],
             'memberPoints' => $validatedData['memberPoints'],
         ]);
 
-        $user = Auth::user();
+        // Jika role berubah menjadi organizer
+        if ($validatedData['userType'] === 'organizer') {
+            Organizer::updateOrCreate(
+                ['organizerId' => $member->user->userId], // Cari berdasarkan organizerId
+                [
+                    'organizerAddress' => $validatedData['organizerAddress'],
+                    'officialSocialMedia' => $validatedData['officialSocialMedia'],
+                    'activeFlag' => true,
+                ]
+            );
+        } else {
+            // Hapus data organizer jika role bukan organizer
+            Organizer::where('organizerId', $member->user->userId)->delete();
+        }
 
-        $this->logActivity(
-            'Member',
-            'Updated', 
-            ' Admin updated member: ' . $user->userName 
-        );
-
-        return redirect()->route('admin.members.indexMember')
-            ->with('success', 'Member updated successfully!');
+        return redirect()->route('admin.members.indexMember')->with('success', __('admin.member_updated'));
     }
 
+    
     public function deleteMember($memberId)
     {
-
         $member = Member::find($memberId);
 
         if (!$member) {
             return redirect()->route('admin.members.indexMember')->with('error', 'Member not found');
         }
 
-
         $user = $member->user;
         $member->delete();
         $user->delete();
 
-        $user = Auth::user();
-
         $this->logActivity(
             'Member',
             'Deleted', 
-            ' Admin deleted member: ' . $user->userName 
+            'Admin deleted member: ' . $user->userName 
         );
 
         return redirect()->route('admin.members.indexMember')->with('success', 'Member deleted successfully');
     }
 
-
     public function updateRoleMember(Request $request, $memberId)
     {
-
         $member = Member::find($memberId);
 
         if (!$member) {
@@ -410,15 +413,14 @@ class AdminController extends Controller
             'userType' => $request->userType,
         ]);
 
-        $user = Auth::user();
-
         $this->logActivity(
             'Member',
             'Updated', 
-            ' Admin updated member role of : ' . $user->userName 
+            'Admin updated member role of : ' . $member->user->userName 
         );
 
         return redirect()->route('admin.members.indexMember')->with('success', 'Role updated successfully');
     }
+
 
 }

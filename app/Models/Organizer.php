@@ -11,6 +11,7 @@ class Organizer extends Model
     public $timestamps = false;
 
     protected $fillable = [
+        'organizerId',
         'organizerAddress',
         'organizerPhoneNumber',
         'officialSocialMedia',
