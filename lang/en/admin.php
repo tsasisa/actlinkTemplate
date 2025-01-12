@@ -141,4 +141,5 @@ return [
     'cancel' => 'Cancel',
     'english' => 'English',
     'indonesia' => 'Indonesian',
+
 ];

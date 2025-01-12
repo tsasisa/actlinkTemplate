@@ -5,23 +5,24 @@
     
     @section('content')
 
-    <section class="page-header py-5 text-center text-white" style="position: relative; overflow: hidden; background-image: url('{{ asset('assets/images/hiw1.png') }}'); background-size: cover; background-position: center; min-height: 600px; display: flex; align-items: center; justify-content: center;">
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1;"></div>
-        <div class="container position-relative text-center" style="z-index: 2; padding: 20px;">
-            <h1 class="display-4 fw-bold">How ActLink Works</h1>
-            <p class="lead">ActLink is a comprehensive event platform that connects organizers and participants for seamless event discovery, participation, and management.</p>
-        </div>
-    </section>
+<!-- How ActLink Works Section -->
+<section class="page-header py-5 text-center text-white" style="position: relative; overflow: hidden; background-image: url('{{ asset('assets/images/hiw1.png') }}'); background-size: cover; background-position: center; min-height: 600px; display: flex; align-items: center; justify-content: center;">
+    <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.6); z-index: 1;"></div>
+    <div class="container position-relative text-center" style="z-index: 2; padding: 20px;">
+        <h1 class="display-4 fw-bold">{{ __('messages.how_actlink_works_title') }}</h1>
+        <p class="lead">{{ __('messages.how_actlink_works_description') }}</p>
+    </div>
+</section>
+
 <!-- Visual Content Section for Members -->
 <section class="visual-content py-5" style="background-color: #28a745;">
     <div class="container">
-        <h2 class="content-title mb-3 text-center text-white">For Members</h2>
+        <h2 class="content-title mb-3 text-center text-white">{{ __('messages.for_members_title') }}</h2>
         <div class="row">
-            @foreach(['Register', 'Login', 'View Events', 'Select Event', 'Participate', 'Earn Points'] as $index => $step)
+            @foreach(['register', 'login', 'view_events', 'select_event', 'participate', 'earn_points'] as $index => $step)
             <div class="col-md-4 mb-4">
                 <div class="gif-container" style="text-align: center;">
-                    {{-- <img src="{{ asset('assets/images/hiwm' . ($index + 1) . '.gif') }}" alt="{{ $step }}" class="img-fluid" style="margin-bottom: 10px;"> --}}
-                    <p class="text-center text-white"><strong>{{ $index + 1 }}. {{ $step }}</strong></p>
+                    <p class="text-center text-white"><strong>{{ $loop->iteration }}. {{ __( 'messages.' . $step) }}</strong></p>
                 </div>
             </div>
             @endforeach
@@ -32,14 +33,14 @@
 <!-- Detailed Content Section for Members -->
 <section class="detailed-content py-5">
     <div class="container">
-        <p class="mb-4">Follow these steps to engage with events that inspire and excite:</p>
+        <p class="mb-4">{{ __('messages.register_description') }}</p>
         <ol style="color: black; font-size: 1.1rem;">
-            <li><strong>Register:</strong> Sign up on ActLink by providing your basic details to create an account.</li>
-            <li><strong>Login:</strong> Access your new ActLink account using the credentials you set up.</li>
-            <li><strong>View Events:</strong> Browse through a diverse list of events sorted by categories that interest you.</li>
-            <li><strong>Select an Event:</strong> Find an event that aligns with your interests and click on it for more details.</li>
-            <li><strong>Participate:</strong> Join the event by registering your attendance. You might also be able to interact online if the event supports it.</li>
-            <li><strong>Earn Points:</strong> Participate in events and earn points that can be redeemed for future events or exclusive perks.</li>
+            <li><strong>{{ __('messages.register') }}:</strong> {{ __('messages.register_description') }}</li>
+            <li><strong>{{ __('messages.login') }}:</strong> {{ __('messages.login_description') }}</li>
+            <li><strong>{{ __('messages.view_events') }}:</strong> {{ __('messages.view_events_description') }}</li>
+            <li><strong>{{ __('messages.select_event') }}:</strong> {{ __('messages.select_event_description') }}</li>
+            <li><strong>{{ __('messages.participate') }}:</strong> {{ __('messages.participate_description') }}</li>
+            <li><strong>{{ __('messages.earn_points') }}:</strong> {{ __('messages.earn_points_description') }}</li>
         </ol>
     </div>
 </section>
@@ -48,11 +49,10 @@
 <section class="visual-content py-5" style="background-color: #28a745;">
     <div class="container">
         <div class="row">
-            @foreach(['Register', 'Login', 'View Events', 'Select Event', 'Participate', 'Earn Points'] as $index => $step)
+            @foreach(['register', 'login', 'view_events', 'select_event', 'participate', 'earn_points'] as $index => $step)
             <div class="col-md-4 mb-4">
                 <div class="gif-container">
-                    <!-- Adjusted image source to follow your file naming convention -->
-                    <p class="text-center mt-2 text-white"><strong>{{ $index + 1 }}. {{ $step }}</strong></p>
+                    <p class="text-center mt-2 text-white"><strong>{{ $loop->iteration }}. {{ __( 'messages.' . $step) }}</strong></p>
                 </div>
             </div>
             @endforeach
@@ -63,18 +63,17 @@
 <!-- Detailed Content Section for Organizers -->
 <section class="detailed-content py-5">
     <div class="container">
-        <p class="mb-4">Manage your events efficiently with these structured steps:</p>
+        <p class="mb-4">{{ __('messages.register_description') }}</p>
         <ol style="color: black; font-size: 1.1rem;">
-            <li><strong>Register:</strong> Create an organizer account to start managing your events.</li>
-            <li><strong>Login:</strong> Log in to access your organizer dashboard.</li>
-            <li><strong>Create Event:</strong> Set up a new event by providing all necessary details like date, location, and participant quota.</li>
-            <li><strong>Publish Event:</strong> Once your event is ready, publish it on ActLink to make it visible to potential participants.</li>
-            <li><strong>Manage Participants:</strong> Track registrations, manage attendee lists, and update event details as needed.</li>
-            <li><strong>Feedback and Points:</strong> After the event, gather feedback from participants and earn reputation points based on their satisfaction and engagement.</li>
+            <li><strong>{{ __('messages.register') }}:</strong> {{ __('messages.register_description') }}</li>
+            <li><strong>{{ __('messages.login') }}:</strong> {{ __('messages.login_description') }}</li>
+            <li><strong>{{ __('messages.create_event') }}:</strong> {{ __('messages.create_event') }}</li>
+            <li><strong>{{ __('messages.publish_event') }}:</strong> {{ __('messages.publish_event') }}</li>
+            <li><strong>{{ __('messages.manage_participants') }}:</strong> {{ __('messages.manage_participants') }}</li>
+            <li><strong>{{ __('messages.feedback_and_points') }}:</strong> {{ __('messages.feedback_and_points') }}</li>
         </ol>
     </div>
 </section>
-
 
 
     

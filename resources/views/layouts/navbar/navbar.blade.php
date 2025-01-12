@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // If necessary, add custom JS for dropdown toggle for unauthenticated users
+            const localeDropdown = document.getElementById('localeDropdown');
+            if (localeDropdown) {
+                new bootstrap.Dropdown(localeDropdown);
+            }
+        });
+    </script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
@@ -77,117 +86,128 @@
     <title>ActLink</title>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg">
-        <div class="container d-flex align-items-center">
-            <!-- Company Logo -->
-            <a class="navbar-brand me-auto" href="#">
-                <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
-            </a>
-    
-            <!-- Hamburger Menu -->
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-    
-            <!-- Center Navigation Links -->
-            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
-                <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('/') || request()->is('member/home') ? 'active' : '' }}" href="/">Home</a>
+   <!-- Navbar code -->
+<nav class="navbar navbar-expand-lg">
+    <div class="container d-flex align-items-center">
+        <!-- Company Logo on the Left -->
+        <a class="navbar-brand me-auto" href="#">
+            <img src="{{ asset('assets/images/logo.png') }}" alt="Logo">
+        </a>
+
+        <!-- Hamburger Menu for Mobile -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <!-- Centered Navigation Links -->
+        <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('/') || request()->is('member/home') ? 'active' : '' }}" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('shop') ? 'active' : '' }}" href="/shop">Shop</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('leaderboard') ? 'active' : '' }}" href="/leaderboard">Leaderboard</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Right Side of Navbar -->
+        <div class="ms-auto d-flex align-items-center gap-3">
+            <!-- Localization Dropdown -->
+            <div class="dropdown">
+                <a 
+                    href="#" 
+                    class="d-flex align-items-center text-decoration-none dropdown-toggle" 
+                    id="localeDropdown" 
+                    data-bs-toggle="dropdown" 
+                    aria-expanded="false"
+                >
+                    <i class="bi bi-globe me-2"></i>
+                    <span class="text-dark" style="font-weight: 500;">
+                        {{ session('locale', 'en') == 'id' ? 'Bahasa Indonesia' : 'English' }}
+                    </span>
+                </a>
+
+                <ul class="dropdown-menu" aria-labelledby="localeDropdown">
+                    <li>
+                        <a 
+                            class="dropdown-item {{ session('locale') == 'en' ? 'active' : '' }}" 
+                            href="{{ route('set-locale', 'en') }}"
+                        >
+                            English
+                        </a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('shop') ? 'active' : '' }}" href="/shop">Shop</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('leaderboard') ? 'active' : '' }}" href="/leaderboard">Leaderboard</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
+                    <li>
+                        <a 
+                            class="dropdown-item {{ session('locale') == 'id' ? 'active' : '' }}" 
+                            href="{{ route('set-locale', 'id') }}"
+                        >
+                            Bahasa Indonesia
+                        </a>
                     </li>
                 </ul>
             </div>
-    
-            <!-- Right Side of Navbar -->
-            <div class="ms-auto d-flex align-items-center gap-3">
-                <!-- Localization Dropdown -->
+
+            @auth
+                <!-- Dropdown for "My Profile" -->
                 <div class="dropdown">
                     <a 
                         href="#" 
                         class="d-flex align-items-center text-decoration-none dropdown-toggle" 
-                        id="localeDropdown" 
+                        id="profileDropdown" 
                         data-bs-toggle="dropdown" 
                         aria-expanded="false"
                     >
-                        <i class="bi bi-globe me-2"></i>
+                        <i class="bi bi-person-circle me-2"></i>
                         <span class="text-dark" style="font-weight: 500;">
-                            {{ session('locale', 'en') == 'id' ? 'Bahasa Indonesia' : 'English' }}
+                            {{ Auth::user()->userName ?? 'My Profile' }}
                         </span>
                     </a>
-    
-                    <ul class="dropdown-menu" aria-labelledby="localeDropdown">
-                        <li>
-                            <a 
-                                class="dropdown-item {{ session('locale') == 'en' ? 'active' : '' }}" 
-                                href="{{ route('set-locale', 'en') }}"
-                            >
-                                English
-                            </a>
-                        </li>
-                        <li>
-                            <a 
-                                class="dropdown-item {{ session('locale') == 'id' ? 'active' : '' }}" 
-                                href="{{ route('set-locale', 'id') }}"
-                            >
-                                Bahasa Indonesia
-                            </a>
+
+                    <!-- Dropdown Menu -->
+                    <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="min-width: 200px;">
+                        <!-- Common for all users -->
+                        <li><a class="dropdown-item" href="{{ route('profile', Auth::user()->userId) }}">My Profile</a></li>
+
+                        <!-- Member-only option -->
+                        @if(Auth::user()->userType === 'member')
+                            <li><a class="dropdown-item" href="{{ route('member.registered.events') }}">Registered Events</a></li>
+                        @endif
+
+                        <!-- Organizer-only option -->
+                        @if(Auth::user()->userType === 'organizer')
+                            <li><a class="dropdown-item" href="{{ route('organizer.manage-event') }}">Manage Events</a></li>
+                        @endif
+
+                        <li><hr class="dropdown-divider"></li>
+
+                        <!-- Logout Button with Padding -->
+                        <li class="px-3">
+                            <form action="{{ route('logout') }}" method="POST" class="m-0">
+                                @csrf
+                                <button type="submit" class="btn btn-outline-danger w-100">Logout</button>
+                            </form>
                         </li>
                     </ul>
                 </div>
-    
-                @auth
-                    <!-- Profile Dropdown for Authenticated Users -->
-                    <div class="dropdown">
-                        <a 
-                            href="#" 
-                            class="d-flex align-items-center text-decoration-none dropdown-toggle" 
-                            id="profileDropdown" 
-                            data-bs-toggle="dropdown" 
-                            aria-expanded="false"
-                        >
-                            <i class="bi bi-person-circle me-2"></i>
-                            <span class="text-dark" style="font-weight: 500;">
-                                {{ Auth::user()->userName ?? 'My Profile' }}
-                            </span>
-                        </a>
-    
-                        <ul class="dropdown-menu" aria-labelledby="profileDropdown" style="min-width: 200px;">
-                            <li><a class="dropdown-item" href="{{ route('profile', Auth::user()->userId) }}">My Profile</a></li>
-                            @if(Auth::user()->userType === 'member')
-                                <li><a class="dropdown-item" href="{{ route('member.registered.events') }}">Registered Events</a></li>
-                            @endif
-                            @if(Auth::user()->userType === 'organizer')
-                                <li><a class="dropdown-item" href="{{ route('organizer.manage-event') }}">Manage Events</a></li>
-                            @endif
-                            <li><hr class="dropdown-divider"></li>
-                            <li class="px-3">
-                                <form action="{{ route('logout') }}" method="POST" class="m-0">
-                                    @csrf
-                                    <button type="submit" class="btn btn-outline-danger w-100">Logout</button>
-                                </form>
-                            </li>
-                        </ul>
-                    </div>
-                @else
-                    <!-- Login and Register for Unauthenticated Users -->
-                    <a href="/register" class="btn btn-green">Register</a>
-                    <a href="/login" class="btn btn-outline-success ms-2">Login</a>
-                @endauth
-            </div>
+            @else
+                <!-- Register and Login Buttons -->
+                <a href="/register" class="btn btn-green">Register</a>
+                <a href="/login" class="btn btn-outline-success ms-2">Login</a>
+            @endauth
         </div>
-    </nav>
+    </div>
+</nav>
+    
     
     
 
