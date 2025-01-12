@@ -20,7 +20,7 @@
             @foreach(['Register', 'Login', 'View Events', 'Select Event', 'Participate', 'Earn Points'] as $index => $step)
             <div class="col-md-4 mb-4">
                 <div class="gif-container" style="text-align: center;">
-                    <img src="{{ asset('assets/images/hiwm' . ($index + 1) . '.gif') }}" alt="{{ $step }}" class="img-fluid" style="margin-bottom: 10px;">
+                    {{-- <img src="{{ asset('assets/images/hiwm' . ($index + 1) . '.gif') }}" alt="{{ $step }}" class="img-fluid" style="margin-bottom: 10px;"> --}}
                     <p class="text-center text-white"><strong>{{ $index + 1 }}. {{ $step }}</strong></p>
                 </div>
             </div>

@@ -9,57 +9,49 @@ class CheckUserRole
 {
     public function handle($request, Closure $next)
     {
-        // Allow unauthenticated users to access the home page
         if (!Auth::check()) {
-            return $next($request);
+            return redirect()->route('login');
         }
 
-        // Redirect authenticated users accessing '/' to their respective home pages
-        if ($request->path() === '/') {
-            switch (Auth::user()->userType) {
-                case 'admin':
-                    return redirect()->route('admin.home');
-                case 'organizer':
-                    if (Auth::user()->organizer && Auth::user()->organizer->activeFlag == 0) {
-                        return redirect()->route('organizer.waitingAccept');
-                    }
-                    return redirect()->route('organizer.home');
-                case 'member':
-                    return redirect()->route('member.home');
+        $user = Auth::user();
+        $userType = $user->userType;
+
+        // Define role-specific route prefixes
+        $roleRoutes = [
+            'admin' => 'admin',
+            'organizer' => 'organizer',
+            'member' => 'member',
+        ];
+
+        // Check if the current route matches the user's role
+        if (!isset($roleRoutes[$userType]) || !$request->is($roleRoutes[$userType] . '/*')) {
+            return $this->redirectToRoleHome($userType);
+        }
+
+        // Handle special case for inactive organizers
+        if ($userType === 'organizer' && $user->organizer && $user->organizer->activeFlag == 0) {
+            if (!$request->is('organizer/waitingAccept')) {
+                return redirect()->route('organizer.waitingAccept');
             }
         }
 
-        // Redirect authenticated users attempting to access unknown or restricted routes
-        $userType = Auth::user()->userType;
+        return $next($request);
+    }
 
+    /**
+     * Redirect to the appropriate home route for the user's role.
+     */
+    private function redirectToRoleHome($userType)
+    {
         switch ($userType) {
             case 'admin':
-                if (!$request->is('admin/*')) {
-                    return redirect()->route('admin.home');
-                }
-                break;
-
+                return redirect()->route('admin.home');
             case 'organizer':
-                if (Auth::user()->organizer) {
-                    if (Auth::user()->organizer->activeFlag == 0 && !$request->is('organizer/waitingAccept')) {
-                        return redirect()->route('organizer.waitingAccept');
-                    }
-                    if (Auth::user()->organizer->activeFlag == 1 && !$request->is('organizer/*')) {
-                        return redirect()->route('organizer.home');
-                    }
-                }
-                break;
-
+                return redirect()->route('organizer.home');
             case 'member':
-                if (!$request->is('member/*')) {
-                    return redirect()->route('member.home');
-                }
-                break;
-
+                return redirect()->route('member.home');
             default:
                 return redirect('/')->with('error', 'Unauthorized access.');
         }
-
-        return $next($request);
     }
 }
