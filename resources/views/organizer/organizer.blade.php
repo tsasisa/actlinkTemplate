@@ -1,11 +1,9 @@
 @extends('layouts.navbar.navbar')
 @section('content')
-<div class="container">
-   
+<div id="app">
+    <div class="container">
     
     <h1 class="page-title">@lang('organizer.Recently-Created-Events')</h1>
-    <a href="{{ route('organizer.manage-event') }}"><button type="button" class="btn btn-success my-3">@lang('organizer.Manage-Event')</button></a>
-    <a href="{{ route('organizer.create-product') }}"><button type="button" class="btn btn-success my-3">@lang('organizer.Add-Product')</button></a>
     
     <section class="latest-events ">
     <div class="container text-center">
@@ -30,7 +28,8 @@
                 {{ $events->links('pagination::bootstrap-5') }}
         </div>
     </div>
-</section>
+    </section>
+    </div>
 </div>
 
 <style>

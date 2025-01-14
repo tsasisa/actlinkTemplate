@@ -1,9 +1,11 @@
 @extends('layouts.navbar.navbar')
 @section('content')
-<div class="container">
+
+<div id="app">
+    <div class="container">
 
     <a href="{{route('organizer.create-event')}}"><button type="button" class="btn btn-success my-3">@lang('organizer.Create-Event')</button></a>
-    
+
     <h1>@lang('organizer.Your-Events')</h1>
     <section class="latest-events my-3 ">
         <div class="container text-center">
@@ -51,7 +53,9 @@
             </div>
         </div>
     </section>
+    </div>
 </div>
+
 <style>
     body {
         background-color: #f9fafb;

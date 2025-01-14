@@ -17,6 +17,24 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
 
+        html, body {
+            height: 100%;  
+        }
+
+        #app {
+            min-height: 70%; 
+            display: flex;
+            flex-direction: column;
+        }
+
+        .content {
+            flex: 1; 
+        }
+
+        .footer {
+            margin-top: auto; 
+        }
+
         .navbar {
             background-color: white !important;
             padding: 0.5rem 1rem;
@@ -101,23 +119,64 @@
 
         <!-- Centered Navigation Links -->
         <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+            @if(Auth::check())
+                @if(Auth::user()->userType === 'organizer')
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('/') || request()->is('member/home') ? 'active' : '' }}" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('organizer.manage-event') }}">
+                                @lang('organizer.Manage-Event')
+                            </a>
+                        </li>
+                        <li class="nav-item" >
+                            <a class="nav-link" href="{{ route('organizer.create-product') }}">
+                                @lang('organizer.Add-Product')
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
+                        </li>
+                    </ul>
+                @else
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('/') || request()->is('member/home') ? 'active' : '' }}" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('shop') ? 'active' : '' }}" href="/shop">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('leaderboard') ? 'active' : '' }}" href="/leaderboard">Leaderboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
+                        </li>
+                    </ul>
+                @endif
+            @else
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('/') || request()->is('member/home') ? 'active' : '' }}" href="/">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('shop') ? 'active' : '' }}" href="/shop">Shop</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('leaderboard') ? 'active' : '' }}" href="/leaderboard">Leaderboard</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
-                </li>
-            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('/') || request()->is('member/home') ? 'active' : '' }}" href="/">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('events') ? 'active' : '' }}" href="/events">Events</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('shop') ? 'active' : '' }}" href="/shop">Shop</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('leaderboard') ? 'active' : '' }}" href="/leaderboard">Leaderboard</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {{ request()->is('how-it-works') ? 'active' : '' }}" href="/how-it-works">How it Works</a>
+                        </li>
+                    </ul>
+            @endif
         </div>
 
         <!-- Right Side of Navbar -->
