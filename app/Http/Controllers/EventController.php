@@ -14,9 +14,20 @@ class EventController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $events = Event::paginate(3);
+        $query = Event::query();
+    
+        if ($request->filled('category')) {
+            $query->where('eventType', $request->category);
+        }
+    
+        if ($request->filled('search')) {
+            $query->where('eventName', 'like', '%' . $request->search . '%');
+        }
+    
+        $events = $query->paginate(3);
+    
         return view('unregistered.events', compact('events'));
     }
 
@@ -70,7 +81,7 @@ class EventController extends Controller
             'isRegistered' => $isRegistered,
             'from' => $request->query('from', 'events'),
         ]);
-}
+    }
 
     /**
      * Show the form for editing the specified resource.

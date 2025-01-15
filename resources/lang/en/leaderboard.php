@@ -2,7 +2,7 @@
 
 return [
     'header' => [
-        'title' => '🏆 Leaderboard',
+        'title' => 'Leaderboard',
         'description' => 'Top members with the highest points!',
     ],
     'leaderboard' => [

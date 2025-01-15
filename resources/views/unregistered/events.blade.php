@@ -9,6 +9,40 @@
         </div>
     </section>
 
+     <!-- Search and Filter -->
+    <section class="search-filter py-4 bg-light">
+        <div class="container">
+            <form method="GET" action="{{ route('events.index') }}" class="d-flex justify-content-between align-items-center">
+                <!-- Search Input and Button -->
+                <div class="d-flex w-50 align-items-center">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        class="form-control me-2" 
+                        placeholder="Search events" 
+                        value="{{ request()->get('search') }}"
+                    >
+                    <button 
+                        type="submit" 
+                        class="btn btn-success d-flex justify-content-center align-items-center p-0" 
+                        style="width: 40px; height: 40px;">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+
+                <!-- Category Filter -->
+                <div class="filter-group ms-3">
+                    <select name="category" class="form-select" onchange="this.form.submit()">
+                        <option value="">All Categories</option>
+                        <option value="Environment" {{ request()->get('category') == 'Environment' ? 'selected' : '' }}>Environment</option>
+                        <option value="Healthcare" {{ request()->get('category') == 'Healthcare' ? 'selected' : '' }}>Healthcare</option>
+                        <option value="Social" {{ request()->get('category') == 'Social' ? 'selected' : '' }}>Social</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    </section>
+
     <!-- Events List Section -->
     <section class="events-list py-5">
         <div class="container">

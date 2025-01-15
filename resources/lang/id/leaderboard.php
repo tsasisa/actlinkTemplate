@@ -2,7 +2,7 @@
 
 return [
     'header' => [
-        'title' => '🏆 Papan Peringkat',
+        'title' => 'Papan Peringkat',
         'description' => 'Anggota teratas dengan poin terbanyak!',
     ],
     'leaderboard' => [
