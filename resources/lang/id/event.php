@@ -1,0 +1,38 @@
+<?php
+
+return [
+    'detail' => [
+        'page_header' => 'Detail Acara',
+        'subheader' => 'Temukan semua informasi tentang acara ini dan bergabunglah dalam pergerakan.',
+        'back_to_registered' => 'Kembali ke Acara yang Terdaftar',
+        'back_to_list' => 'Kembali ke Daftar Acara',
+        'join_event' => 'Ikuti Acara Ini',
+        'event_full' => 'Acara ini sudah penuh.',
+        'event_full_btn' => 'Acara Penuh',
+        'login_to_register' => 'Login untuk Mendaftar',
+        'already_registered' => 'Anda sudah terdaftar untuk acara ini.',
+        'already_registered_btn' => 'Sudah Terdaftar',
+        'register_now' => 'Daftar Sekarang',
+        'slots_filled' => 'slot terisi',
+        'description' => 'Deskripsi',
+        'updates' => 'Pembaruan Acara',
+        'points' => 'Poin Acara',
+        'points_text' => 'Dapatkan :points poin untuk berpartisipasi!',
+        'organizer' => 'Penyelenggara',
+        'organized_by' => 'Diselenggarakan oleh: :organizer',
+        'confirm_registration' => 'Konfirmasi Pendaftaran',
+        'confirmation_text' => 'Apakah Anda yakin ingin mendaftar untuk acara ini?',
+        'confirmation_points' => 'Anda akan mendapatkan :points poin!',
+        'confirm' => 'Konfirmasi',
+        'cancel' => 'Batal',
+    ],
+    'list' => [
+        'page_header' => 'Jelajahi Acara Relawan',
+        'subheader' => 'Temukan acara yang sempurna untuk membuat perbedaan di komunitas Anda.',
+        'event_date' => 'Tanggal',
+        'event_location' => 'Lokasi',
+        'event_participants' => 'Peserta',
+        'event_points' => 'Poin',
+        'view_details' => 'Lihat Detail',
+    ],
+];

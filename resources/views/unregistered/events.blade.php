@@ -4,8 +4,8 @@
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white">
         <div class="container position-relative">
-            <h1 class="display-4 fw-bold">Explore Volunteer Events</h1>
-            <p class="lead">Find the perfect event to make a difference in your community.</p>
+            <h1 class="display-4 fw-bold">{{ __('event.list.page_header') }}</h1>
+            <p class="lead">{{ __('event.list.subheader') }}</p>
         </div>
     </section>
 
@@ -28,28 +28,32 @@
 
                             <!-- Event Date -->
                             <p class="event-date mb-1">
-                                <i class="bi bi-calendar3 text-success"></i> {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
+                                <i class="bi bi-calendar3 text-success"></i> 
+                                {{ __('event.list.event_date') }}: {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
                             </p>
 
                             <!-- Event Location -->
                             <p class="event-location mb-1">
-                                <i class="bi bi-geo-alt text-success"></i> {{ $event->eventLocation }}
+                                <i class="bi bi-geo-alt text-success"></i> 
+                                {{ __('event.list.event_location') }}: {{ $event->eventLocation }}
                             </p>
 
                             <!-- Event Participants -->
                             <p class="event-participants fw-bold text-success mb-1">
-                                <i class="bi bi-people"></i> {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}
+                                <i class="bi bi-people"></i> 
+                                {{ __('event.list.event_participants') }}: {{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }}
                             </p>
 
                             <!-- Event Points -->
                             <p class="event-points text-muted mb-4">
-                                <i class="bi bi-award-fill text-warning"></i> {{ $event->eventPoints }} Points
+                                <i class="bi bi-award-fill text-warning"></i> 
+                                {{ __('event.list.event_points') }}: {{ $event->eventPoints }}
                             </p>
 
                             <!-- View Details Button -->
                             <div class="view-details-wrapper">
                                 <a href="{{ route('event.detail', ['id' => $event->eventId, 'from' => 'events']) }}" class="btn btn-success">
-                                    View Details
+                                    {{ __('event.list.view_details') }}
                                 </a>
                             </div>
                         </div>
@@ -61,7 +65,6 @@
                 {{ $events->links('pagination::bootstrap-5') }}
             </div>
         </div>
-
     </section>
     <style>
     body {

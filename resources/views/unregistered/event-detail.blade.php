@@ -4,8 +4,8 @@
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white">
         <div class="container">
-            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">Event Details</h1>
-            <p class="lead animate__animated animate__fadeInUp">Discover everything about this event and join the movement.</p>
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">{{ __('event.detail.page_header') }}</h1>
+            <p class="lead animate__animated animate__fadeInUp">{{ __('event.detail.subheader') }}</p>
         </div>
     </section>
 
@@ -13,11 +13,11 @@
     <div class="container mt-4">
         @if($from === 'registered-events')
             <a href="{{ route('member.registered.events') }}" class="btn btn-secondary animate__animated animate__fadeInLeft">
-                <i class="bi bi-arrow-left"></i> Back to Registered Events
+                <i class="bi bi-arrow-left"></i> {{ __('event.detail.back_to_registered') }}
             </a>
         @else
             <a href="{{ route('events.index') }}" class="btn btn-secondary animate__animated animate__fadeInLeft">
-                <i class="bi bi-arrow-left"></i> Back to Events List
+                <i class="bi bi-arrow-left"></i> {{ __('event.detail.back_to_list') }}
             </a>
         @endif
     </div>
@@ -30,27 +30,26 @@
                 <div class="col-lg-4 order-lg-2 mb-4">
                     <!-- Join Event Card -->
                     <div class="join-card shadow-lg rounded p-4 text-center animate__animated animate__fadeInRight">
-                        <h4 class="fw-bold">Join this Event</h4>
+                        <h4 class="fw-bold">{{ __('event.detail.join_event') }}</h4>
                         @if($event->eventParticipantNumber >= $event->eventParticipantQuota)
-                            <p class="text-danger fw-bold">This event is fully booked.</p>
-                            <button class="btn btn-secondary btn-lg w-100" disabled>Event Full</button>
+                            <p class="text-danger fw-bold">{{ __('event.detail.event_full') }}</p>
+                            <button class="btn btn-secondary btn-lg w-100" disabled>{{ __('event.detail.event_full_btn') }}</button>
                         @elseif(!auth()->check())
-                            <!-- User is not logged in -->
                             <a href="{{ route('login') }}?intended={{ urlencode(request()->fullUrl()) }}" class="btn btn-success btn-lg w-100">
-                                Login to Register
+                                {{ __('event.detail.login_to_register') }}
                             </a>
                         @else
                             @if($isRegistered)
-                                <p class="text-warning fw-bold">You are already registered for this event.</p>
-                                <button class="btn btn-secondary btn-lg w-100" disabled>Already Registered</button>
+                                <p class="text-warning fw-bold">{{ __('event.detail.already_registered') }}</p>
+                                <button class="btn btn-secondary btn-lg w-100" disabled>{{ __('event.detail.already_registered_btn') }}</button>
                             @else
                                 <a href="#" class="btn btn-success btn-lg w-100" data-bs-toggle="modal" data-bs-target="#confirmRegistrationModal">
-                                    Register Now
+                                    {{ __('event.detail.register_now') }}
                                 </a>
                             @endif
                         @endif
                         <hr class="my-4">
-                        <p class="event-participants fw-bold">{{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }} slots filled</p>
+                        <p class="event-participants fw-bold">{{ $event->eventParticipantNumber }} / {{ $event->eventParticipantQuota }} {{ __('event.detail.slots_filled') }}</p>
                     </div>
                     <!-- Event Image -->
                     <div class="event-image-container shadow-lg rounded overflow-hidden mt-4 animate__animated animate__fadeInRight">
@@ -73,17 +72,17 @@
                             <i class="bi bi-geo-alt"></i> {{ $event->eventLocation }}
                         </p>
 
-                        <h4 class="mt-4">Description</h4>
+                        <h4 class="mt-4">{{ __('event.detail.description') }}</h4>
                         <p class="event-description">{{ $event->eventDescription }}</p>
 
-                        <h4 class="mt-4">Event Updates</h4>
+                        <h4 class="mt-4">{{ __('event.detail.updates') }}</h4>
                         <p class="event-updates">{{ $event->eventUpdates }}</p>
 
-                        <h4 class="mt-4">Event Points</h4>
-                        <p class="event-points"><i class="bi bi-star-fill text-warning"></i> Earn {{ $event->eventPoints }} points for participating!</p>
+                        <h4 class="mt-4">{{ __('event.detail.points') }}</h4>
+                        <p class="event-points"><i class="bi bi-star-fill text-warning"></i> {{ __('event.detail.points_text', ['points' => $event->eventPoints]) }}</p>
 
-                        <h4 class="mt-4">Organizer</h4>
-                        <p class="event-organizer"><i class="bi bi-person"></i> Organized by: {{ $event->organizer->user->userName }}</p>
+                        <h4 class="mt-4">{{ __('event.detail.organizer') }}</h4>
+                        <p class="event-organizer"><i class="bi bi-person"></i> {{ __('event.detail.organized_by', ['organizer' => $event->organizer->user->userName]) }}</p>
                     </div>
                 </div>
             </div>
@@ -92,22 +91,22 @@
                 <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="confirmRegistrationLabel">Confirm Registration</h5>
+                            <h5 class="modal-title" id="confirmRegistrationLabel">{{ __('event.detail.confirm_registration') }}</h5>
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body text-center">
-                            <p class="fs-5 fw-bold">Are you sure you want to register for this event?</p>
+                            <p class="fs-5 fw-bold">{{ __('event.detail.confirmation_text') }}</p>
                             <p class="text-success fw-bold">
                                 <i class="bi bi-star-fill text-warning"></i> 
-                                You will earn {{ $event->eventPoints }} points!
+                                {{ __('event.detail.confirmation_points', ['points' => $event->eventPoints]) }}
                             </p>
                         </div>
                         <div class="modal-footer d-flex justify-content-center">
                             <form method="POST" action="{{ route('member.event.register', $event->eventId) }}">
                                 @csrf
-                                <button type="submit" class="btn btn-success">Confirm</button>
+                                <button type="submit" class="btn btn-success">{{ __('event.detail.confirm') }}</button>
                             </form>
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">{{ __('event.detail.cancel') }}</button>
                         </div>
                     </div>
                 </div>
