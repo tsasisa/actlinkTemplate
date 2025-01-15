@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\claimedItem;
 use App\Models\ShopItem;
-use Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 
 class ShopController extends Controller
 {
