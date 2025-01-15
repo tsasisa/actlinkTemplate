@@ -18,16 +18,16 @@
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white">
         <div class="container position-relative">
-            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">🛒 Shop</h1>
-            <p class="lead animate__animated animate__fadeInUp">Find items to enhance your volunteer experience!</p>
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">🛒 {{ __('shop.header.title') }}</h1>
+            <p class="lead animate__animated animate__fadeInUp">{{ __('shop.header.description') }}</p>
             @guest
                 <p class="text-warning fw-bold mt-3 animate__animated animate__fadeInUp">
-                    <i class="bi bi-exclamation-circle-fill"></i> Login to claim items!
+                    <i class="bi bi-exclamation-circle-fill"></i> {{ __('shop.header.login_prompt') }}
                 </p>
             @endguest
             @auth
                 <p class="fw-bold mt-3 animate__animated animate__fadeInUp" style="color: #ffdd57;">
-                    <i class="bi bi-wallet-fill"></i> Your Points: {{ auth()->user()->member->memberPoints }} Points
+                    <i class="bi bi-wallet-fill"></i> {{ __('shop.header.points', ['points' => auth()->user()->member->memberPoints]) }}
                 </p>
             @endauth
         </div>
@@ -38,7 +38,7 @@
         <div class="container">
             @if($items->isEmpty())
                 <div class="alert alert-warning text-center animate__animated animate__bounceIn">
-                    <h4>No items available in the shop at the moment.</h4>
+                    <h4>{{ __('shop.shop.no_items') }}</h4>
                 </div>
             @else
                 <div class="row g-4 animate__animated animate__fadeInUp">
@@ -58,7 +58,7 @@
                                     <p class="card-text text-secondary">{{ $item->description }}</p>
                                     <div class="d-flex justify-content-center align-items-center gap-3">
                                         <span class="text-success fw-bold">
-                                            <i class="bi bi-tag-fill text-warning"></i> {{ $item->price }} Points
+                                            <i class="bi bi-tag-fill text-warning"></i> {{ $item->price }} {{ __('shop.shop.price_label') }}
                                         </span>
                                     </div>
                                 </div>
@@ -67,12 +67,12 @@
                                     <form action="{{ route('shop.claim', $item->itemId) }}" method="POST">
                                         @csrf
                                         <button type="submit" class="btn btn-success btn-lg w-100">
-                                            Claim
+                                            {{ __('shop.shop.claim_button') }}
                                         </button>
                                     </form>
                                     @else
                                         <button class="btn btn-secondary btn-sm fw-bold" disabled>
-                                            Claim Now
+                                            {{ __('shop.shop.claim_disabled') }}
                                         </button>
                                     @endauth
                                 </div>

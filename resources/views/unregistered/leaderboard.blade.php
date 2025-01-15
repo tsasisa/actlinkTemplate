@@ -4,8 +4,8 @@
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white">
         <div class="container position-relative">
-            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">🏆 Leaderboard</h1>
-            <p class="lead animate__animated animate__fadeInUp">Top members with the highest points!</p>
+            <h1 class="display-4 fw-bold animate__animated animate__fadeInDown">🏆 {{ __('leaderboard.header.title') }}</h1>
+            <p class="lead animate__animated animate__fadeInUp">{{ __('leaderboard.header.description') }}</p>
         </div>
     </section>
 
@@ -14,16 +14,16 @@
         <div class="container">
             @if($members->isEmpty())
                 <div class="alert alert-warning text-center">
-                    <h4 class="animate__animated animate__bounceIn">No members are currently on the leaderboard.</h4>
+                    <h4 class="animate__animated animate__bounceIn">{{ __('leaderboard.leaderboard.no_members') }}</h4>
                 </div>
             @else
                 <div class="table-responsive animate__animated animate__fadeInUp">
                     <table class="table table-borderless text-center align-middle shadow-sm">
                         <thead class="table-header">
                             <tr>
-                                <th scope="col" class="text-uppercase fw-bold">Rank</th>
-                                <th scope="col" class="text-uppercase fw-bold">Name</th>
-                                <th scope="col" class="text-uppercase fw-bold">Points</th>
+                                <th scope="col" class="text-uppercase fw-bold">{{ __('leaderboard.leaderboard.rank') }}</th>
+                                <th scope="col" class="text-uppercase fw-bold">{{ __('leaderboard.leaderboard.name') }}</th>
+                                <th scope="col" class="text-uppercase fw-bold">{{ __('leaderboard.leaderboard.points') }}</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -32,11 +32,11 @@
                                     <!-- Rank with Highlight for Top 3 -->
                                     <td class="fw-bold">
                                         @if($index == 0)
-                                            <span class="rank-badge gold">🥇 #{{ $index + 1 }}</span>
+                                            <span class="rank-badge gold">{{ __('leaderboard.rank.gold') }}{{ $index + 1 }}</span>
                                         @elseif($index == 1)
-                                            <span class="rank-badge silver">🥈 #{{ $index + 1 }}</span>
+                                            <span class="rank-badge silver">{{ __('leaderboard.rank.silver') }}{{ $index + 1 }}</span>
                                         @elseif($index == 2)
-                                            <span class="rank-badge bronze">🥉 #{{ $index + 1 }}</span>
+                                            <span class="rank-badge bronze">{{ __('leaderboard.rank.bronze') }}{{ $index + 1 }}</span>
                                         @else
                                             #{{ $index + 1 }}
                                         @endif
