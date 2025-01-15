@@ -48,6 +48,7 @@
 <!-- Visual Content Section for Organizers -->
 <section class="visual-content py-5" style="background-color: #28a745;">
     <div class="container">
+        <h2 class="content-title mb-3 text-center text-white">{{ __('messages.for_organizers_title') }}</h2>
         <div class="row">
             @foreach(['register', 'login', 'view_events', 'select_event', 'participate', 'earn_points'] as $index => $step)
             <div class="col-md-4 mb-4">
