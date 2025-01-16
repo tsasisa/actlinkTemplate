@@ -50,7 +50,7 @@
     <div class="container">
         <h2 class="content-title mb-3 text-center text-white">{{ __('messages.for_organizers_title') }}</h2>
         <div class="row">
-            @foreach(['register', 'login', 'view_events', 'select_event', 'participate', 'earn_points'] as $index => $step)
+            @foreach(['register', 'login', 'create_event', 'publish_event', 'manage_participants', 'feedback_and_points'] as $index => $step)
             <div class="col-md-4 mb-4">
                 <div class="gif-container">
                     <p class="text-center mt-2 text-white"><strong>{{ $loop->iteration }}. {{ __( 'messages.' . $step) }}</strong></p>
