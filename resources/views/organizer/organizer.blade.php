@@ -34,10 +34,6 @@
 
 <style>
         /* Hero Section */
-        .hero {
-            height: 100vh; /* Full viewport height */
-            position: relative;
-        }
         .latest-events {
             background-color: white;
         }
@@ -81,72 +77,12 @@
             z-index: 1;
         }
 
-        .container {
-            z-index: 2; /* Position content above the overlay */
-        }
-
-        /* SDG Section */
-        .sdg-section {
-            background-color: #28a745; /* Light green background for SDG section */
-            padding-top: 60px;
-        }
-
-        .sdg-icon-card {
-            background-color: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .lead {
-            font-size: 1rem;
-            margin-top: 10px;
-        }
-
-        /* Custom style for the heading */
-        .sdg-heading {
-            font-size: 1.75rem; /* Slightly smaller heading size */
-        }
-
-        .sdg-heading {
-            font-size: 2.5rem; /* Increased heading size */
-            color: #fff; /* White text color */
-        }
-        .event-heading {
-            font-size: 2.5rem; /* Increased heading size */
-            color: #28a745; /* White text color */
-        }
-        /* Highlight SDG 15 as priority */
-        .priority {
-            border: 2px solid #28a745; /* Green border for emphasis */
-            background-color: white; /* Light green background */
-        }
-
-        /* Carousel styles */
-        .carousel-item {
-            height: 100vh; /* Full height for each carousel item */
-            background-size: cover;
-            background-position: center;
-        }
-
-        .btn-success {
-        background-color: #28a745;
-        border-color: #28a745;
-        transition: background-color 0.3s, transform 0.2s;
-    }
-
-        .btn-success:hover {
-            background-color: #218838;
-            transform: scale(1.02);
-        }
-
         .event-image {
         width: 100%; /* Make image full width */
         height: 200px; /* Fixed height for consistency */
         object-fit: cover; /* Ensure the image covers the container */
         border-radius: 10px; /* Optional: rounded corners */
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: add shadow for better look */
-    }
+        }
     </style>
 @endsection
