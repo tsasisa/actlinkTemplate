@@ -4,7 +4,7 @@
 @section('content')
 <div class="container-fluid py-5" style="background-color: #28a745;">
     <!-- Motivational Sentence -->
-    <h2 class="fw-bold text-white text-center">ActLink</h2>
+    <h2 class="fw-bold text-white text-center">{{ __('messages.login_title') }}</h2>
 
     <!-- Login Section -->
     <div class="row align-items-center justify-content-center">
@@ -13,7 +13,7 @@
             <div class="card shadow">
                 <div class="row my-4 mb-2">
                     <div class="col-10">
-                        <h3 class="ms-3">Login</h3>
+                        <h3 class="ms-3">{{ __('messages.login_header') }}</h3>
                     </div>
                 </div>
                 <div class="card-body">
@@ -32,11 +32,11 @@
                     <div id="step1">
                         <form id="checkEmailForm" onsubmit="event.preventDefault(); checkEmail();">
                             <div class="mb-3">
-                                <label for="step1-email" class="form-label">Email Address</label>
-                                <input type="email" class="form-control" id="step1-email" name="email" placeholder="Enter your email" required>
+                                <label for="step1-email" class="form-label">{{ __('messages.email_address') }}</label>
+                                <input type="email" class="form-control" id="step1-email" name="email" placeholder="{{ __('messages.enter_email') }}" required>
                             </div>
                             <div class="d-grid">
-                                <button type="submit" class="btn text-white" style="background-color: #28a745;">Next</button>
+                                <button type="submit" class="btn text-white" style="background-color: #28a745;">{{ __('messages.next_button') }}</button>
                             </div>
                         </form>
                     </div>
@@ -47,24 +47,25 @@
                             @csrf
                             <input type="hidden" id="email" name="email" value="{{ old('email') }}">
                             <div class="mb-3">
-                                <label for="password" class="form-label">Password</label>
-                                <input type="password" class="form-control mb-lg-5" id="password" name="password" placeholder="Enter your password" required>
-                                <div class="invalid-feedback">Please enter your password.</div>
+                                <label for="password" class="form-label">{{ __('messages.password') }}</label>
+                                <input type="password" class="form-control mb-lg-5" id="password" name="password" placeholder="{{ __('messages.enter_password') }}" required>
+                                <div class="invalid-feedback">{{ __('messages.enter_password') }}</div>
                             </div>
                             
                             <div class="d-grid">
-                                <button type="submit" class="btn text-white" style="background-color: #28a745;">Login</button>
+                                <button type="submit" class="btn text-white" style="background-color: #28a745;">{{ __('messages.login_button') }}</button>
                             </div>
                         </form>
                     </div>
                 </div>
                 <div class="card-footer text-center">
-                    <small>Don't have an account? <a href="{{ route('register.index') }}">Register here</a>.</small>
+                    <small>{{ __('messages.no_account') }} <a href="{{ route('register.index') }}">{{ __('messages.register_here') }}</a>.</small>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 <script>
 function checkEmail() {

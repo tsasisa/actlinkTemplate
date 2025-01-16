@@ -51,5 +51,7 @@ return [
     'Photo' => 'User Image',
     'Search-Placeholder' => 'Search participants by name...',
     'Search-Button' => 'Search',
-    'No-Participant' => 'No participants found.',
+    'No-Participants' => 'No participants found.',
+    'register_as' => 'Register as'
+
 ];

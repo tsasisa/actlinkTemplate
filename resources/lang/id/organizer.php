@@ -51,6 +51,6 @@ return [
     'Photo' => 'User Image',
     'Search-Placeholder' => 'Cari Peserta berdasarkan nama',
     'Search-Button' => 'Cari',
-    'No-Participant' => 'Peserta tidak ditemukan.',
+    'No-Participants' => 'Peserta tidak ditemukan.',
 
 ];

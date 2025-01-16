@@ -14,7 +14,7 @@
         
         @if ($participants->isEmpty())
             <div class="alert alert-warning text-center animate__animated animate__fadeInUp">
-                <h4>@lang('organizer.No-Participant')</h4>
+                <h4>@lang('organizer.No-Participants')</h4>
             </div>
         @else
             <div class="table-responsive animate__animated animate__fadeInUp">
