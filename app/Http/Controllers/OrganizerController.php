@@ -54,13 +54,23 @@ class OrganizerController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,userEmail,' . $user->userId . ',userId',
+            'image' => 'required|image|mimes:jpeg,png,jpg|max:10240',
             'phone' => 'nullable|string|max:15',
             'address' => 'nullable|string|max:255',
             'sosmed' => 'nullable|string|max:255',
         ]);
 
+        if ($request->hasFile('image')) {
+            $imageFile = $request->file('image');
+            $fileContents = file_get_contents($imageFile);
+            $base64Image = base64_encode($fileContents);
+        } else {
+            $base64Image = null; 
+        }
+
         // Update the user data
         $user->userName = $request->name;
+        $user->userImage = $base64Image;
         $user->userEmail = $request->email;
         $user->userPhoneNumber = $request->phone;
         $user->save();

@@ -2,7 +2,7 @@
 @section('content')
 <div id="app">
 <div class="container my-3">
-    <form action="{{ route('organizer.updateProfile') }}" method="POST">
+    <form action="{{ route('organizer.updateProfile') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
@@ -28,6 +28,14 @@
                     value="{{ $user->userEmail }}" 
                     required
                 >
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">@lang('organizer.Upload-Image')</label>
+                <input type="file" class="form-control" id="image" name="image">  
+                @error('image')
+                    <div class="text-danger">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="mb-3">
