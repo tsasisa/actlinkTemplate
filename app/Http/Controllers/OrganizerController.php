@@ -219,9 +219,16 @@ class OrganizerController extends Controller
     }
 
     
+    public function viewParticipant($id){
+        $participants = EventParticipant::where('eventId', $id)
+        ->join('users', 'eventparticipants.memberId', '=', 'users.userId')
+        ->select('eventparticipants.*', 'users.userName')
+        ->get();
+        
+        return view('organizer.event-participant', compact('participants'));
+    }
 
-
-    public function viewParticipant(Request $request)
+    public function searchParticipant(Request $request)
     {
         $searchTerm = $request->input('searchTerm');
     
