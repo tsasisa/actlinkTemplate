@@ -5,9 +5,41 @@
     <div class="col">
         <div class="card">
             <div class="card-body">
+                <!-- Language Switcher -->
                 <div class="d-flex flex-row-reverse">
-                            <a class="btn btn-primary" style="margin-left: 10px;" href="{{ route('set-locale','id') }}">{{ __('admin.indonesia') }}</a>
-                            <a class="btn btn-primary" href="{{ route('set-locale','en') }}">{{ __('admin.english') }}</a>
+                    <div class="dropdown">
+                        <a 
+                            href="#" 
+                            class="d-flex align-items-center text-decoration-none dropdown-toggle" 
+                            id="localeDropdown" 
+                            data-bs-toggle="dropdown" 
+                            aria-expanded="false"
+                        >
+                            <i class="bi bi-globe me-3"></i>
+                            <span class="text-dark" style="font-weight: 500;">
+                                {{ app()->getLocale() == 'en' ? __('admin.english') : __('admin.indonesia') }}
+                            </span>
+                        </a>
+
+                        <ul class="dropdown-menu" aria-labelledby="localeDropdown">
+                            <li>
+                                <a 
+                                    class="dropdown-item {{ app()->getLocale() == 'en' ? 'active' : '' }}" 
+                                    href="{{ route('set-locale', 'en') }}"
+                                >
+                                    {{ __('admin.english') }}
+                                </a>
+                            </li>
+                            <li>
+                                <a 
+                                    class="dropdown-item {{ app()->getLocale() == 'id' ? 'active' : '' }}" 
+                                    href="{{ route('set-locale', 'id') }}"
+                                >
+                                    {{ __('admin.indonesia') }}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
 
                 <!-- Title -->

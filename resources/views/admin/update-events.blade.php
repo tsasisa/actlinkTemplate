@@ -37,14 +37,14 @@
                     </div>
 
                   <!-- Event Type -->
-<div class="form-outline mb-4">
-    <select name="eventType" class="form-control" required>
-        <option value="Environment" {{ old('eventType', $event->eventType) == 'Environment' ? 'selected' : '' }}>Environment</option>
-        <option value="Social" {{ old('eventType', $event->eventType) == 'Social' ? 'selected' : '' }}>Social</option>
-        <option value="Healthcare" {{ old('eventType', $event->eventType) == 'Healthcare' ? 'selected' : '' }}>Healthcare</option>
-        <option value="Education" {{ old('eventType', $event->eventType) == 'Education' ? 'selected' : '' }}>Education</option>
-    </select>
-</div>
+                <div class="form-outline mb-4">
+                    <select name="eventType" class="form-control" required>
+                        <option value="Environment" {{ old('eventType', $event->eventType) == 'Environment' ? 'selected' : '' }}>Environment</option>
+                        <option value="Social" {{ old('eventType', $event->eventType) == 'Social' ? 'selected' : '' }}>Social</option>
+                        <option value="Healthcare" {{ old('eventType', $event->eventType) == 'Healthcare' ? 'selected' : '' }}>Healthcare</option>
+                        <option value="Education" {{ old('eventType', $event->eventType) == 'Education' ? 'selected' : '' }}>Education</option>
+                    </select>
+                </div>
 
 
                     <!-- Event Updates -->
