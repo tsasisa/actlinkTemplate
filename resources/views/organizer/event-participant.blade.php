@@ -25,7 +25,6 @@
                             <th scope="col">@lang('organizer.Participant-Name')</th>
                             <th scope="col">@lang('organizer.Email')</th>
                             <th scope="col">@lang('organizer.Phone')</th>
-                            <th scope="col">@lang('organizer.Age')</th>
                             <th scope="col">@lang('organizer.Photo')</th>
                             <th scope="col">@lang('organizer.Join-Date')</th>
                         </tr>
@@ -37,7 +36,6 @@
                                 <td>{{ $participant->userName }}</td>
                                 <td>{{ $participant->userEmail }}</td>
                                 <td>{{ $participant->userPhoneNumber }}</td>
-                                <td>{{ $participant->age }}</td>
                                 <td>
                                     <img src="data:image/jpeg;base64,{{ $participant->userImage }}" 
                                          alt="Participant Photo" 

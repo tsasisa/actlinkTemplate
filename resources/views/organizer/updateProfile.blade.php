@@ -1,5 +1,6 @@
 @extends('layouts.navbar.navbar')
 @section('content')
+<div id="app">
 <div class="container my-3">
     <form action="{{ route('organizer.updateProfile') }}" method="POST">
             @csrf
@@ -65,5 +66,6 @@
             <button type="submit" class="btn btn-primary">@lang('organizer.Submit')</button>
         </form>
     </div>
+</div>
     
 @endsection
