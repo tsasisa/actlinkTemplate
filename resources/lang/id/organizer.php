@@ -47,4 +47,10 @@ return [
     'Thankyou' => 'Terima kasih telah mendaftar sebagai penyelenggara! Pendaftaran Anda saat ini sedang ditinjau',
     'Please-wait' => 'Harap tunggu hingga admin menyetujui akun Anda. Kami akan memberi tahu Anda setelah proses selesai',
     'Back-To-Home' => 'Kembali Ke Beranda',
+    'Age' => 'Umur',
+    'Photo' => 'User Image',
+    'Search-Placeholder' => 'Cari Peserta berdasarkan nama',
+    'Search-Button' => 'Cari',
+    'No-Participant' => 'Peserta tidak ditemukan.',
+
 ];

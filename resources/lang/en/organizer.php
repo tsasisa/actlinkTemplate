@@ -46,5 +46,10 @@ return [
     'Pending-Approval' => 'Pending Approval',
     'Thankyou' => 'Thank you for signing up as an organizer! Your registration is currently under review.',
     'Please-wait' => 'Please wait for the admin to approve your account. We will notify you once the process is complete.',
-    'Back-To-Home' => 'Back To Home'
+    'Back-To-Home' => 'Back To Home',
+    'Age' => 'Age',
+    'Photo' => 'User Image',
+    'Search-Placeholder' => 'Search participants by name...',
+    'Search-Button' => 'Search',
+    'No-Participant' => 'No participants found.',
 ];

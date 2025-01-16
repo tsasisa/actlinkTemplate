@@ -218,15 +218,42 @@ class OrganizerController extends Controller
     return redirect('organizer/manage-event');
     }
 
-    public function viewParticipant($id)
-{
-    $participants = EventParticipant::where('eventId', $id)
-        ->join('users', 'eventparticipants.memberId', '=', 'users.userId')
-        ->select('eventparticipants.*', 'users.userName')
-        ->get();
+    
 
-    return view('organizer.event-participant', compact('participants'));
-}
+
+    public function viewParticipant(Request $request)
+    {
+        $searchTerm = $request->input('searchTerm');
+    
+        $participants = EventParticipant::query()
+            ->join('users', 'eventparticipants.memberId', '=', 'users.userId')
+            ->leftJoin('members', 'users.userId', '=', 'members.memberId') // Adjust join type if necessary
+            ->select(
+                'users.userId', // Ensure DISTINCT operates correctly by fetching the user ID
+                'users.userName', 
+                'users.userEmail', 
+                'users.userPhoneNumber',
+                'users.userImage',
+                'members.memberDOB'
+            )
+            ->distinct(); // Apply DISTINCT on the entire select to avoid duplicate user entries
+    
+        if (!empty($searchTerm)) {
+            $participants = $participants->where('users.userName', 'LIKE', '%' . $searchTerm . '%');
+        }
+    
+        $participants = $participants->get();
+    
+        foreach ($participants as $participant) {
+            $participant->age = \Carbon\Carbon::parse($participant->memberDOB)->age;
+        }
+    
+        return view('organizer.event-participant', compact('participants'));
+    }
+    
+    
+    
+    
 
     public function createProduct(){
 

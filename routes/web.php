@@ -64,6 +64,8 @@ Route::middleware(['auth', CheckUserRole::class])->prefix('organizer')->name('or
     Route::put('/event-edit/{id}', [OrganizerController::class, 'edit'])->name('event-update');
     Route::get('/create-product', [OrganizerController::class, 'createProduct'])->name('create-product');
     Route::post('/create-product', [OrganizerController::class, 'addProduct'])->name('create-product');
+    Route::get('/organizer/search-participant', [OrganizerController::class, 'viewParticipant'])->name('search-participant');
+
 });
 
 // Member Routes
