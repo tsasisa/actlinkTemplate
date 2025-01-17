@@ -3,7 +3,7 @@
 @section('content')
     <section class="profile-header py-5 text-center text-white animate__animated animate__fadeInDown">
         <div class="container">
-            <h1 class="display-4 fw-bold">🎭 {{ $user->userName }}'s Profile</h1>
+            <h1 class="display-4 fw-bold">🎭 {{ __('profile.profile.header', ['userName' => $user->userName]) }}</h1>
         </div>
     </section>
 
@@ -30,19 +30,19 @@
 
                         <div class="card-body">
                             <div class="info-section mb-4">
-                                <h5 class="fw-bold text-success"><i class="bi bi-person-circle"></i> Basic Information</h5>
+                                <h5 class="fw-bold text-success"><i class="bi bi-person-circle"></i> {{ __('profile.profile.information') }}</h5>
                                 <ul class="list-unstyled">
-                                    <li><strong>Email:</strong> {{ $user->userEmail }}</li>
-                                    <li><strong>Phone:</strong> {{ $user->userPhoneNumber ?? 'N/A' }}</li>
+                                    <li><strong>{{ __('profile.profile.email') }}:</strong> {{ $user->userEmail }}</li>
+                                    <li><strong>{{ __('profile.profile.phone') }}:</strong> {{ $user->userPhoneNumber ?? 'N/A' }}</li>
                                 </ul>
                             </div>
 
                             @if($member)
                                 <div class="info-section mb-4 animate__animated animate__fadeInLeft">
-                                    <h5 class="fw-bold text-primary"><i class="bi bi-award-fill"></i> Member Details</h5>
+                                    <h5 class="fw-bold text-primary"><i class="bi bi-award-fill"></i> {{ __('profile.profile.detail') }}</h5>
                                     <ul class="list-unstyled">
-                                        <li><strong>Date of Birth:</strong> {{ $member->memberDOB }}</li>
-                                        <li><strong>Points:</strong>
+                                        <li><strong>{{ __('profile.profile.dob') }}:</strong> {{ $member->memberDOB }}</li>
+                                        <li><strong>{{ __('profile.profile.points') }}:</strong>
                                             <span class="badge bg-success fs-6">{{ $member->memberPoints }} XP</span>
                                         </li>
                                     </ul>
@@ -51,19 +51,19 @@
 
                             @if($organizer)
                                 <div class="info-section mb-4 animate__animated animate__fadeInRight">
-                                    <h5 class="fw-bold text-warning"><i class="bi bi-briefcase-fill"></i> Organizer Details</h5>
+                                    <h5 class="fw-bold text-warning"><i class="bi bi-briefcase-fill"></i> {{ __('profile.profile.organizer_details') }}</h5>
                                     <ul class="list-unstyled">
-                                        <li><strong>Address:</strong> {{ $organizer->organizerAddress }}</li>
-                                        <li><strong>Social Media:</strong> 
+                                        <li><strong>{{ __('profile.profile.address') }}:</strong> {{ $organizer->organizerAddress }}</li>
+                                        <li><strong>{{ __('profile.profile.social_media') }}:</strong> 
                                             <a href="{{ $organizer->officialSocialMedia }}" target="_blank" class="text-primary">
                                                 {{ $organizer->officialSocialMedia }}
                                             </a>
                                         </li>
-                                        <li><strong>Status:</strong>
+                                        <li><strong>{{ __('profile.profile.status') }}:</strong>
                                             @if($organizer->activeFlag)
-                                                <span class="badge bg-success">Active</span>
+                                                <span class="badge bg-success">{{ __('profile.profile.active') }}</span>
                                             @else
-                                                <span class="badge bg-danger">Inactive</span>
+                                                <span class="badge bg-danger">{{ __('profile.profile.inactive') }}</span>
                                             @endif
                                         </li>
                                     </ul>
@@ -71,16 +71,11 @@
                             @endif
                         </div>
 
-                        @if ($organizer)
-                            <div class="card-footer text-center bg-light py-3">
-                                <a href="{{ route('organizer.updateProfile') }}" class="btn btn-outline-success btn-lg animate__animated animate__pulse animate__infinite">Edit Profile</a>
-                            </div>
-                        @else
                         <div class="card-footer text-center bg-light py-3">
-                            <a href="#" class="btn btn-outline-success btn-lg animate__animated animate__pulse animate__infinite">Edit Profile</a>
+                            <a href="{{ $organizer ? route('organizer.updateProfile') : '#' }}" class="btn btn-outline-success btn-lg animate__animated animate__pulse animate__infinite">
+                                {{ __('profile.profile.edit_profile') }}
+                            </a>
                         </div>
-                        @endif
-                        
                     </div>
                 </div>
             </div>
