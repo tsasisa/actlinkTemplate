@@ -35,5 +35,14 @@ return [
         'event_points' => 'Points',
         'view_details' => 'View Details',
     ],
-
+    'registered-events' => [
+        'page_header' => 'My Registered Events',
+        'subheader' => 'Here are the events you have registered for.',
+        'no_events' => 'You have not registered for any events yet.',
+        'event_date' => 'Event Date',
+        'event_location' => 'Event Location',
+        'earned_points' => 'Earned Points',
+        'registered_on' => 'Registered On',
+        'view_event' => 'View Event',
+    ],
 ];

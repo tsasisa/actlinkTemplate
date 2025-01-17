@@ -35,4 +35,14 @@ return [
         'event_points' => 'Poin',
         'view_details' => 'Lihat Detail',
     ],
+    'registered-events' => [
+        'page_header' => 'Acara yang Terdaftar',
+        'subheader' => 'Berikut adalah acara yang telah Anda daftarkan.',
+        'no_events' => 'Anda belum mendaftar untuk acara apa pun.',
+        'event_date' => 'Tanggal Acara',
+        'event_location' => 'Lokasi Acara',
+        'earned_points' => 'Poin yang Diperoleh',
+        'registered_on' => 'Terdaftar Pada',
+        'view_event' => 'Lihat Acara',
+    ],
 ];

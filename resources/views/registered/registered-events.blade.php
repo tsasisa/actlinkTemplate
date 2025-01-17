@@ -4,8 +4,8 @@
     <!-- Page Header -->
     <section class="page-header py-5 text-center text-white animate__animated animate__fadeInDown">
         <div class="container">
-            <h1 class="display-4 fw-bold">My Registered Events</h1>
-            <p class="lead">Here are the events you have registered for.</p>
+            <h1 class="display-4 fw-bold">{{ __('event.registered-events.page_header') }}</h1>
+            <p class="lead">{{ __('event.registered-events.subheader') }}</p>
         </div>
     </section>
 
@@ -14,7 +14,7 @@
         <div class="container">
             @if($registeredEvents->isEmpty())
                 <div class="alert alert-warning text-center animate__animated animate__fadeInUp">
-                    <h4>You have not registered for any events yet.</h4>
+                    <h4>{{ __('event.registered-events.no_events') }}</h4>
                 </div>
             @else
                 <div class="row">
@@ -25,18 +25,20 @@
                                 <div class="card-body">
                                     <h5 class="card-title">{{ $event->eventName }}</h5>
                                     <p class="card-text text-muted">
-                                        <i class="bi bi-calendar-event"></i> {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
+                                        <i class="bi bi-calendar-event"></i> {{ __('event.registered-events.event_date') }}: {{ \Carbon\Carbon::parse($event->eventDate)->format('d M, Y') }}
                                     </p>
                                     <p class="card-text text-muted">
-                                        <i class="bi bi-geo-alt"></i> {{ $event->eventLocation }}
+                                        <i class="bi bi-geo-alt"></i> {{ __('event.registered-events.event_location') }}: {{ $event->eventLocation }}
                                     </p>
                                     <p class="card-text">
-                                        <i class="bi bi-star-fill text-warning"></i> Earned Points: {{ $event->eventPoints }}
+                                        <i class="bi bi-star-fill text-warning"></i> {{ __('event.registered-events.earned_points') }}: {{ $event->eventPoints }}
                                     </p>
                                     <p class="card-text">
-                                        <i class="bi bi-clock"></i> Registered On: {{ \Carbon\Carbon::parse($event->registeredDate)->format('d M, Y') }}
+                                        <i class="bi bi-clock"></i> {{ __('event.registered-events.registered_on') }}: {{ \Carbon\Carbon::parse($event->registeredDate)->format('d M, Y') }}
                                     </p>
-                                    <a href="{{ route('event.detail', ['id' => $event->eventId, 'from' => 'registered-events']) }}" class="btn btn-success">View Event</a>
+                                    <a href="{{ route('event.detail', ['id' => $event->eventId, 'from' => 'registered-events']) }}" class="btn btn-success">
+                                        {{ __('event.registered-events.view_event') }}
+                                    </a>
                                 </div>
                             </div>
                         </div>

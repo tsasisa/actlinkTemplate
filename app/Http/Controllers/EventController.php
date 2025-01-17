@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Event;
 use App\Models\Member;
-use App\Models\SystemLog; // Tambahkan ini
+use App\Models\SystemLog;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -29,22 +29,6 @@ class EventController extends Controller
         $events = $query->paginate(3);
     
         return view('unregistered.events', compact('events'));
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
     }
 
     /**
@@ -81,30 +65,6 @@ class EventController extends Controller
             'isRegistered' => $isRegistered,
             'from' => $request->query('from', 'events'),
         ]);
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 
     public function register(Request $request, $id)
@@ -149,19 +109,16 @@ class EventController extends Controller
     {
         $user = Auth::user();
 
-        // Ensure the user is authenticated
         if (!$user) {
             return redirect()->route('login')->with('error', 'Please log in to view your registered events.');
         }
 
-        // Get the registered events for the authenticated user
         $registeredEvents = DB::table('eventParticipants')
             ->join('events', 'eventParticipants.eventId', '=', 'events.eventId')
             ->where('eventParticipants.memberId', $user->userId)
             ->select('events.*', 'eventParticipants.registeredDate')
             ->get();
 
-        // Pass the data to the view
         return view('registered.registered-events', compact('registeredEvents'));
     }
 }
