@@ -30,7 +30,7 @@
 
                     <!-- Step 1: Enter Email -->
                     <div id="step1">
-                        <form id="checkEmailForm" onsubmit="event.preventDefault(); checkEmail();">
+                        <form id="checkEmailForm" onsubmit="event.preventDefault();">
                             <div class="mb-3">
                                 <label for="step1-email" class="form-label">{{ __('messages.email_address') }}</label>
                                 <input type="email" class="form-control" id="step1-email" name="email" placeholder="{{ __('messages.enter_email') }}" required>
@@ -67,7 +67,7 @@
 </div>
 
 
-<script>
+<!-- <script>
 function checkEmail() {
     const csrfToken = document.querySelector('meta[name="csrf-token"]');
     if (!csrfToken) {
@@ -99,5 +99,5 @@ function checkEmail() {
 
 }
 
-</script>
+</script> -->
 @endsection
